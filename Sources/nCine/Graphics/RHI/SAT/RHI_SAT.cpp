@@ -399,6 +399,6 @@ namespace nCine::RHI
 		SetScissorTest(state.enabled, state.x, state.y, state.w, state.h);
 	}
 
-} // namespace nCine::RHI
+}
 
 #endif

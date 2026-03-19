@@ -814,6 +814,6 @@ namespace nCine::RHI
 		return g_state.bufferHeight;
 	}
 
-} // namespace nCine::RHI
+}
 
 #endif
