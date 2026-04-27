@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+	
+	<!-- StaticHashMap visualization -->
+	<Type Name="nCine::StaticHashMap&lt;*,*,*,*&gt;">
+		<DisplayString>{{ size={size_} }}</DisplayString>
+		<Expand>
+			<Item Name="[size]">size_</Item>
+			<Item Name="[capacity]">$T3</Item>
+			<Item Name="[load factor]">size_ / (float)$T3</Item>
+			
+			<CustomListItems>
+				<Variable Name="i" InitialValue="0" />
+				<Variable Name="count" InitialValue="0" />
+				<Size>size_</Size>
+				<Loop>
+					<Break Condition="count == size_" />
+					<If Condition="i &lt; $T3 &amp;&amp; hashes_[i] != 0xFFFFFFFF">
+						<Item Name="[{nodes_[i].key}]">nodes_[i].value</Item>
+						<Exec>count++</Exec>
+					</If>
+					<Exec>i++</Exec>
+				</Loop>
+			</CustomListItems>
+			
+			<Synthetic Name="[buckets]">
+				<Expand>
+					<ArrayItems>
+						<Size>$T3</Size>
+						<ValuePointer>nodes_</ValuePointer>
+					</ArrayItems>
+				</Expand>
+			</Synthetic>
+			
+			<Synthetic Name="[hashes]">
+				<Expand>
+					<ArrayItems>
+						<Size>$T3</Size>
+						<ValuePointer>hashes_</ValuePointer>
+					</ArrayItems>
+				</Expand>
+			</Synthetic>
+			
+			<Synthetic Name="[delta1]">
+				<Expand>
+					<ArrayItems>
+						<Size>$T3</Size>
+						<ValuePointer>delta1_</ValuePointer>
+					</ArrayItems>
+				</Expand>
+			</Synthetic>
+			
+			<Synthetic Name="[delta2]">
+				<Expand>
+					<ArrayItems>
+						<Size>$T3</Size>
+						<ValuePointer>delta2_</ValuePointer>
+					</ArrayItems>
+				</Expand>
+			</Synthetic>
+		</Expand>
+	</Type>
+
+	<!-- StaticHashMap::Node visualization -->
+	<Type Name="nCine::StaticHashMap&lt;*,*,*,*&gt;::Node">
+		<DisplayString>{{ key={key}, value={value} }}</DisplayString>
+		<Expand>
+			<Item Name="[key]">key</Item>
+			<Item Name="[value]">value</Item>
+		</Expand>
+	</Type>
+
+	<!-- StaticHashMapIterator visualization -->
+	<Type Name="nCine::StaticHashMapIterator&lt;*,*,*,*,*&gt;">
+		<DisplayString Condition="tag_ == 0">{{ index={bucketIndex_}, key={hashMap_-&gt;nodes_[bucketIndex_].key}, value={hashMap_-&gt;nodes_[bucketIndex_].value} }}</DisplayString>
+		<DisplayString Condition="tag_ == 1">{{ BEGIN }}</DisplayString>
+		<DisplayString Condition="tag_ == 2">{{ END }}</DisplayString>
+		<Expand>
+			<Item Name="[bucket index]" Condition="tag_ == 0">bucketIndex_</Item>
+			<Item Name="[key]" Condition="tag_ == 0">hashMap_-&gt;nodes_[bucketIndex_].key</Item>
+			<Item Name="[value]" Condition="tag_ == 0">hashMap_-&gt;nodes_[bucketIndex_].value</Item>
+			<Item Name="[hash]" Condition="tag_ == 0">hashMap_-&gt;hashes_[bucketIndex_]</Item>
+			<Item Name="[tag]">tag_</Item>
+			<Item Name="[hashmap]">hashMap_</Item>
+		</Expand>
+	</Type>
+
+</AutoVisualizer>

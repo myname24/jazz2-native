@@ -24,12 +24,12 @@ using namespace Death::IO;
 namespace nCine
 {
 	ITextureLoader::ITextureLoader()
-		: hasLoaded_(false), width_(0), height_(0), headerSize_(0), dataSize_(0), mipMapCount_(1)
+		: hasLoaded_(false), width_(0), height_(0), headerSize_(0), dataSize_(0), mipMapCount_(1), texFormat_(RHI::TextureFormat::Unknown)
 	{
 	}
 
 	ITextureLoader::ITextureLoader(std::unique_ptr<Stream> fileHandle)
-		: hasLoaded_(false), fileHandle_(std::move(fileHandle)), width_(0), height_(0), headerSize_(0), dataSize_(0), mipMapCount_(1)
+		: hasLoaded_(false), fileHandle_(std::move(fileHandle)), width_(0), height_(0), headerSize_(0), dataSize_(0), mipMapCount_(1), texFormat_(RHI::TextureFormat::Unknown)
 	{
 	}
 
@@ -44,9 +44,9 @@ namespace nCine
 		return dataSize;
 	}
 
-	const GLubyte* ITextureLoader::pixels(std::uint32_t mipMapLevel) const
+	const std::uint8_t* ITextureLoader::pixels(std::uint32_t mipMapLevel) const
 	{
-		const GLubyte* pixels = nullptr;
+		const std::uint8_t* pixels = nullptr;
 
 		if (pixels_ != nullptr) {
 			if (mipMapCount_ > 1 && std::int32_t(mipMapLevel) < mipMapCount_) {
@@ -108,18 +108,9 @@ namespace nCine
 		return std::make_unique<InvalidTextureLoader>(std::move(fileHandle));
 	}
 
-	void ITextureLoader::loadPixels(GLenum internalFormat)
+	void ITextureLoader::loadPixels(RHI::TextureFormat format)
 	{
-		loadPixels(internalFormat, 0);
-	}
-
-	void ITextureLoader::loadPixels(GLenum internalFormat, GLenum type)
-	{
-		if (type) { // overriding pixel type
-			texFormat_ = TextureFormat(internalFormat, type);
-		} else {
-			texFormat_ = TextureFormat(internalFormat);
-		}
+		texFormat_ = format;
 
 		dataSize_ = fileHandle_->GetSize() - headerSize_;
 		fileHandle_->Seek(headerSize_, SeekOrigin::Current);

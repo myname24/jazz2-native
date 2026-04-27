@@ -218,4 +218,115 @@ namespace nCine::RHI
 		UInt32
 	};
 
+	/// Returns number of colour channels for uncompressed formats, 0 for compressed/unknown
+	inline constexpr std::uint32_t NumChannels(TextureFormat format)
+	{
+		switch (format) {
+			case TextureFormat::R8:
+			case TextureFormat::R_Float16:
+				return 1;
+			case TextureFormat::RG8:
+				return 2;
+			case TextureFormat::RGB8:
+			case TextureFormat::RGB_DXT1:
+			case TextureFormat::RGB_ETC1:
+			case TextureFormat::RGB_ETC2:
+				return 3;
+			case TextureFormat::RGBA8:
+			case TextureFormat::RGBA_Float16:
+			case TextureFormat::RGBA_DXT3:
+			case TextureFormat::RGBA_DXT5:
+			case TextureFormat::RGBA_ETC2:
+				return 4;
+			default:
+				return 0;
+		}
+	}
+
+	/// Returns true if the format holds compressed data
+	inline constexpr bool IsCompressed(TextureFormat format)
+	{
+		switch (format) {
+			case TextureFormat::RGB_DXT1:
+			case TextureFormat::RGBA_DXT3:
+			case TextureFormat::RGBA_DXT5:
+			case TextureFormat::RGB_ETC1:
+			case TextureFormat::RGB_ETC2:
+			case TextureFormat::RGBA_ETC2:
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	/// Returns bits per pixel for uncompressed formats
+	inline constexpr std::uint32_t BitsPerPixel(TextureFormat format)
+	{
+		switch (format) {
+			case TextureFormat::R8:         return 8;
+			case TextureFormat::RG8:        return 16;
+			case TextureFormat::RGB8:       return 24;
+			case TextureFormat::RGBA8:      return 32;
+			case TextureFormat::Depth16:    return 16;
+			case TextureFormat::Depth24:    return 24;
+			case TextureFormat::Depth24Stencil8: return 32;
+			case TextureFormat::R_Float16:  return 16;
+			case TextureFormat::RGBA_Float16: return 64;
+			case TextureFormat::RGB_DXT1:   return 4;
+			case TextureFormat::RGBA_DXT3:  return 8;
+			case TextureFormat::RGBA_DXT5:  return 8;
+			case TextureFormat::RGB_ETC1:   return 4;
+			case TextureFormat::RGB_ETC2:   return 4;
+			case TextureFormat::RGBA_ETC2:  return 8;
+			default:                        return 0;
+		}
+	}
+
+	/// Calculates the pixel data size for each MIP map level, returns total size
+	inline std::uint32_t CalculateMipSizes(TextureFormat format, std::int32_t width, std::int32_t height, std::int32_t mipMapCount, std::uint32_t* mipDataOffsets, std::uint32_t* mipDataSizes)
+	{
+		std::uint32_t blockWidth = 1, blockHeight = 1;
+		std::uint32_t bpp = BitsPerPixel(format);
+		std::uint32_t minDataSize = 1;
+
+		if (IsCompressed(format)) {
+			blockWidth = 4;
+			blockHeight = 4;
+			switch (format) {
+				case TextureFormat::RGB_DXT1:
+				case TextureFormat::RGB_ETC1:
+				case TextureFormat::RGB_ETC2:
+					minDataSize = 8;
+					break;
+				case TextureFormat::RGBA_DXT3:
+				case TextureFormat::RGBA_DXT5:
+				case TextureFormat::RGBA_ETC2:
+					minDataSize = 16;
+					break;
+				default: break;
+			}
+		}
+
+		std::int32_t levelWidth = width;
+		std::int32_t levelHeight = height;
+		std::uint32_t dataSizesSum = 0;
+
+		for (std::int32_t i = 0; i < mipMapCount; i++) {
+			std::uint32_t blocksX = (levelWidth + blockWidth - 1) / blockWidth;
+			std::uint32_t blocksY = (levelHeight + blockHeight - 1) / blockHeight;
+			mipDataOffsets[i] = dataSizesSum;
+			mipDataSizes[i] = blocksX * blocksY * ((blockWidth * blockHeight * bpp) / 8);
+
+			if (mipDataSizes[i] < minDataSize) {
+				mipDataSizes[i] = minDataSize;
+			}
+
+			levelWidth /= 2;
+			levelHeight /= 2;
+			dataSizesSum += mipDataSizes[i];
+		}
+
+		return dataSizesSum;
+	}
+
 } // namespace nCine::RHI

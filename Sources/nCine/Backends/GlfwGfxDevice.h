@@ -97,6 +97,9 @@ namespace nCine::Backends
 #if defined(WITH_RHI_SW)
 		/// GL texture used to blit the SW color buffer each frame
 		GLuint swBlitTexture_ = 0;
+		/// Cached texture dimensions to avoid glTexImage2D reallocation each frame
+		std::int32_t swBlitWidth_ = 0;
+		std::int32_t swBlitHeight_ = 0;
 		/// Uploads the SW color buffer to a GL texture and draws a fullscreen quad
 		void blitSwBuffer();
 #endif

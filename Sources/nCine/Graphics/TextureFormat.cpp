@@ -1,4 +1,7 @@
 ﻿#include "TextureFormat.h"
+
+#if defined(WITH_RHI_GL)
+
 #include "../ServiceLocator.h"
 #include "../../Main.h"
 
@@ -520,5 +523,6 @@ namespace nCine
 #endif
 		}
 	}
-
 }
+
+#endif // defined(WITH_RHI_GL)

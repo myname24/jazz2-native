@@ -88,8 +88,14 @@ namespace nCine
 			RHI::DrawContext ctx;
 			ctx.ff = matFF;
 			std::memcpy(ctx.ff.mvpMatrix, mvp, 16 * sizeof(float));
+
+			// Determine whether this draw uses a texture based on the shader type
+			const bool isNoTexture = (material_.shaderProgramType_ == Material::ShaderProgramType::SpriteNoTexture ||
+			                          material_.shaderProgramType_ == Material::ShaderProgramType::MeshSpriteNoTexture ||
+			                          material_.shaderProgramType_ == Material::ShaderProgramType::BatchedSpritesNoTexture ||
+			                          material_.shaderProgramType_ == Material::ShaderProgramType::BatchedMeshSpritesNoTexture);
 			for (std::uint32_t i = 0; i < RHI::MaxTextureUnits; i++) {
-				ctx.textures[i] = const_cast<RHI::Texture*>(material_.GetTexture(i));
+				ctx.textures[i] = isNoTexture ? nullptr : const_cast<RHI::Texture*>(material_.GetTexture(i));
 			}
 			ctx.ff.hasTexture = (ctx.textures[0] != nullptr);
 			ctx.ff.textureUnit = 0;
@@ -103,6 +109,11 @@ namespace nCine
 			const RHI::ScissorState sc = RHI::GetScissorState();
 			ctx.scissorEnabled = sc.enabled;
 			ctx.scissorRect.Set(sc.x, sc.y, sc.w, sc.h);
+			ctx.fragmentShader = material_.fragmentShader_;
+			if (ctx.fragmentShader == nullptr && material_.shaderProgram_ != nullptr) {
+				ctx.fragmentShader = material_.shaderProgram_->fragmentShader;
+			}
+			ctx.fragmentShaderUserData = material_.fragmentShaderUserData_;
 			RHI::SetDrawContext(ctx);
 		}
 #endif

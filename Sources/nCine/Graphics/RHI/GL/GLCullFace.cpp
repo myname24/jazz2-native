@@ -7,7 +7,7 @@ namespace nCine
 
 	void GLCullFace::Enable()
 	{
-		if (state_.enabled == false) {
+		if (!state_.enabled) {
 			glEnable(GL_CULL_FACE);
 			state_.enabled = true;
 		}
@@ -15,7 +15,7 @@ namespace nCine
 
 	void GLCullFace::Disable()
 	{
-		if (state_.enabled == true) {
+		if (state_.enabled) {
 			glDisable(GL_CULL_FACE);
 			state_.enabled = false;
 		}

@@ -159,7 +159,7 @@ namespace nCine
 #endif
 			opaqueRenderCommand->CommitCameraTransformation();
 			opaqueRenderCommand->Issue();
-	}
+		}
 
 		RHI::SetBlending(true, RHI::BlendFactor::SrcAlpha, RHI::BlendFactor::OneMinusSrcAlpha);
 		RHI::SetDepthMask(false);

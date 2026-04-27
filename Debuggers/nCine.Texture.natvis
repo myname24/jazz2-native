@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+	<UIVisualizer ServiceId="{A452AFEA-3DF6-46BB-9177-C0B08F318025}" Id="1"
+				MenuName="Add to Image Watch"/>
+
+	<Type Name="nCine::RHI::Texture">
+		<UIVisualizer ServiceId="{A452AFEA-3DF6-46BB-9177-C0B08F318025}" Id="1"/>
+	</Type>
+
+	<Type Name="nCine::RHI::Texture">
+		<DisplayString Condition="width_ == 0 &amp;&amp; height_ == 0">Texture [uninitialized]</DisplayString>
+		<DisplayString Condition="width_ != 0">Texture {width_}x{height_} mips={mipCount_} fmt={format_}</DisplayString>
+		<Expand>
+			<Synthetic Name="[type]">
+				<DisplayString>UINT8</DisplayString>
+			</Synthetic>
+			<Synthetic Name="[channels]">
+				<DisplayString>RGBA</DisplayString>
+			</Synthetic>
+			<Item Name="[width]">width_</Item>
+			<Item Name="[height]">height_</Item>
+
+			<!-- unique_ptr::get() returns the raw pointer Image Watch needs -->
+			<!--<Item Name="[data]">(void*)mips_[0].data.get()</Item>-->
+			<Item Name="[data]">(void*)mips_[0].data._Mypair._Myval2</Item>
+
+			<!-- stride = width * 4 bytes (RGBA8, tightly packed) -->
+			<Item Name="[stride]">width_ * 4</Item>
+
+			<!-- Extra debugger-friendly fields below -->
+			<Item Name="MipCount">mipCount_</Item>
+			<Item Name="Format">format_</Item>
+			<Item Name="MinFilter">minFilter_</Item>
+			<Item Name="MagFilter">magFilter_</Item>
+			<Item Name="WrapS">wrapS_</Item>
+			<Item Name="WrapT">wrapT_</Item>
+			<Item Name="[Mip 0]" Condition="mipCount_ &gt; 0">mips_[0]</Item>
+			<Item Name="[Mip 1]" Condition="mipCount_ &gt; 1">mips_[1]</Item>
+			<Item Name="[Mip 2]" Condition="mipCount_ &gt; 2">mips_[2]</Item>
+			<Item Name="[Mip 3]" Condition="mipCount_ &gt; 3">mips_[3]</Item>
+		</Expand>
+	</Type>
+
+	<Type Name="nCine::RHI::Texture::MipLevel">
+		<DisplayString Condition="data.get() == nullptr">empty</DisplayString>
+		<DisplayString Condition="data.get() != nullptr">{width}x{height} RGBA8</DisplayString>
+		<Expand>
+			<Item Name="Width">width</Item>
+			<Item Name="Height">height</Item>
+			<Item Name="DataPtr">(void*)data.get()</Item>
+		</Expand>
+	</Type>
+
+</AutoVisualizer>

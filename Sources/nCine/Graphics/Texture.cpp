@@ -1,4 +1,6 @@
-#define NCINE_INCLUDE_OPENGL
+#if defined(WITH_RHI_GL)
+#	define NCINE_INCLUDE_OPENGL
+#endif
 #include "../CommonHeaders.h"
 
 #include "Texture.h"
@@ -11,51 +13,74 @@
 
 namespace nCine
 {
-	GLenum ncFormatToInternal(Texture::Format format)
+	static Texture::Format rhiFormatToNc(RHI::TextureFormat format)
 	{
 		switch (format) {
-			case Texture::Format::R8:
-				return GL_R8;
-			case Texture::Format::RG8:
-				return GL_RG8;
-			case Texture::Format::RGB8:
-				return GL_RGB8;
-			case Texture::Format::RGBA8:
-			default:
-				return GL_RGBA8;
+			case RHI::TextureFormat::R8:    return Texture::Format::R8;
+			case RHI::TextureFormat::RG8:   return Texture::Format::RG8;
+			case RHI::TextureFormat::RGB8:  return Texture::Format::RGB8;
+			case RHI::TextureFormat::RGBA8: return Texture::Format::RGBA8;
+			default:                        return Texture::Format::Unknown;
 		}
 	}
 
-	GLenum ncFormatToNonInternal(Texture::Format format)
+#if defined(WITH_RHI_GL)
+	static GLenum ncFormatToGLInternal(Texture::Format format)
 	{
 		switch (format) {
-			case Texture::Format::R8:
-				return GL_RED;
-			case Texture::Format::RG8:
-				return GL_RG;
-			case Texture::Format::RGB8:
-				return GL_RGB;
+			case Texture::Format::R8:    return GL_R8;
+			case Texture::Format::RG8:   return GL_RG8;
+			case Texture::Format::RGB8:  return GL_RGB8;
 			case Texture::Format::RGBA8:
-			default:
-				return GL_RGBA;
+			default:                     return GL_RGBA8;
 		}
 	}
 
-	Texture::Format internalFormatToNc(GLenum format)
+	static GLenum ncFormatToGLFormat(Texture::Format format)
 	{
 		switch (format) {
-			case GL_R8:
-				return Texture::Format::R8;
-			case GL_RG8:
-				return Texture::Format::RG8;
-			case GL_RGB8:
-				return Texture::Format::RGB8;
-			case GL_RGBA8:
-				return Texture::Format::RGBA8;
-			default:
-				return Texture::Format::Unknown;
+			case Texture::Format::R8:    return GL_RED;
+			case Texture::Format::RG8:   return GL_RG;
+			case Texture::Format::RGB8:  return GL_RGB;
+			case Texture::Format::RGBA8:
+			default:                     return GL_RGBA;
 		}
 	}
+
+	static GLenum rhiFormatToGLInternal(RHI::TextureFormat format)
+	{
+		switch (format) {
+			case RHI::TextureFormat::R8:           return GL_R8;
+			case RHI::TextureFormat::RG8:          return GL_RG8;
+			case RHI::TextureFormat::RGB8:         return GL_RGB8;
+			case RHI::TextureFormat::RGBA8:        return GL_RGBA8;
+			case RHI::TextureFormat::Depth16:      return GL_DEPTH_COMPONENT16;
+			case RHI::TextureFormat::Depth24:      return GL_DEPTH_COMPONENT24;
+			case RHI::TextureFormat::R_Float16:    return GL_R16F;
+			case RHI::TextureFormat::RGBA_Float16: return GL_RGBA16F;
+			case RHI::TextureFormat::RGB_DXT1:     return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
+			case RHI::TextureFormat::RGBA_DXT3:    return GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
+			case RHI::TextureFormat::RGBA_DXT5:    return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+#if defined(WITH_OPENGLES)
+			case RHI::TextureFormat::RGB_ETC1:     return GL_ETC1_RGB8_OES;
+			case RHI::TextureFormat::RGB_ETC2:     return GL_COMPRESSED_RGB8_ETC2;
+			case RHI::TextureFormat::RGBA_ETC2:    return GL_COMPRESSED_RGBA8_ETC2_EAC;
+#endif
+			default:                               return GL_RGBA8;
+		}
+	}
+
+	static GLenum rhiFormatToGLFormat(RHI::TextureFormat format)
+	{
+		switch (format) {
+			case RHI::TextureFormat::R8:    return GL_RED;
+			case RHI::TextureFormat::RG8:   return GL_RG;
+			case RHI::TextureFormat::RGB8:  return GL_RGB;
+			case RHI::TextureFormat::RGBA8: return GL_RGBA;
+			default:                        return GL_RGBA;
+		}
+	}
+#endif
 
 	Texture::Texture()
 		: Object(ObjectType::Texture), texture_(RHI::CreateTexture()), width_(0), height_(0),
@@ -120,8 +145,14 @@ namespace nCine
 			return;
 		}
 
+		// Convert Texture::Format to RHI::TextureFormat for the raw loader
+		static constexpr RHI::TextureFormat ncToRhi[] = {
+			RHI::TextureFormat::R8, RHI::TextureFormat::RG8, RHI::TextureFormat::RGB8, RHI::TextureFormat::RGBA8
+		};
+		RHI::TextureFormat rhiFormat = (format >= Format::R8 && format <= Format::RGBA8) ? ncToRhi[static_cast<int>(format)] : RHI::TextureFormat::RGBA8;
+
 #if defined(WITH_RHI_GL)
-		TextureLoaderRaw texLoader(width, height, mipMapCount, ncFormatToInternal(format));
+		TextureLoaderRaw texLoader(width, height, mipMapCount, rhiFormat);
 
 #	if defined(NCINE_PROFILING)
 		if (dataSize_ > 0) {
@@ -216,7 +247,7 @@ namespace nCine
 #if defined(WITH_RHI_GL)
 		const std::uint8_t* data = bufferPtr;
 
-		const GLenum format = ncFormatToNonInternal(format_);
+		const GLenum format = ncFormatToGLFormat(format_);
 		glGetError();
 		texture_->TexSubImage2D(level, x, y, width, height, format, GL_UNSIGNED_BYTE, data);
 		const GLenum error = glGetError();
@@ -247,7 +278,7 @@ namespace nCine
 	bool Texture::SaveToMemory(std::uint8_t* bufferPtr, std::int32_t level)
 	{
 #if defined(WITH_RHI_GL) && !defined(WITH_OPENGLES) && !defined(DEATH_TARGET_EMSCRIPTEN)
-		const GLenum format = ncFormatToNonInternal(format_);
+		const GLenum format = ncFormatToGLFormat(format_);
 		glGetError();
 		texture_->GetTexImage(level, format, GL_UNSIGNED_BYTE, bufferPtr);
 		const GLenum error = glGetError();
@@ -290,6 +321,7 @@ namespace nCine
 			return;
 		}
 
+#if defined(WITH_RHI_GL)
 		GLenum glFilter = GL_NEAREST;
 		// clang-format off
 		switch (filter) {
@@ -303,7 +335,6 @@ namespace nCine
 		}
 		// clang-format on
 
-#if defined(WITH_RHI_GL)
 		texture_->Bind();
 		texture_->TexParameteri(GL_TEXTURE_MIN_FILTER, glFilter);
 		minFiltering_ = filter;
@@ -319,6 +350,7 @@ namespace nCine
 			return;
 		}
 
+#if defined(WITH_RHI_GL)
 		GLenum glFilter = GL_NEAREST;
 		// clang-format off
 		switch (filter) {
@@ -328,7 +360,6 @@ namespace nCine
 		}
 		// clang-format on
 
-#if defined(WITH_RHI_GL)
 		texture_->Bind();
 		texture_->TexParameteri(GL_TEXTURE_MAG_FILTER, glFilter);
 		magFiltering_ = filter;
@@ -344,6 +375,7 @@ namespace nCine
 			return;
 		}
 
+#if defined(WITH_RHI_GL)
 		GLenum glWrap;
 		// clang-format off
 		switch (wrapMode) {
@@ -354,7 +386,6 @@ namespace nCine
 		}
 		// clang-format on
 
-#if defined(WITH_RHI_GL)
 		texture_->Bind();
 		texture_->TexParameteri(GL_TEXTURE_WRAP_S, glWrap);
 		texture_->TexParameteri(GL_TEXTURE_WRAP_T, glWrap);
@@ -387,9 +418,9 @@ namespace nCine
 		FATAL_ASSERT_MSG(texLoader.width() <= maxTextureSize, "Texture width {} is bigger than device maximum {}", texLoader.width(), maxTextureSize);
 		FATAL_ASSERT_MSG(texLoader.height() <= maxTextureSize, "Texture height {} is bigger than device maximum {}", texLoader.height(), maxTextureSize);
 
-		const TextureFormat& texFormat = texLoader.texFormat();
-		GLenum internalFormat = texFormat.internalFormat();
-		GLenum format = texFormat.format();
+		const RHI::TextureFormat texFormat = texLoader.texFormat();
+		const GLenum internalFormat = rhiFormatToGLInternal(texFormat);
+		const GLenum format = rhiFormatToGLFormat(texFormat);
 		std::uint32_t dataSize = texLoader.dataSize();
 
 #	if (defined(WITH_OPENGLES) && GL_ES_VERSION_3_0) || defined(DEATH_TARGET_EMSCRIPTEN)
@@ -399,7 +430,7 @@ namespace nCine
 #	endif
 
 		// Specify texture storage because it's either the very first time or there have been a change in size or format
-		if (dataSize_ == 0 || (width_ != texLoader.width() || height_ != texLoader.height() || ncFormatToInternal(format_) != internalFormat)) {
+		if (dataSize_ == 0 || (width_ != texLoader.width() || height_ != texLoader.height() || ncFormatToGLInternal(format_) != internalFormat)) {
 			if (withTexStorage) {
 				if (dataSize_ > 0) {
 					// The texture needs to be recreated as its storage is immutable
@@ -410,12 +441,12 @@ namespace nCine
 				if (dataSize_ == 0) {
 					texture_->TexStorage2D(texLoader.mipMapCount(), internalFormat, texLoader.width(), texLoader.height());
 				}
-			} else if (!texFormat.isCompressed()) {
+			} else if (!texLoader.isCompressed()) {
 				std::int32_t levelWidth = texLoader.width();
 				std::int32_t levelHeight = texLoader.height();
 
 				for (std::int32_t i = 0; i < texLoader.mipMapCount(); i++) {
-					texture_->TexImage2D(i, internalFormat, levelWidth, levelHeight, format, texFormat.type(), nullptr);
+					texture_->TexImage2D(i, internalFormat, levelWidth, levelHeight, format, GL_UNSIGNED_BYTE, nullptr);
 					levelWidth /= 2;
 					levelHeight /= 2;
 				}
@@ -425,8 +456,8 @@ namespace nCine
 		width_ = texLoader.width();
 		height_ = texLoader.height();
 		mipMapLevels_ = texLoader.mipMapCount();
-		isCompressed_ = texFormat.isCompressed();
-		format_ = internalFormatToNc(internalFormat);
+		isCompressed_ = texLoader.isCompressed();
+		format_ = rhiFormatToNc(texFormat);
 		dataSize_ = dataSize;
 
 		texture_->TexParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -448,13 +479,12 @@ namespace nCine
 		}
 #else
 		// Software renderer: store dimensions and format metadata; pixel data is uploaded in Load()
-		const TextureFormat& texFormat = texLoader.texFormat();
-		const GLenum internalFormat = texFormat.internalFormat();
+		const RHI::TextureFormat texFormat = texLoader.texFormat();
 		width_ = texLoader.width();
 		height_ = texLoader.height();
 		mipMapLevels_ = texLoader.mipMapCount();
-		isCompressed_ = texFormat.isCompressed();
-		format_ = internalFormatToNc(internalFormat);
+		isCompressed_ = texLoader.isCompressed();
+		format_ = rhiFormatToNc(texFormat);
 		dataSize_ = texLoader.dataSize();
 		wrapMode_ = SamplerWrapping::ClampToEdge;
 		if (mipMapLevels_ > 1) {
@@ -479,24 +509,24 @@ namespace nCine
 		const bool withTexStorage = gfxCaps.HasExtension(IGfxCapabilities::Extensions::ARB_TEXTURE_STORAGE);
 #	endif
 
-		const TextureFormat& texFormat = texLoader.texFormat();
+		const RHI::TextureFormat texFormat = texLoader.texFormat();
+		const GLenum glInternalFormat = rhiFormatToGLInternal(texFormat);
+		const GLenum glFormat = rhiFormatToGLFormat(texFormat);
+		const bool compressed = texLoader.isCompressed();
 		std::int32_t levelWidth = width_;
 		std::int32_t levelHeight = height_;
-
-		GLenum format = texFormat.format();
 
 		for (std::int32_t mipIdx = 0; mipIdx < texLoader.mipMapCount(); mipIdx++) {
 			const std::uint8_t* data = texLoader.pixels(mipIdx);
 
-			if (texFormat.isCompressed()) {
+			if (compressed) {
 				if (withTexStorage) {
-					texture_->CompressedTexSubImage2D(mipIdx, 0, 0, levelWidth, levelHeight, texFormat.internalFormat(), texLoader.dataSize(mipIdx), texLoader.pixels(mipIdx));
+					texture_->CompressedTexSubImage2D(mipIdx, 0, 0, levelWidth, levelHeight, glInternalFormat, texLoader.dataSize(mipIdx), data);
 				} else {
-					texture_->CompressedTexImage2D(mipIdx, texFormat.internalFormat(), levelWidth, levelHeight, texLoader.dataSize(mipIdx), texLoader.pixels(mipIdx));
+					texture_->CompressedTexImage2D(mipIdx, glInternalFormat, levelWidth, levelHeight, texLoader.dataSize(mipIdx), data);
 				}
 			} else {
-				// Storage has already been created at this point
-				texture_->TexSubImage2D(mipIdx, 0, 0, levelWidth, levelHeight, format, texFormat.type(), data);
+				texture_->TexSubImage2D(mipIdx, 0, 0, levelWidth, levelHeight, glFormat, GL_UNSIGNED_BYTE, data);
 			}
 
 			levelWidth /= 2;
@@ -504,11 +534,11 @@ namespace nCine
 		}
 #else
 		// Software renderer: upload raw pixel data to CPU-side surfaces
-		const TextureFormat& texFormat = texLoader.texFormat();
+		const bool compressed = texLoader.isCompressed();
 		std::int32_t levelWidth = width_;
 		std::int32_t levelHeight = height_;
 
-		if (!texFormat.isCompressed()) {
+		if (!compressed) {
 			for (std::int32_t mipIdx = 0; mipIdx < texLoader.mipMapCount(); mipIdx++) {
 				const std::uint8_t* data = texLoader.pixels(mipIdx);
 				if (data != nullptr) {
@@ -520,4 +550,21 @@ namespace nCine
 		}
 #endif
 	}
+
+#if !defined(RHI_CAP_SHADERS)
+	const std::uint8_t* Texture::GetPixels(std::int32_t mipLevel) const
+	{
+		return texture_->GetPixels(mipLevel);
+	}
+
+	std::uint8_t* Texture::GetMutablePixels(std::int32_t mipLevel)
+	{
+		return texture_->GetMutablePixels(mipLevel);
+	}
+
+	void Texture::EnsureRenderTarget()
+	{
+		texture_->EnsureRenderTarget();
+	}
+#endif
 }

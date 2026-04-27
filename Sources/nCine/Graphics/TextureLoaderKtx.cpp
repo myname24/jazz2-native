@@ -56,16 +56,35 @@ namespace nCine
 
 	bool TextureLoaderKtx::parseFormat(const KtxHeader& header)
 	{
-		const GLenum internalFormat = AsLE(header.glInternalFormat);
-		const GLenum type = AsLE(header.glType);
+		const std::uint32_t glInternalFormat = AsLE(header.glInternalFormat);
 
-		loadPixels(internalFormat, type);
+		// Map GL internal format to RHI::TextureFormat
+		RHI::TextureFormat format;
+		switch (glInternalFormat) {
+			case 0x8229: format = RHI::TextureFormat::R8; break;          // GL_R8
+			case 0x822B: format = RHI::TextureFormat::RG8; break;         // GL_RG8
+			case 0x8051: format = RHI::TextureFormat::RGB8; break;        // GL_RGB8
+			case 0x8058: format = RHI::TextureFormat::RGBA8; break;       // GL_RGBA8
+			case 0x83F0: format = RHI::TextureFormat::RGB_DXT1; break;    // GL_COMPRESSED_RGB_S3TC_DXT1_EXT
+			case 0x83F2: format = RHI::TextureFormat::RGBA_DXT3; break;   // GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
+			case 0x83F4: format = RHI::TextureFormat::RGBA_DXT5; break;   // GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
+			case 0x8D64: format = RHI::TextureFormat::RGB_ETC1; break;    // GL_ETC1_RGB8_OES
+			case 0x9274: format = RHI::TextureFormat::RGB_ETC2; break;    // GL_COMPRESSED_RGB8_ETC2
+			case 0x9278: format = RHI::TextureFormat::RGBA_ETC2; break;   // GL_COMPRESSED_RGBA8_ETC2_EAC
+			case 0x822D: format = RHI::TextureFormat::R_Float16; break;   // GL_R16F
+			case 0x881A: format = RHI::TextureFormat::RGBA_Float16; break; // GL_RGBA16F
+			default:
+				LOGE("Unsupported KTX internal format: 0x{:x}", glInternalFormat);
+				return false;
+		}
+
+		loadPixels(format);
 
 		if (mipMapCount_ > 1) {
 			LOGI("MIP Maps: {}", mipMapCount_);
 			mipDataOffsets_ = std::make_unique<std::uint32_t[]>(mipMapCount_);
 			mipDataSizes_ = std::make_unique<std::uint32_t[]>(mipMapCount_);
-			std::uint32_t dataSizesSum = TextureFormat::calculateMipSizes(internalFormat, width_, height_, mipMapCount_, mipDataOffsets_.get(), mipDataSizes_.get());
+			std::uint32_t dataSizesSum = RHI::CalculateMipSizes(format, width_, height_, mipMapCount_, mipDataOffsets_.get(), mipDataSizes_.get());
 
 			// HACK: accounting for `UInt32 imageSize` on top of each MIP level
 			// Excluding the first one, already taken into account in header size

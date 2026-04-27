@@ -169,6 +169,15 @@ namespace nCine
 			return ObjectType::Texture;
 		}
 
+#if !defined(RHI_CAP_SHADERS)
+		/** @brief Returns raw RGBA8 pixel data (SW backend only) */
+		const std::uint8_t* GetPixels(std::int32_t mipLevel = 0) const;
+		/** @brief Returns mutable RGBA8 pixel data (SW backend only) */
+		std::uint8_t* GetMutablePixels(std::int32_t mipLevel = 0);
+		/** @brief Ensures mip 0 is allocated as a render target (SW backend only) */
+		void EnsureRenderTarget();
+#endif
+
 	private:
 		std::unique_ptr<RHI::Texture> texture_;
 		std::int32_t width_;

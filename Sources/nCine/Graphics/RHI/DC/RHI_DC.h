@@ -35,9 +35,9 @@
 #include <kos.h>
 #include <dc/pvr.h>
 
-#include "../../Primitives/Rect.h"
-#include "../../Primitives/Vector2.h"
-#include "../../Primitives/Color.h"
+#include "../../../Primitives/Rect.h"
+#include "../../../Primitives/Vector2.h"
+#include "../../../Primitives/Color.h"
 #include "../RenderTypes.h"
 
 #include <memory>

@@ -1,15 +1,17 @@
 #pragma once
 
+#if defined(WITH_RHI_GL)
+
 #ifndef DOXYGEN_GENERATING_OUTPUT
-#define NCINE_INCLUDE_OPENGL
-#include "../CommonHeaders.h"
+#	define NCINE_INCLUDE_OPENGL
+#	include "../CommonHeaders.h"
 #endif
 
 #include "../../Main.h"
 
 namespace nCine
 {
-	/// Texture format
+	/// Texture format (GL-specific, maps GL internal formats to external formats and types)
 	class TextureFormat
 	{
 	public:
@@ -69,3 +71,4 @@ namespace nCine
 
 }
 
+#endif // defined(WITH_RHI_GL)

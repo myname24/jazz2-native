@@ -116,6 +116,10 @@ namespace Jazz2::UI
 		if (_renderCommandsCount < _renderCommands.size()) {
 			RenderCommand* command = _renderCommands[_renderCommandsCount].get();
 			command->SetType(RenderCommand::Type::Sprite);
+#if !defined(RHI_CAP_SHADERS)
+			// Clear stale texture from previous use, callers that need a texture will set it explicitly
+			command->GetMaterial().SetTexture(nullptr);
+#endif
 			_renderCommandsCount++;
 			return command;
 		} else {

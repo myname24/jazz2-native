@@ -63,6 +63,11 @@ namespace Jazz2::Rendering
 		_lightingBuffer->SetMagFiltering(SamplerFilter::Nearest);
 		_lightingBuffer->SetWrap(SamplerWrapping::ClampToEdge);
 
+#if !defined(RHI_CAP_SHADERS)
+		// SW renderer handles lighting clear and fill manually in LightingRenderer::OnDraw()
+		_lightingView->SetClearMode(Viewport::ClearMode::Never);
+#endif
+
 		_downsamplePass.Initialize(_viewTexture.get(), w / 2, h / 2, Vector2f(0.0f, 0.0f));
 		_blurPass1.Initialize(_downsamplePass.GetTarget(), w / 2, h / 2, Vector2f(1.0f, 0.0f));
 		_blurPass2.Initialize(_blurPass1.GetTarget(), w / 2, h / 2, Vector2f(0.0f, 1.0f));

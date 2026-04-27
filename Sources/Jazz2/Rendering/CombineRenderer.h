@@ -13,6 +13,19 @@ namespace Jazz2::Rendering
 {
 	class PlayerViewport;
 
+#if !defined(RHI_CAP_SHADERS)
+	/// Uniform data passed to the SW combine fragment shader
+	struct CombineShaderData
+	{
+		float ambientR, ambientG, ambientB, ambientW;
+		float invDarknessDiv;
+		float waterLevelNorm;
+		bool hasWater;
+		float time;
+		float camY;
+	};
+#endif
+
 	/** @brief Combines all previous passes of a scene into a resulting image */
 	class CombineRenderer : public SceneNode
 	{
@@ -29,5 +42,9 @@ namespace Jazz2::Rendering
 		RenderCommand _renderCommand;
 		RenderCommand _renderCommandWithWater;
 		Rectf _bounds;
+
+#if !defined(RHI_CAP_SHADERS)
+		struct CombineShaderData _combineData;
+#endif
 	};
 }

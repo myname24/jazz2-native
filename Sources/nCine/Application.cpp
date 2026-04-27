@@ -746,9 +746,10 @@ namespace nCine
 
 		if (appCfg_.withGraphics) {
 #if defined(WITH_RHI_GL)
+			// TODO: Move GfxCapabilities to RHI namespace
 			theServiceLocator().RegisterGfxCapabilities(std::make_unique<GfxCapabilities>());
 #else
-			theServiceLocator().RegisterGfxCapabilities(std::make_unique<SWGfxCapabilities>());
+			theServiceLocator().RegisterGfxCapabilities(std::make_unique<RHI::SWGfxCapabilities>());
 #endif
 			const auto& gfxCapabilities = theServiceLocator().GetGfxCapabilities();
 #if defined(WITH_RHI_GL)

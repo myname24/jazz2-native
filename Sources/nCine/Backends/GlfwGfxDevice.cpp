@@ -158,11 +158,21 @@ namespace nCine::Backends
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+			swBlitWidth_ = 0;
+			swBlitHeight_ = 0;
 		} else {
 			glBindTexture(GL_TEXTURE_2D, swBlitTexture_);
 		}
-		// GL_TEXTURE_2D origin is bottom-left; use GL_BGRA or GL_RGBA depending on SW buffer layout
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+
+		if (swBlitWidth_ != w || swBlitHeight_ != h) {
+			// Texture size changed - reallocate with glTexImage2D
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+			swBlitWidth_ = w;
+			swBlitHeight_ = h;
+		} else {
+			// Same size — update in-place (avoids GPU-side reallocation)
+			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, buf);
+		}
 
 		// Set up an identity ortho projection sized to the drawable framebuffer
 		glViewport(0, 0, drawableWidth_, drawableHeight_);

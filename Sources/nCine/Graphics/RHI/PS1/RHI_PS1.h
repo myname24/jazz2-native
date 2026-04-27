@@ -40,8 +40,8 @@
 #include <psxgpu.h>
 #include <psxgte.h>
 
-#include "../../Primitives/Rect.h"
-#include "../../Primitives/Color.h"
+#include "../../../Primitives/Rect.h"
+#include "../../../Primitives/Color.h"
 #include "../RenderTypes.h"
 
 #include <memory>

@@ -6,11 +6,9 @@
 // Software rendering backend
 // Provides the GAPI interface using pure CPU rasterization.
 // This backend targets low-end devices, retro consoles without a fixed-
-// function or programmable 3-D GPU, and testing/reference builds.
+// function or programmable 3D GPU, and testing/reference builds.
 //
-// Feature set deliberately minimal - no programmable shaders.
-// The renderer implements the same visual output as the GL backend via
-// a fixed pipeline: transform → clip → rasterize → shade (fixed) → blit.
+// The renderer doesn't true hardware-accelerated shaders, so RHI_CAP_SHADERS is not defined.
 // ============================================================================
 
 // --- Capability flags -------------------------------------------------------
@@ -26,6 +24,7 @@
 #define RHI_FF_ALPHA_BLEND			// Source-over alpha compositing
 
 #include "../RenderTypes.h"
+#include "../../IGfxCapabilities.h"
 
 #include "../../../Primitives/Rect.h"
 #include "../../../Primitives/Vector2.h"
@@ -36,6 +35,22 @@
 
 namespace nCine::RHI
 {
+	/// Software-renderer graphics capabilities — returns conservative safe defaults
+	class SWGfxCapabilities : public IGfxCapabilities
+	{
+	public:
+		SWGfxCapabilities();
+
+		std::int32_t GetVersion(Version version) const override;
+		const InfoStrings& GetInfoStrings() const override;
+		std::int32_t GetValue(IntValues valueName) const override;
+		std::int32_t GetArrayValue(ArrayIntValues arrayValueName, std::uint32_t index) const override;
+		bool HasExtension(Extensions extensionName) const override;
+
+	private:
+		InfoStrings infoStrings_;
+	};
+
 	// =========================================================================
 	// Buffer - host memory buffer standing in for a GPU buffer object
 	// =========================================================================
@@ -118,7 +133,9 @@ namespace nCine::RHI
 		/// Allocate storage for a mip level.
 		void UploadMip(std::int32_t mipLevel, std::int32_t width, std::int32_t height, TextureFormat format, const void* data, std::size_t size);
 
-		/// Sample the texture using nearest-neighbour (no bilinear yet).
+		/// Sample the texture using nearest-neighbour filtering.
+		/// For bilinear filtering, use magFilter == SamplerFilter::Linear
+		/// and the rasterizer's inline SampleBilinear* helpers.
 		nCine::Colorf Sample(float u, float v, std::int32_t mipLevel = 0) const;
 
 		void SetFilter(SamplerFilter minFilter, SamplerFilter magFilter)
@@ -282,6 +299,23 @@ namespace nCine::RHI
 	// =========================================================================
 	// ShaderProgram stub — no GPU shaders; renders via fixed-function pipeline
 	// =========================================================================
+
+	/// Fragment shader input — provides pixel color, UV, all bound textures, and custom data.
+	struct FragmentShaderInput
+	{
+		std::uint8_t* rgba;							///< In/out pixel color (4 bytes, RGBA order). Modified in place.
+		float u, v;									///< Interpolated texture coordinates
+		std::int32_t x, y;							///< Destination pixel coordinates
+		std::int32_t texWidth, texHeight;			///< Dimensions of the primary texture
+		Texture* const* textures;					///< Array of bound textures (MaxTextureUnits)
+		const float* color;							///< Instance/vertex color (4 floats, RGBA)
+		void* userData;								///< Custom data set via Material::SetFragmentShader()
+	};
+
+	/// Fragment shader callback type for SW renderer.
+	/// Called after texture sampling, before blending.
+	using FragmentShaderFn = void(*)(const FragmentShaderInput& input);
+
 	class ShaderProgram
 	{
 	public:
@@ -304,6 +338,7 @@ namespace nCine::RHI
 		void DefineVertexFormat(const Buffer* /*vbo*/, const Buffer* /*ibo*/, std::uint32_t /*vboOffset*/) {}
 
 		FFState ffState; // direct parameter access for fixed-function draws
+		FragmentShaderFn fragmentShader = nullptr; // optional per-program fragment callback
 	};
 
 	// =========================================================================
@@ -486,6 +521,8 @@ namespace nCine::RHI
 		std::size_t         vboByteOffset = 0;  // byte offset within the VBO
 		Texture*            textures[MaxTextureUnits] = {};
 		FFState             ff;
+		FragmentShaderFn    fragmentShader = nullptr;
+		void*               fragmentShaderUserData = nullptr;
 
 		bool   blendingEnabled  = false;
 		BlendFactor blendSrc    = BlendFactor::SrcAlpha;

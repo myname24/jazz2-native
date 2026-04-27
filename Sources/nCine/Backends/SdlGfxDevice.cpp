@@ -100,7 +100,22 @@ namespace nCine::Backends
 			const std::int32_t h   = RHI::GetColorBufferHeight();
 			const std::uint8_t* buf = RHI::GetColorBuffer();
 			if (buf != nullptr && w > 0 && h > 0) {
-				SDL_UpdateTexture(swTexture_, nullptr, buf, w * 4);
+				void* texPixels = nullptr;
+				int texPitch = 0;
+				if (SDL_LockTexture(swTexture_, nullptr, &texPixels, &texPitch) == 0) {
+					const std::int32_t srcPitch = w * 4;
+					if (texPitch == srcPitch) {
+						std::memcpy(texPixels, buf, static_cast<std::size_t>(srcPitch) * h);
+					} else {
+						const std::uint8_t* srcRow = buf;
+						std::uint8_t* dstRow = static_cast<std::uint8_t*>(texPixels);
+						const std::int32_t copyBytes = std::min(srcPitch, texPitch);
+						for (std::int32_t y = 0; y < h; ++y, srcRow += srcPitch, dstRow += texPitch) {
+							std::memcpy(dstRow, srcRow, copyBytes);
+						}
+					}
+					SDL_UnlockTexture(swTexture_);
+				}
 			}
 			SDL_RenderCopy(swRenderer_, swTexture_, nullptr, nullptr);
 			SDL_RenderPresent(swRenderer_);
@@ -136,12 +151,12 @@ namespace nCine::Backends
 	void SdlGfxDevice::setWindowIcon(StringView windowIconFilename)
 	{
 		std::unique_ptr<ITextureLoader> image = ITextureLoader::createFromFile(windowIconFilename);
-		const unsigned int bytesPerPixel = image->texFormat().numChannels();
+		const unsigned int bytesPerPixel = image->numChannels();
 		const Uint32 pixelFormat = (bytesPerPixel == 4) ? SDL_PIXELFORMAT_ABGR8888 : SDL_PIXELFORMAT_BGR888;
 
 		SDL_Surface* surface = nullptr;
 		const int pitch = image->width() * bytesPerPixel;
-		void* pixels = reinterpret_cast<void*>(const_cast<GLubyte*>(image->pixels()));
+		void* pixels = reinterpret_cast<void*>(const_cast<std::uint8_t*>(image->pixels()));
 		surface = SDL_CreateRGBSurfaceWithFormatFrom(pixels, image->width(), image->height(), bytesPerPixel * 8, pitch, pixelFormat);
 		SDL_SetWindowIcon(windowHandle_, surface);
 		SDL_FreeSurface(surface);

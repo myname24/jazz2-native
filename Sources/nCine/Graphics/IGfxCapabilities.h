@@ -110,43 +110,5 @@ namespace nCine
 	private:
 		InfoStrings infoStrings_;
 	};
-
-	/// Software-renderer graphics capabilities — returns conservative safe defaults
-	class SWGfxCapabilities : public IGfxCapabilities
-	{
-	public:
-		SWGfxCapabilities()
-		{
-			infoStrings_.renderer = "Software Renderer";
-
-			LOGI("The application is using software renderer");
-		}
-
-		inline std::int32_t GetVersion(Version version) const override {
-			return 0;
-		}
-		inline const InfoStrings& GetInfoStrings() const override {
-			return infoStrings_;
-		}
-		inline std::int32_t GetValue(IntValues valueName) const override {
-			switch (valueName) {
-				case IntValues::MAX_TEXTURE_SIZE:                return 4096;
-				case IntValues::MAX_TEXTURE_IMAGE_UNITS:         return 8;
-				case IntValues::UNIFORM_BUFFER_OFFSET_ALIGNMENT: return 1;
-				case IntValues::MAX_VERTEX_ATTRIB_STRIDE:        return 1024;
-				case IntValues::MAX_COLOR_ATTACHMENTS:           return 4;
-				default:                                         return 0;
-			}
-		}
-		inline std::int32_t GetArrayValue(ArrayIntValues arrayValueName, std::uint32_t index) const override {
-			return 0;
-		}
-		inline bool HasExtension(Extensions extensionName) const override {
-			return false;
-		}
-
-	private:
-		InfoStrings infoStrings_;
-	};
 #endif
 }

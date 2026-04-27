@@ -140,6 +140,12 @@ namespace nCine
 		inline RHI::FFState& GetFFState() {
 			return shaderUniforms_.GetFFState();
 		}
+
+		/// Sets a fragment shader with per-command user data (Software renderer only).
+		inline void SetFragmentShader(RHI::FragmentShaderFn fn, void* userData = nullptr) {
+			fragmentShader_ = fn;
+			fragmentShaderUserData_ = userData;
+		}
 #endif
 
 		/// Wrapper around `ShaderUniforms::HasUniform()`
@@ -198,6 +204,11 @@ namespace nCine
 		std::uint32_t uniformsHostBufferSize_;
 		/// Memory buffer with uniform values to be sent to the GPU
 		std::unique_ptr<std::uint8_t[]> uniformsHostBuffer_;
+
+#if !defined(RHI_CAP_SHADERS)
+		RHI::FragmentShaderFn fragmentShader_ = nullptr;
+		void* fragmentShaderUserData_ = nullptr;
+#endif
 
 		void Bind();
 		/// Wrapper around `ShaderUniforms::CommitUniforms()`

@@ -14,6 +14,7 @@
 #include "../nCine/tracy.h"
 #include "../nCine/Graphics/ITextureLoader.h"
 #include "../nCine/Graphics/RenderResources.h"
+#include "../nCine/Graphics/Shader.h"
 #include "../nCine/Base/Random.h"
 
 #if defined(DEATH_TARGET_ANDROID)
@@ -695,8 +696,8 @@ namespace Jazz2
 			String fullPath = fs::CombinePath({ GetContentPath(), "Animations"_s, pathNormalized });
 			std::unique_ptr<ITextureLoader> texLoader = ITextureLoader::createFromFile(fullPath);
 			if (texLoader->hasLoaded()) {
-				auto texFormat = texLoader->texFormat().internalFormat();
-				if (texFormat != GL_RGBA8 && texFormat != GL_RGB8) {
+				auto texFormat = texLoader->texFormat();
+				if (texFormat != RHI::TextureFormat::RGBA8 && texFormat != RHI::TextureFormat::RGB8) {
 					return nullptr;
 				}
 
@@ -1599,6 +1600,140 @@ namespace Jazz2
 		return _precompiledShaders[(std::int32_t)shader].get();
 	}
 
+#if !defined(RHI_CAP_SHADERS)
+	namespace
+	{
+		// SW fragment shader: Colorized
+		void FragmentColorized(const RHI::FragmentShaderInput& input)
+		{
+			std::uint8_t* rgba = input.rgba;
+			const float* color = input.color;
+			const float dyeR = 1.0f + (color[0] - 0.5f) * 4.0f;
+			const float dyeG = 1.0f + (color[1] - 0.5f) * 4.0f;
+			const float dyeB = 1.0f + (color[2] - 0.5f) * 4.0f;
+			const float dyeA = 1.0f + (color[3] - 0.5f) * 4.0f;
+			const float avg = (rgba[0] + rgba[1] + rgba[2]) * (0.5f / 255.0f);
+			rgba[0] = static_cast<std::uint8_t>(std::min(255.0f, std::max(0.0f, avg * dyeR * 255.0f)));
+			rgba[1] = static_cast<std::uint8_t>(std::min(255.0f, std::max(0.0f, avg * dyeG * 255.0f)));
+			rgba[2] = static_cast<std::uint8_t>(std::min(255.0f, std::max(0.0f, avg * dyeB * 255.0f)));
+			rgba[3] = static_cast<std::uint8_t>(std::min(255.0f, std::max(0.0f, (rgba[3] / 255.0f) * dyeA * 255.0f)));
+		}
+
+		// SW fragment shader: Tinted
+		void FragmentTinted(const RHI::FragmentShaderInput& input)
+		{
+			std::uint8_t* rgba = input.rgba;
+			const float* color = input.color;
+			const float origR = rgba[0] / 255.0f;
+			const float origG = rgba[1] / 255.0f;
+			const float origB = rgba[2] / 255.0f;
+			rgba[0] = static_cast<std::uint8_t>(std::min(255.0f, (origR + (color[0] - origR) * 0.45f) * 255.0f));
+			rgba[1] = static_cast<std::uint8_t>(std::min(255.0f, (origG + (color[1] - origG) * 0.45f) * 255.0f));
+			rgba[2] = static_cast<std::uint8_t>(std::min(255.0f, (origB + (color[2] - origB) * 0.45f) * 255.0f));
+			rgba[3] = static_cast<std::uint8_t>((rgba[3] / 255.0f) * color[3] * 255.0f);
+		}
+
+		// SW fragment shader: WhiteMask
+		void FragmentWhiteMask(const RHI::FragmentShaderInput& input)
+		{
+			std::uint8_t* rgba = input.rgba;
+			const float* color = input.color;
+			const float luma = (0.299f * rgba[0] + 0.587f * rgba[1] + 0.114f * rgba[2]) / 255.0f;
+			const float c = std::min(luma * 6.0f, 1.0f);
+			rgba[0] = static_cast<std::uint8_t>(std::min(255.0f, c * color[0] * 255.0f));
+			rgba[1] = static_cast<std::uint8_t>(std::min(255.0f, c * color[1] * 255.0f));
+			rgba[2] = static_cast<std::uint8_t>(std::min(255.0f, c * color[2] * 255.0f));
+			rgba[3] = static_cast<std::uint8_t>(std::min(255.0f, (rgba[3] / 255.0f) * color[3] * 255.0f));
+		}
+
+		// SW fragment shader: PartialWhiteMask
+		void FragmentPartialWhiteMask(const RHI::FragmentShaderInput& input)
+		{
+			std::uint8_t* rgba = input.rgba;
+			const float* color = input.color;
+			const float luma = (0.299f * rgba[0] + 0.587f * rgba[1] + 0.114f * rgba[2]) / 255.0f;
+			const float c = std::min(luma * 2.5f, 1.0f);
+			rgba[0] = static_cast<std::uint8_t>(std::min(255.0f, c * color[0] * 255.0f));
+			rgba[1] = static_cast<std::uint8_t>(std::min(255.0f, c * color[1] * 255.0f));
+			rgba[2] = static_cast<std::uint8_t>(std::min(255.0f, c * color[2] * 255.0f));
+			rgba[3] = static_cast<std::uint8_t>(std::min(255.0f, (rgba[3] / 255.0f) * color[3] * 255.0f));
+		}
+
+		// SW fragment shader: FrozenMask
+		void FragmentFrozenMask(const RHI::FragmentShaderInput& input)
+		{
+			std::uint8_t* rgba = input.rgba;
+			const float* color = input.color;
+			const std::int32_t texW = input.texWidth;
+			const std::int32_t texH = input.texHeight;
+			const std::uint8_t* texPixels = (input.textures[0] != nullptr ? input.textures[0]->GetPixels(0) : nullptr);
+			if (texPixels == nullptr) return;
+
+			// color.xy = 1/texSize, color.w = transition (0→1)
+			const float transition = color[3];
+			const float sizeX = color[0] * transition * 2.0f;
+			const float sizeY = color[1] * transition * 2.0f;
+
+			// Convert size from texcoord space to pixel offsets
+			const std::int32_t offX = std::max(1, static_cast<std::int32_t>(sizeX * texW + 0.5f));
+			const std::int32_t offY = std::max(1, static_cast<std::int32_t>(sizeY * texH + 0.5f));
+
+			// Current texel position
+			const std::int32_t cx = std::clamp(static_cast<std::int32_t>(input.u * texW), 0, texW - 1);
+			const std::int32_t cy = std::clamp(static_cast<std::int32_t>(input.v * texH), 0, texH - 1);
+
+			auto sample = [&](std::int32_t dx, std::int32_t dy) -> const std::uint8_t* {
+				std::int32_t sx = std::clamp(cx + dx, 0, texW - 1);
+				std::int32_t sy = std::clamp(cy + dy, 0, texH - 1);
+				return texPixels + (static_cast<std::size_t>(sy) * texW + sx) * 4;
+			};
+
+			const std::uint8_t* tex = sample(0, 0);
+			const std::uint8_t* tex1 = sample(-offX, 0);
+			const std::uint8_t* tex2 = sample(0, offY);
+			const std::uint8_t* tex3 = sample(offX, 0);
+			const std::uint8_t* tex4 = sample(0, -offY);
+
+			// Outline from 8-neighbor alpha
+			float outline = tex1[3] + tex2[3] + tex3[3] + tex4[3]
+				+ sample(-offX, offY)[3] + sample(offX, offY)[3]
+				+ sample(-offX, -offY)[3] + sample(offX, -offY)[3];
+			outline = (outline >= 255.0f ? 1.0f : outline / 255.0f);
+
+			// Average: (center*2 + 4 cardinal) / 6
+			float avgR = (tex[0] * 2 + tex1[0] + tex2[0] + tex3[0] + tex4[0]) / (6.0f * 255.0f);
+			float avgG = (tex[1] * 2 + tex1[1] + tex2[1] + tex3[1] + tex4[1]) / (6.0f * 255.0f);
+			float avgB = (tex[2] * 2 + tex1[2] + tex2[2] + tex3[2] + tex4[2]) / (6.0f * 255.0f);
+
+			float grey = std::min((0.299f * avgR + 0.587f * avgG + 0.114f * avgB) * 2.6f, 1.0f);
+
+			// Blue tint
+			float frozenR = 0.2f * grey;
+			float frozenG = 0.2f + grey * 0.62f;
+			float frozenB = 0.6f + 0.2f * grey;
+			float frozenA = outline * 0.95f;
+
+			// Mix with original based on transition
+			float origR = tex[0] / 255.0f;
+			float origG = tex[1] / 255.0f;
+			float origB = tex[2] / 255.0f;
+			float origA = tex[3] / 255.0f;
+
+			rgba[0] = static_cast<std::uint8_t>(std::min(255.0f, (origR + (frozenR - origR) * transition) * 255.0f));
+			rgba[1] = static_cast<std::uint8_t>(std::min(255.0f, (origG + (frozenG - origG) * transition) * 255.0f));
+			rgba[2] = static_cast<std::uint8_t>(std::min(255.0f, (origB + (frozenB - origB) * transition) * 255.0f));
+			rgba[3] = static_cast<std::uint8_t>(std::min(255.0f, (origA + (frozenA - origA) * transition) * 255.0f));
+		}
+
+		void SetSwFragmentShader(Shader* shader, RHI::FragmentShaderFn fn)
+		{
+			if (shader != nullptr && shader->GetHandle() != nullptr) {
+				shader->GetHandle()->fragmentShader = fn;
+			}
+		}
+	}
+#endif
+
 	void ContentResolver::CompileShaders()
 	{
 		// Don't load shaders in headless mode
@@ -1668,6 +1803,20 @@ namespace Jazz2
 		_precompiledShaders[(std::int32_t)PrecompiledShader::Antialiasing] = CompileShader("Antialiasing", Shaders::AntialiasingVs, Shaders::AntialiasingFs);
 
 		_precompiledShaders[(std::int32_t)PrecompiledShader::Transition] = CompileShader("Transition", Shaders::TransitionVs, Shaders::TransitionFs);
+
+#if !defined(RHI_CAP_SHADERS)
+		// Register SW fragment shader callbacks for shaders that need non-standard color math
+		SetSwFragmentShader(_precompiledShaders[(std::int32_t)PrecompiledShader::Colorized].get(), FragmentColorized);
+		SetSwFragmentShader(_precompiledShaders[(std::int32_t)PrecompiledShader::BatchedColorized].get(), FragmentColorized);
+		SetSwFragmentShader(_precompiledShaders[(std::int32_t)PrecompiledShader::Tinted].get(), FragmentTinted);
+		SetSwFragmentShader(_precompiledShaders[(std::int32_t)PrecompiledShader::BatchedTinted].get(), FragmentTinted);
+		SetSwFragmentShader(_precompiledShaders[(std::int32_t)PrecompiledShader::WhiteMask].get(), FragmentWhiteMask);
+		SetSwFragmentShader(_precompiledShaders[(std::int32_t)PrecompiledShader::BatchedWhiteMask].get(), FragmentWhiteMask);
+		SetSwFragmentShader(_precompiledShaders[(std::int32_t)PrecompiledShader::PartialWhiteMask].get(), FragmentPartialWhiteMask);
+		SetSwFragmentShader(_precompiledShaders[(std::int32_t)PrecompiledShader::BatchedPartialWhiteMask].get(), FragmentPartialWhiteMask);
+		SetSwFragmentShader(_precompiledShaders[(std::int32_t)PrecompiledShader::FrozenMask].get(), FragmentFrozenMask);
+		SetSwFragmentShader(_precompiledShaders[(std::int32_t)PrecompiledShader::BatchedFrozenMask].get(), FragmentFrozenMask);
+#endif
 	}
 
 	std::unique_ptr<Shader> ContentResolver::CompileShader(const char* shaderName, Shader::DefaultVertex vertex, const char* fragment, Shader::Introspection introspection, std::initializer_list<StringView> defines)
@@ -1876,8 +2025,8 @@ namespace Jazz2
 			String fullPath = fs::CombinePath({ GetContentPath(), "Animations"_s, path });
 			std::unique_ptr<ITextureLoader> texLoader = ITextureLoader::createFromFile(fullPath);
 			if (texLoader->hasLoaded()) {
-				auto texFormat = texLoader->texFormat().internalFormat();
-				if (texFormat != GL_RGBA8 && texFormat != GL_RGB8) {
+				auto texFormat = texLoader->texFormat();
+				if (texFormat != RHI::TextureFormat::RGBA8 && texFormat != RHI::TextureFormat::RGB8) {
 					return;
 				}
 
