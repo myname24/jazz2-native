@@ -154,7 +154,7 @@ namespace Jazz2
 		_configPath = "Jazz2.config"_s;
 		bool overrideConfigPath = false;
 
-#	if !defined(DEATH_TARGET_ANDROID) && !defined(DEATH_TARGET_IOS) && !defined(DEATH_TARGET_SWITCH)
+#	if !defined(DEATH_TARGET_ANDROID) && !defined(DEATH_TARGET_IOS) && !defined(DEATH_TARGET_SWITCH) && !defined(DEATH_TARGET_VITA)
 		for (std::int32_t i = 0; i < config.argc(); i++) {
 			auto arg = config.argv(i);
 			if (arg == "/config"_s) {
@@ -170,8 +170,8 @@ namespace Jazz2
 #	endif
 
 		// If config path is not overriden and portable config doesn't exist, use common path for current user
-		if (!overrideConfigPath && !fs::IsReadableFile(_configPath)) {
-#	if defined(DEATH_TARGET_SWITCH)
+		if (!overrideConfigPath && !fs::FileExists(_configPath)) {
+#	if defined(DEATH_TARGET_SWITCH) || defined(DEATH_TARGET_VITA)
 			// Save config file next to `Source` directory
 			auto& resolver = ContentResolver::Get();
 			_configPath = fs::CombinePath(fs::GetDirectoryName(resolver.GetSourcePath()), "Jazz2.config"_s);
@@ -185,7 +185,7 @@ namespace Jazz2
 			// Save config file to external path if possible
 			auto& resolver = ContentResolver::Get();
 			auto externalConfigPath = fs::CombinePath(fs::GetDirectoryName(resolver.GetSourcePath()), "Jazz2.config"_s);
-			if (!fs::IsReadableFile(_configPath) || fs::IsReadableFile(externalConfigPath)) {
+			if (!fs::FileExists(_configPath) || fs::FileExists(externalConfigPath)) {
 				_configPath = externalConfigPath;
 			}
 #	elif defined(DEATH_TARGET_WINDOWS_RT)
@@ -208,7 +208,7 @@ namespace Jazz2
 		// (Apple, Unix, Windows) it also forces tracing to the file even without
 		// using any command-line argument
 #	if defined(DEATH_TRACE)
-#		if defined(DEATH_TARGET_ANDROID) || defined(DEATH_TARGET_SWITCH)
+#		if defined(DEATH_TARGET_ANDROID) || defined(DEATH_TARGET_SWITCH) || defined(DEATH_TARGET_VITA)
 		fs::CreateDirectories(configDir);
 #			if defined(DEATH_TRACE_LOG_PATH)
 		theApplication().AttachTraceTarget(fs::CombinePath(configDir, DEATH_TRACE_LOG_PATH));
@@ -788,6 +788,9 @@ namespace Jazz2
 		char DeviceDesc[128];
 		std::int32_t DeviceDescLength = formatInto(DeviceDesc, "|Nintendo Switch {}.{}.{}{}||9|{}",
 			((switchVersion >> 16) & 0xFF), ((switchVersion >> 8) & 0xFF), (switchVersion & 0xFF), isAtmosphere ? " (Atmosphère)"_s : ""_s, arch);
+#elif defined(DEATH_TARGET_VITA)
+		char DeviceDesc[128];
+		std::int32_t DeviceDescLength = formatInto(DeviceDesc, "|Vita||10|{}", arch);
 #elif defined(DEATH_TARGET_UNIX)
 #	if defined(DEATH_TARGET_CLANG)
 		arch |= 0x100000;

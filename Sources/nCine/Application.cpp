@@ -113,6 +113,8 @@ using namespace Death::IO;
 #	if defined(DEATH_TARGET_SWITCH)
 #		include <time.h>
 #		include <switch.h>
+#	elif defined(DEATH_TARGET_VITA)
+#		include <psp2/kernel/clib.h>
 #	endif
 #endif
 
@@ -151,7 +153,7 @@ enum class ConsoleType {
 };
 
 static ConsoleType __consoleType = ConsoleType::None;
-#if !defined(DEATH_TARGET_ANDROID) && !defined(DEATH_TARGET_SWITCH) && !defined(DEATH_TARGET_WINDOWS_RT)
+#if !defined(DEATH_TARGET_ANDROID) && !defined(DEATH_TARGET_SWITCH) && !defined(DEATH_TARGET_VITA) && !defined(DEATH_TARGET_WINDOWS_RT)
 static bool __consoleDarkMode = true;
 static bool __consoleSixelSupported = false;
 #endif
@@ -1111,6 +1113,13 @@ namespace nCine
 		AppendFunctionName(logEntryWithColors, length2, functionName);
 		AppendPart(logEntryWithColors, length2, content.data(), (std::int32_t)content.size());
 		svcOutputDebugString(logEntryWithColors, length2);
+#elif defined(DEATH_TARGET_VITA)
+		std::int32_t length2 = 0;
+		AppendLevel(logEntryWithColors, length2, level, threadId);
+		AppendFunctionName(logEntryWithColors, length2, functionName);
+		AppendPart(logEntryWithColors, length2, content.data(), (std::int32_t)content.size());
+		logEntryWithColors[length2] = '\0';
+		sceClibPrintf("%s", logEntryWithColors);
 #elif defined(DEATH_TARGET_WINDOWS_RT)
 		// Use OutputDebugStringA() to avoid conversion UTF-8 => UTF-16 => current code page
 		std::int32_t length2 = 0;
@@ -1266,12 +1275,7 @@ namespace nCine
 			AppendPart(logEntryWithColors, length3, content.data(), (std::int32_t)content.size());
 			logEntryWithColors[length3++] = '\n';
 
-#	if !defined(DEATH_TRACE_ASYNC)
-			// File needs to be locked, because messages can arrive from different threads
 			__logFile->Write(logEntryWithColors, length3);
-#	else
-			__logFile->Write(logEntryWithColors, length3);
-#	endif
 		}
 #endif
 
@@ -1579,6 +1583,11 @@ namespace nCine
 		auto androidId = nCine::Backends::AndroidJniWrap_Secure::getAndroidId();
 		const char* hostName = androidId.data();
 		std::int32_t hostNameLength = (std::int32_t)androidId.size();
+#		elif defined(DEATH_TARGET_VITA)
+		flags |= 0x20;	// RemoteDevice
+		std::uint32_t processId = (std::uint32_t)::getpid();
+		// TODO: Hostname is not implemented on Vita
+		char hostName[32] {}; std::int32_t hostNameLength = 0;
 #		else
 #			if defined(DEATH_TARGET_SWITCH)
 		flags |= 0x20;	// RemoteDevice

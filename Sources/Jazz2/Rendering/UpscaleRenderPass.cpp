@@ -12,7 +12,7 @@ namespace Jazz2::Rendering
 	{
 		_targetSize = Vector2f((float)targetWidth, (float)targetHeight);
 
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 		if ((PreferencesCache::ActiveRescaleMode & RescaleMode::UseAntialiasing) == RescaleMode::UseAntialiasing) {
 			float widthRatio, heightRatio;
 			float widthFrac = modff((float)targetWidth / width, &widthRatio);
@@ -65,7 +65,7 @@ namespace Jazz2::Rendering
 		_target->SetMagFiltering(SamplerFilter::Nearest);
 		_target->SetWrap(SamplerWrapping::ClampToEdge);
 
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 		if (_antialiasing._target != nullptr) {
 			if (_antialiasing._camera == nullptr) {
 				_antialiasing._camera = std::make_unique<Camera>();
@@ -107,7 +107,7 @@ namespace Jazz2::Rendering
 #endif
 
 		// Prepare render command
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 		switch (PreferencesCache::ActiveRescaleMode & RescaleMode::TypeMask) {
 			case RescaleMode::HQ2x: _resizeShader = ContentResolver::Get().GetShader(PrecompiledShader::ResizeHQ2x); break;
 			case RescaleMode::_3xBrz: _resizeShader = ContentResolver::Get().GetShader(PrecompiledShader::Resize3xBrz); break;
@@ -141,7 +141,7 @@ namespace Jazz2::Rendering
 
 	void UpscaleRenderPass::Register()
 	{
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 		_antialiasing.Register();
 #endif
 
@@ -150,7 +150,7 @@ namespace Jazz2::Rendering
 
 	bool UpscaleRenderPass::OnDraw(RenderQueue& renderQueue)
 	{
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 		if (_resizeShader != nullptr) {
 			// TexRectUniformName is reused for input texture size
 			Vector2i size = _target->GetSize();
@@ -170,7 +170,7 @@ namespace Jazz2::Rendering
 		return true;
 	}
 
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 	UpscaleRenderPass::AntialiasingSubpass::AntialiasingSubpass()
 	{
 		setVisitOrderState(SceneNode::VisitOrderState::Disabled);
@@ -240,7 +240,7 @@ namespace Jazz2::Rendering
 
 	void UpscaleRenderPassWithClipping::Register()
 	{
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 		_antialiasing.Register();
 #endif
 

@@ -43,8 +43,8 @@ namespace nCine::Backends
 
 	char SdlInputManager::joyGuidString_[33];
 
-	namespace {
-
+	namespace
+	{
 		MouseButton sdlToNcineMouseButton(int button)
 		{
 			if (button == SDL_BUTTON_LEFT)
@@ -87,8 +87,10 @@ namespace nCine::Backends
 
 	SdlInputManager::SdlInputManager()
 	{
+#if !defined(DEATH_TARGET_VITA)
 		const std::uint32_t ret = SDL_WasInit(SDL_INIT_VIDEO);
 		FATAL_ASSERT_MSG(ret != 0, "SDL video subsystem is not initialized");
+#endif
 
 		// Initializing the joystick subsystem
 		SDL_InitSubSystem(SDL_INIT_JOYSTICK);
@@ -176,6 +178,7 @@ namespace nCine::Backends
 
 		// Filling static event structures
 		switch (event.type) {
+#if !defined(DEATH_TARGET_VITA)
 			case SDL_KEYDOWN:
 			case SDL_KEYUP:
 				if (!SdlGfxDevice::isMainWindow(event.key.windowID)) {
@@ -221,6 +224,7 @@ namespace nCine::Backends
 				scrollEvent_.x = static_cast<float>(event.wheel.x);
 				scrollEvent_.y = static_cast<float>(event.wheel.y);
 				break;
+#endif
 			case SDL_JOYBUTTONDOWN:
 			case SDL_JOYBUTTONUP:
 				joyButtonEvent_.joyId = joyInstanceIdToDeviceIndex(event.jbutton.which);
@@ -239,10 +243,11 @@ namespace nCine::Backends
 			case SDL_FINGERDOWN:
 			case SDL_FINGERMOTION:
 			case SDL_FINGERUP:
+#if !defined(DEATH_TARGET_VITA)
 				if (!SdlGfxDevice::isMainWindow(event.tfinger.windowID)) {
 					return;
 				}
-
+#endif
 				touchEvent_.count = SDL_GetNumTouchFingers(event.tfinger.touchId);
 				touchEvent_.actionIndex = (std::int32_t)event.tfinger.fingerId;
 
@@ -265,6 +270,7 @@ namespace nCine::Backends
 
 		// Calling the event handler method
 		switch (event.type) {
+#if !defined(DEATH_TARGET_VITA)
 			case SDL_KEYDOWN:
 				inputEventHandler_->OnKeyPressed(keyboardEvent_);
 				break;
@@ -286,6 +292,7 @@ namespace nCine::Backends
 			case SDL_MOUSEWHEEL:
 				inputEventHandler_->OnMouseWheel(scrollEvent_);
 				break;
+#endif
 			case SDL_JOYBUTTONDOWN:
 				joyMapping_.OnJoyButtonPressed(joyButtonEvent_);
 				inputEventHandler_->OnJoyButtonPressed(joyButtonEvent_);
@@ -430,6 +437,7 @@ namespace nCine::Backends
 
 	void SdlInputManager::setCursor(Cursor cursor)
 	{
+#if !defined(DEATH_TARGET_VITA)
 		if (cursor != cursor_) {
 			bool isChanged = true;
 			switch (cursor) {
@@ -453,6 +461,7 @@ namespace nCine::Backends
 				cursor_ = cursor;
 			}
 		}
+#endif
 	}
 
 	void SdlInputManager::handleJoyDeviceEvent(const SDL_Event& event)

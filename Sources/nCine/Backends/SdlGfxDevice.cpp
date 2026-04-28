@@ -14,8 +14,10 @@
 
 namespace nCine::Backends
 {
+#if !defined(DEATH_TARGET_VITA)
 	SDL_Window* SdlGfxDevice::windowHandle_ = nullptr;
 	SDL_GLContext SdlGfxDevice::glContextHandle_;
+#endif
 
 	SdlGfxDevice::SdlGfxDevice(const WindowMode& windowMode, const GLContextInfo& glContextInfo, const DisplayMode& displayMode)
 		: IGfxDevice(windowMode, glContextInfo, displayMode)
@@ -42,11 +44,14 @@ namespace nCine::Backends
 		SDL_GL_DeleteContext(glContextHandle_);
 		glContextHandle_ = nullptr;
 #endif
+
+#if !defined(DEATH_TARGET_VITA)
 		SDL_DestroyWindow(windowHandle_);
 		windowHandle_ = nullptr;
 
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 		SDL_Quit();
+#endif
 	}
 
 	void SdlGfxDevice::setSwapInterval(int interval)
@@ -60,15 +65,16 @@ namespace nCine::Backends
 
 	void SdlGfxDevice::setResolution(bool fullscreen, int width, int height)
 	{
+#if !defined(DEATH_TARGET_VITA)
 		isFullscreen_ = fullscreen;
 
-#if defined(DEATH_TARGET_EMSCRIPTEN)
+#	if defined(DEATH_TARGET_EMSCRIPTEN)
 		SDL_SetWindowFullscreen(windowHandle_, fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
 		if (width > 0 && height > 0) {
 			width_ = width;
 			height_ = height;
 		}
-#else
+#	else
 		if (fullscreen) {
 			if (width <= 0 || height <= 0) {
 				SDL_SetWindowFullscreen(windowHandle_, SDL_WINDOW_FULLSCREEN_DESKTOP);
@@ -86,10 +92,11 @@ namespace nCine::Backends
 				SDL_SetWindowSize(windowHandle_, width, height);
 			}
 		}
-#endif
+#	endif
 
 		SDL_GetWindowSize(windowHandle_, &width_, &height_);
 		SDL_GL_GetDrawableSize(windowHandle_, &drawableWidth_, &drawableHeight_);
+#endif
 	}
 
 	void SdlGfxDevice::update()
@@ -120,6 +127,8 @@ namespace nCine::Backends
 			SDL_RenderCopy(swRenderer_, swTexture_, nullptr, nullptr);
 			SDL_RenderPresent(swRenderer_);
 		}
+#elif defined(DEATH_TARGET_VITA)
+		vglSwapBuffers(GL_FALSE);
 #else
 		SDL_GL_SwapWindow(windowHandle_);
 #endif
@@ -127,11 +136,13 @@ namespace nCine::Backends
 
 	void SdlGfxDevice::setResolutionInternal(int width, int height)
 	{
+#if !defined(DEATH_TARGET_VITA)
 		width_ = width;
 		height_ = height;
 		SDL_SetWindowSize(windowHandle_, width, height);
-#if defined(WITH_RHI_SW)
+#	if defined(WITH_RHI_SW)
 		resizeSwBuffer(width, height);
+#	endif
 #endif
 	}
 
@@ -148,8 +159,16 @@ namespace nCine::Backends
 	}
 #endif
 
+	void SdlGfxDevice::setWindowTitle(StringView windowTitle)
+	{
+#if !defined(DEATH_TARGET_VITA)
+		SDL_SetWindowTitle(windowHandle_, String::nullTerminatedView(windowTitle).data());
+#endif
+	}
+
 	void SdlGfxDevice::setWindowIcon(StringView windowIconFilename)
 	{
+#if !defined(DEATH_TARGET_VITA)
 		std::unique_ptr<ITextureLoader> image = ITextureLoader::createFromFile(windowIconFilename);
 		const unsigned int bytesPerPixel = image->numChannels();
 		const Uint32 pixelFormat = (bytesPerPixel == 4) ? SDL_PIXELFORMAT_ABGR8888 : SDL_PIXELFORMAT_BGR888;
@@ -160,10 +179,19 @@ namespace nCine::Backends
 		surface = SDL_CreateRGBSurfaceWithFormatFrom(pixels, image->width(), image->height(), bytesPerPixel * 8, pitch, pixelFormat);
 		SDL_SetWindowIcon(windowHandle_, surface);
 		SDL_FreeSurface(surface);
+#endif
+	}
+
+	void SdlGfxDevice::setWindowPosition(int x, int y)
+	{
+#if !defined(DEATH_TARGET_VITA)
+		SDL_SetWindowPosition(windowHandle_, x, y);
+#endif
 	}
 
 	void SdlGfxDevice::setWindowSize(int width, int height)
 	{
+#if !defined(DEATH_TARGET_VITA)
 		// Change resolution only in case it is valid and it really changes
 		if (width == 0 || height == 0 || (width == width_ && height == height_)) {
 			return;
@@ -174,26 +202,33 @@ namespace nCine::Backends
 			SDL_GetWindowSize(windowHandle_, &width_, &height_);
 			SDL_GL_GetDrawableSize(windowHandle_, &drawableWidth_, &drawableHeight_);
 		}
+#endif
 	}
 
 	const Vector2i SdlGfxDevice::windowPosition() const
 	{
 		Vector2i position(0, 0);
+#if !defined(DEATH_TARGET_VITA)
 		SDL_GetWindowPosition(windowHandle_, &position.X, &position.Y);
+#endif
 		return position;
 	}
 
 	void SdlGfxDevice::flashWindow() const
 	{
-#if SDL_VERSION_ATLEAST(2, 0, 16) && !defined(DEATH_TARGET_EMSCRIPTEN)
+#if SDL_VERSION_ATLEAST(2, 0, 16) && !defined(DEATH_TARGET_EMSCRIPTEN) && !defined(DEATH_TARGET_VITA)
 		SDL_FlashWindow(windowHandle_, SDL_FLASH_UNTIL_FOCUSED);
 #endif
 	}
 
 	unsigned int SdlGfxDevice::windowMonitorIndex() const
 	{
+#if defined(DEATH_TARGET_VITA)
+		return 0;
+#else
 		const int retrievedIndex = (windowHandle_ != nullptr ? SDL_GetWindowDisplayIndex(windowHandle_) : 0);
 		return (retrievedIndex >= 0 ? static_cast<unsigned int>(retrievedIndex) : 0);
+#endif
 	}
 
 	const IGfxDevice::VideoMode& SdlGfxDevice::currentVideoMode(unsigned int monitorIndex) const
@@ -210,6 +245,7 @@ namespace nCine::Backends
 
 	bool SdlGfxDevice::setVideoMode(unsigned int modeIndex)
 	{
+#if !defined(DEATH_TARGET_VITA)
 		std::int32_t displayIndex = SDL_GetWindowDisplayIndex(windowHandle_);
 		if (displayIndex < 0 || displayIndex >= (std::int32_t)numMonitors_) {
 			displayIndex = 0;
@@ -220,6 +256,7 @@ namespace nCine::Backends
 			SDL_GetDisplayMode(displayIndex, modeIndex, &mode);
 			return SDL_SetWindowDisplayMode(windowHandle_, &mode);
 		}
+#endif
 		return false;
 	}
 
@@ -246,19 +283,49 @@ namespace nCine::Backends
 		SDL_SetHint(SDL_HINT_APP_NAME, NCINE_APP_NAME);
 #endif
 
-#if SDL_VERSION_ATLEAST(2, 24, 0) && defined(SDL_HINT_WINDOWS_DPI_SCALING)
+#if !defined(DEATH_TARGET_VITA)
+#	if SDL_VERSION_ATLEAST(2, 24, 0) && defined(SDL_HINT_WINDOWS_DPI_SCALING)
 		// Scaling is handled automatically by SDL (since v2.24.0)
 		if (enableWindowScaling) {
 			SDL_SetHint(SDL_HINT_WINDOWS_DPI_SCALING, "1");
 		}
-#endif
+#	endif
 		const int err = SDL_InitSubSystem(SDL_INIT_VIDEO);
 		FATAL_ASSERT_MSG(!err, "SDL_InitSubSystem(SDL_INIT_VIDEO) failed: {}", SDL_GetError());
+#endif
 	}
 
 	void SdlGfxDevice::initDevice(int windowPosX, int windowPosY, bool isResizable)
 	{
-#if !defined(WITH_RHI_SW)
+#if defined(DEATH_TARGET_VITA)
+		LOGD("Initializing OpenGL context...");
+
+		// Vita OpenGL context is initialized in vglInitExtended() and doesn't use windowing system
+		std::int32_t result = vglInitExtended(0, 960, 544, 0x1800000, SCE_GXM_MULTISAMPLE_NONE);
+		DEATH_ASSERT(result >= 0, ("vglInitExtended() failed with error 0x{:.8x}", -result));
+
+		std::uint8_t interval = (displayMode_.hasVSync() ? 1 : 0);
+		vglWaitVblankStart(interval);
+
+		// Force default resolution
+		drawableWidth_ = width_ = 960;
+		drawableHeight_ = height_ = 544;
+
+		LOGD("Initializing SDL2 software renderer...");
+
+		swRenderer_ = SDL_CreateRenderer(windowHandle_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		if (swRenderer_ == nullptr) {
+			swRenderer_ = SDL_CreateRenderer(windowHandle_, -1, SDL_RENDERER_SOFTWARE);
+		}
+		FATAL_ASSERT_MSG(swRenderer_, "SDL_CreateRenderer failed: {}", SDL_GetError());
+
+		swTexture_ = SDL_CreateTexture(swRenderer_, SDL_PIXELFORMAT_RGBA32,
+									   SDL_TEXTUREACCESS_STREAMING, drawableWidth_, drawableHeight_);
+		FATAL_ASSERT_MSG(swTexture_, "SDL_CreateTexture failed: {}", SDL_GetError());
+
+		RHI::ResizeColorBuffer(drawableWidth_, drawableHeight_);
+#else
+#	if !defined(WITH_RHI_SW)
 		// Setting OpenGL attributes
 		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, displayMode_.redBits());
 		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, displayMode_.greenBits());
@@ -269,34 +336,34 @@ namespace nCine::Backends
 		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, displayMode_.stencilBits());
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, glContextInfo_.majorVersion);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, glContextInfo_.minorVersion);
-#	if defined(WITH_OPENGLES)
+#		if defined(WITH_OPENGLES)
 		SDL_SetHint(SDL_HINT_OPENGL_ES_DRIVER, "1");
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-#	elif defined(DEATH_TARGET_EMSCRIPTEN)
+#		elif defined(DEATH_TARGET_EMSCRIPTEN)
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-#	else
+#		else
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, glContextInfo_.coreProfile
 															 ? SDL_GL_CONTEXT_PROFILE_CORE
 															 : SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
-#	endif
+#		endif
 		if (!glContextInfo_.forwardCompatible) {
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
 		}
 		if (glContextInfo_.debugContext) {
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 		}
-#endif
+#	endif
 
 		LOGD("Initializing window...");
 
-#if defined(WITH_RHI_SW)
+#	if defined(WITH_RHI_SW)
 		Uint32 flags = 0;
-#else
+#	else
 		Uint32 flags = SDL_WINDOW_OPENGL;
-#endif
-#if !defined(DEATH_TARGET_EMSCRIPTEN)
+#	endif
+#	if !defined(DEATH_TARGET_EMSCRIPTEN)
 		flags |= SDL_WINDOW_ALLOW_HIGHDPI;
-#endif
+#	endif
 		if (width_ <= 0 || height_ <= 0) {
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 			isFullscreen_ = true;
@@ -315,12 +382,12 @@ namespace nCine::Backends
 		windowHandle_ = SDL_CreateWindow("", windowPosX, windowPosY, width_, height_, flags);
 		FATAL_ASSERT_MSG(windowHandle_, "SDL_CreateWindow failed: {}", SDL_GetError());
 
-#if defined(WITH_RHI_SW)
+#	if defined(WITH_RHI_SW)
 		SDL_GetWindowSize(windowHandle_, &drawableWidth_, &drawableHeight_);
-#else
+#	else
 		SDL_GL_GetDrawableSize(windowHandle_, &drawableWidth_, &drawableHeight_);
 		initGLViewport();
-#endif
+#	endif
 
 		SDL_SetWindowResizable(windowHandle_, isResizable ? SDL_TRUE : SDL_FALSE);
 
@@ -329,7 +396,7 @@ namespace nCine::Backends
 			SDL_GetWindowSize(windowHandle_, &width_, &height_);
 		}
 
-#if defined(WITH_RHI_SW)
+#	if defined(WITH_RHI_SW)
 		LOGD("Initializing SDL2 software renderer...");
 
 		swRenderer_ = SDL_CreateRenderer(windowHandle_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -343,7 +410,7 @@ namespace nCine::Backends
 		FATAL_ASSERT_MSG(swTexture_, "SDL_CreateTexture failed: {}", SDL_GetError());
 
 		RHI::ResizeColorBuffer(drawableWidth_, drawableHeight_);
-#else
+#	else
 		LOGD("Initializing OpenGL context...");
 
 	Retry:
@@ -351,40 +418,42 @@ namespace nCine::Backends
 
 		if (!glContextHandle_ && glContextInfo_.minorVersion > 0) {
 			// Retry with lower minor version
-#	if defined(WITH_OPENGLES) || defined(DEATH_TARGET_EMSCRIPTEN)
+#		if defined(WITH_OPENGLES) || defined(DEATH_TARGET_EMSCRIPTEN)
 			LOGW("SDL_GL_CreateContext() with OpenGL|ES {}.{} failed, retrying with lower version: {}",
 				glContextInfo_.majorVersion, glContextInfo_.minorVersion, SDL_GetError());
-#	else
+#		else
 			LOGW(glContextInfo_.coreProfile ? "SDL_GL_CreateContext() with OpenGL Core {}.{} failed, retrying with lower version: {}" : "SDL_GL_CreateContext() with OpenGL {}.{} failed, retrying with lower version: {}",
 				glContextInfo_.majorVersion, glContextInfo_.minorVersion, SDL_GetError());
-#	endif
+#		endif
 			glContextInfo_.minorVersion--;
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, glContextInfo_.minorVersion);
 			goto Retry;
 		}
 
-#	if defined(WITH_OPENGLES) || defined(DEATH_TARGET_EMSCRIPTEN)
+#		if defined(WITH_OPENGLES) || defined(DEATH_TARGET_EMSCRIPTEN)
 		FATAL_ASSERT_MSG(glContextHandle_, "SDL_GL_CreateContext() with OpenGL|ES {}.{} failed: {}",
 			glContextInfo_.majorVersion, glContextInfo_.minorVersion, SDL_GetError());
-#	else
+#		else
 		FATAL_ASSERT_MSG(glContextHandle_, glContextInfo_.coreProfile ? "SDL_GL_CreateContext() with OpenGL Core {}.{} failed: {}" : "SDL_GL_CreateContext() with OpenGL {}.{} failed: {}",
 			glContextInfo_.majorVersion, glContextInfo_.minorVersion, SDL_GetError());
-#	endif
+#		endif
 
 		const int interval = (displayMode_.hasVSync() ? 1 : 0);
 		SDL_GL_SetSwapInterval(interval);
 
-#	if defined(WITH_GLEW)
+#		if defined(WITH_GLEW)
 		const GLenum err = glewInit();
 		FATAL_ASSERT_MSG(err == GLEW_OK, "GLEW error: {}", (const char*)glewGetErrorString(err));
 
 		glContextInfo_.debugContext = (glContextInfo_.debugContext && glewIsSupported("GL_ARB_debug_output"));
+#		endif
 #	endif
 #endif
 	}
 
 	void SdlGfxDevice::updateMonitors()
 	{
+#if !defined(DEATH_TARGET_VITA)
 		LOGD("Updating list of monitors...");
 
 		const int monitorCount = SDL_GetNumVideoDisplays();
@@ -414,6 +483,7 @@ namespace nCine::Backends
 				convertVideoModeInfo(mode, monitors_[i].videoModes[j]);
 			}
 		}
+#endif
 	}
 
 	void SdlGfxDevice::convertVideoModeInfo(const SDL_DisplayMode& sdlVideoMode, IGfxDevice::VideoMode& videoMode) const

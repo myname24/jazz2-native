@@ -16,7 +16,7 @@ namespace Jazz2::Rendering
 	{
 	public:
 		UpscaleRenderPass()
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 			: _resizeShader(nullptr)
 #endif
 		{
@@ -37,7 +37,7 @@ namespace Jazz2::Rendering
 		}
 
 		Vector2f GetTargetSize() const {
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 			return (_antialiasing._target != nullptr ? _antialiasing._targetSize : _targetSize);
 #else
 			return _targetSize;
@@ -45,7 +45,7 @@ namespace Jazz2::Rendering
 		}
 
 	protected:
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 		/** @brief Optional antialiasing subpass */
 		class AntialiasingSubpass : public SceneNode
 		{
@@ -73,14 +73,14 @@ namespace Jazz2::Rendering
 		std::unique_ptr<Camera> _camera;
 		std::unique_ptr<Texture> _target;
 		Vector2f _targetSize;
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 		AntialiasingSubpass _antialiasing;
 #endif
 #endif
 
 	private:
 		std::unique_ptr<SceneNode> _node;
-#if defined(RHI_CAP_SHADERS)
+#if !defined(DISABLE_RESCALE_SHADERS) && defined(RHI_CAP_SHADERS)
 		Shader* _resizeShader;
 #endif
 		RenderCommand _renderCommand;

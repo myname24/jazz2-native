@@ -86,7 +86,7 @@ namespace Jazz2
 
 	StringView ContentResolver::GetContentPath() const
 	{
-#if defined(DEATH_TARGET_UNIX) || defined(DEATH_TARGET_WINDOWS_RT)
+#if defined(DEATH_TARGET_UNIX) || defined(DEATH_TARGET_VITA) || defined(DEATH_TARGET_WINDOWS_RT)
 		return _contentPath;
 #elif defined(DEATH_TARGET_ANDROID)
 		return "assets:/"_s;
@@ -101,7 +101,7 @@ namespace Jazz2
 
 	StringView ContentResolver::GetCachePath() const
 	{
-#if defined(DEATH_TARGET_ANDROID) || defined(DEATH_TARGET_APPLE) || defined(DEATH_TARGET_UNIX) || defined(DEATH_TARGET_WINDOWS_RT)
+#if defined(DEATH_TARGET_ANDROID) || defined(DEATH_TARGET_APPLE) || defined(DEATH_TARGET_UNIX) || defined(DEATH_TARGET_VITA) || defined(DEATH_TARGET_WINDOWS_RT)
 		return _cachePath;
 #elif defined(DEATH_TARGET_SWITCH)
 		// Switch has some issues with UTF-8 characters, so use "Jazz2" instead
@@ -115,7 +115,7 @@ namespace Jazz2
 
 	StringView ContentResolver::GetSourcePath() const
 	{
-#if defined(DEATH_TARGET_ANDROID) || defined(DEATH_TARGET_APPLE) || defined(DEATH_TARGET_UNIX) || defined(DEATH_TARGET_WINDOWS_RT)
+#if defined(DEATH_TARGET_ANDROID) || defined(DEATH_TARGET_APPLE) || defined(DEATH_TARGET_UNIX) || defined(DEATH_TARGET_VITA) || defined(DEATH_TARGET_WINDOWS_RT)
 		return _sourcePath;
 #elif defined(DEATH_TARGET_SWITCH)
 		// Switch has some issues with UTF-8 characters, so use "Jazz2" instead
@@ -191,6 +191,11 @@ namespace Jazz2
 			_sourcePath = fs::CombinePath(dataPath, "Source/"_s);
 			_cachePath = fs::CombinePath(dataPath, "Cache/"_s);
 		}
+#elif defined(DEATH_TARGET_VITA)
+		String appRoot = fs::CombinePath("ux0:data/"_s, NCINE_APP);
+		_cachePath = fs::CombinePath(appRoot, "Cache/"_s);
+		_contentPath = fs::CombinePath(appRoot, "Content/"_s);
+		_sourcePath = fs::CombinePath(appRoot, "Source/"_s);
 #elif defined(DEATH_TARGET_APPLE)
 		// Returns local application data directory on Apple
 		const String& appData = fs::GetSavePath("Jazz² Resurrection"_s);
@@ -358,7 +363,7 @@ namespace Jazz2
 #endif
 
 		String fullPath = fs::CombinePath(GetContentPath(), path);
-		if (fs::IsReadableFile(fullPath)) {
+		if (fs::FileExists(fullPath)) {
 			auto realFile = fs::Open(fullPath, FileAccess::Read, bufferSize);
 			if (realFile->IsValid()) {
 				return realFile;
@@ -1033,7 +1038,7 @@ namespace Jazz2
 		}
 		if (fullPath.empty()) {
 			fullPath = fs::CombinePath({ GetContentPath(), "Tilesets"_s, String(path + ".j2t"_s) });
-			if (!fs::IsReadableFile(fullPath)) {
+			if (!fs::FileExists(fullPath)) {
 				fullPath = fs::CombinePath({ GetCachePath(), "Tilesets"_s, String(path + ".j2t"_s) });
 			}
 		}
@@ -1231,8 +1236,8 @@ namespace Jazz2
 	{
 		// Try "Content" directory first, then "Cache" directory
 		auto pathNormalized = fs::ToNativeSeparators(levelName);
-		return (fs::IsReadableFile(fs::CombinePath({ GetContentPath(), "Episodes"_s, String(pathNormalized + ".j2l"_s) })) ||
-				fs::IsReadableFile(fs::CombinePath({ GetCachePath(), "Episodes"_s, String(pathNormalized + ".j2l"_s) })));
+		return (fs::FileExists(fs::CombinePath({ GetContentPath(), "Episodes"_s, String(pathNormalized + ".j2l"_s) })) ||
+				fs::FileExists(fs::CombinePath({ GetCachePath(), "Episodes"_s, String(pathNormalized + ".j2l"_s) })));
 	}
 
 	bool ContentResolver::TryLoadLevel(StringView path, GameDifficulty difficulty, LevelDescriptor& descriptor)
@@ -1244,7 +1249,7 @@ namespace Jazz2
 		}
 		if (descriptor.FullPath.empty()) {
 			descriptor.FullPath = fs::CombinePath({ GetContentPath(), "Episodes"_s, String(pathNormalized + ".j2l"_s) });
-			if (!fs::IsReadableFile(descriptor.FullPath)) {
+			if (!fs::FileExists(descriptor.FullPath)) {
 				descriptor.FullPath = fs::CombinePath({ GetCachePath(), "Episodes"_s, String(pathNormalized + ".j2l"_s) });
 			}
 		}
@@ -1464,7 +1469,7 @@ namespace Jazz2
 	std::optional<Episode> ContentResolver::GetEpisode(StringView name, bool withImages)
 	{
 		String fullPath = fs::CombinePath({ GetContentPath(), "Episodes"_s, String(name + ".j2e"_s) });
-		if (!fs::IsReadableFile(fullPath)) {
+		if (!fs::FileExists(fullPath)) {
 			fullPath = fs::CombinePath({ GetCachePath(), "Episodes"_s, String(name + ".j2e"_s) });
 		}
 		return GetEpisodeByPath(fullPath, withImages);
@@ -1549,12 +1554,12 @@ namespace Jazz2
 		}
 		if (fullPath.empty()) {
 			fullPath = fs::CombinePath({ GetContentPath(), "Music"_s, path });
-			if (!fs::IsReadableFile(fullPath)) {
+			if (!fs::FileExists(fullPath)) {
 				// "Source" directory must be case in-sensitive
 				fullPath = fs::FindPathCaseInsensitive(fs::CombinePath(GetSourcePath(), path));
 			}
 		}
-		if (!fs::IsReadableFile(fullPath)) {
+		if (!fs::FileExists(fullPath)) {
 			return nullptr;
 		}
 		return std::make_unique<AudioStreamPlayer>(fullPath);

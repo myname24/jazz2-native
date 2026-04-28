@@ -20,6 +20,9 @@
 #	include <emscripten/emscripten.h>
 #elif defined(DEATH_TARGET_SWITCH)
 #	include <switch.h>
+#elif defined(DEATH_TARGET_VITA)
+#	include <vitasdk.h>
+#	include <vitaGL.h>
 #elif defined(DEATH_TARGET_UNIX)
 #	include <pwd.h>
 #	include <unistd.h>
@@ -101,6 +104,13 @@ namespace nCine
 		socketInitializeDefault();
 		nxlinkStdio();
 		romfsInit();
+#elif defined(DEATH_TARGET_VITA)
+		// Enable analog sampling for controllers
+		sceTouchSetSamplingState(SCE_TOUCH_PORT_FRONT, SCE_TOUCH_SAMPLING_STATE_START);
+		sceTouchSetSamplingState(SCE_TOUCH_PORT_BACK, SCE_TOUCH_SAMPLING_STATE_START);
+
+		// Enabling sampling for the analogs
+		sceCtrlSetSamplingMode(SCE_CTRL_MODE_ANALOG_WIDE);
 #elif defined(DEATH_TARGET_WINDOWS)
 		// Force set current directory, so everything is loaded correctly, because it's not usually intended
 		wchar_t workingDir[fs::MaxPathLength];
@@ -149,6 +159,8 @@ namespace nCine
 #if defined(DEATH_TARGET_SWITCH)
 		romfsExit();
 		socketExit();
+#elif defined(DEATH_TARGET_VITA)
+		sceKernelExitProcess(0);
 #elif defined(DEATH_TARGET_WINDOWS)
 		timeEndPeriod(1);
 #endif
@@ -436,7 +448,7 @@ namespace nCine
 			gfxDevice_->setWindowTitle(appCfg_.windowTitle.data());
 			if (!appCfg_.windowIconFilename.empty()) {
 				String windowIconFilePath = fs::CombinePath(GetDataPath(), appCfg_.windowIconFilename);
-				if (fs::IsReadableFile(windowIconFilePath)) {
+				if (fs::FileExists(windowIconFilePath)) {
 					gfxDevice_->setWindowIcon(windowIconFilePath);
 				}
 			}
@@ -508,6 +520,7 @@ namespace nCine
 				case SDL_DISPLAYEVENT:
 					gfxDevice_->updateMonitors();
 					break;
+#	if !defined(DEATH_TARGET_VITA)
 				case SDL_WINDOWEVENT: {
 					if (SdlGfxDevice::isMainWindow(event.window.windowID)) {
 						switch (event.window.event) {
@@ -522,12 +535,12 @@ namespace nCine
 								gfxDevice_->height_ = event.window.data2;
 								SDL_Window* windowHandle = SDL_GetWindowFromID(event.window.windowID);
 								gfxDevice_->isFullscreen_ = (SDL_GetWindowFlags(windowHandle) & SDL_WINDOW_FULLSCREEN) != 0;
-#if defined(WITH_RHI_SW)
+#		if defined(WITH_RHI_SW)
 								SDL_GetWindowSize(windowHandle, &gfxDevice_->drawableWidth_, &gfxDevice_->drawableHeight_);
 								static_cast<SdlGfxDevice*>(gfxDevice_.get())->resizeSwBuffer(gfxDevice_->drawableWidth_, gfxDevice_->drawableHeight_);
-#else
+#		else
 								SDL_GL_GetDrawableSize(windowHandle, &gfxDevice_->drawableWidth_, &gfxDevice_->drawableHeight_);
-#endif
+#		endif
 								ResizeScreenViewport(gfxDevice_->drawableWidth_, gfxDevice_->drawableHeight_);
 								break;
 							}
@@ -535,6 +548,7 @@ namespace nCine
 					}
 					break;
 				}
+#endif
 				default:
 					if (appCfg_.withGraphics) {
 						SdlInputManager::parseEvent(event);

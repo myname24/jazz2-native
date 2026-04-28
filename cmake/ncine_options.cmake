@@ -77,7 +77,7 @@ else()
 	endif()
 endif()
 
-cmake_dependent_option(NCINE_WITH_BACKWARD "Enable integration with Backward for exception handling" ON "(APPLE OR LINUX OR (WIN32 AND NOT WINDOWS_PHONE AND NOT WINDOWS_STORE)) AND NOT EMSCRIPTEN AND NOT NCINE_BUILD_ANDROID" OFF)
+cmake_dependent_option(NCINE_WITH_BACKWARD "Enable integration with Backward for exception handling" ON "(APPLE OR LINUX OR (WIN32 AND NOT WINDOWS_PHONE AND NOT WINDOWS_STORE)) AND NOT EMSCRIPTEN AND NOT NCINE_BUILD_ANDROID AND NOT VITA" OFF)
 #option(NCINE_WITH_LZ4 "Enable LZ4 compression support" OFF)
 #option(NCINE_WITH_ZSTD "Enable Zstd compression support" OFF)
 option(NCINE_WITH_WEBP "Enable WebP image file support" OFF)
@@ -92,7 +92,7 @@ option(NCINE_WITH_TRACY "Enable integration with Tracy frame profiler" OFF)
 cmake_dependent_option(NCINE_COMPILE_OPENMPT "Compile libopenmpt from sources instead of using library" OFF "NCINE_WITH_OPENMPT" OFF)
 
 set(NCINE_CONTENT_DIR "${CMAKE_SOURCE_DIR}/Content" CACHE PATH "Set path to the game data directory")
-cmake_dependent_option(NCINE_CREATE_CONTENT_SYMLINK "Create symbolic link to the game data directory in target directory" OFF "(APPLE OR LINUX OR (WIN32 AND NOT WINDOWS_PHONE AND NOT WINDOWS_STORE)) AND NOT EMSCRIPTEN AND NOT NCINE_BUILD_ANDROID" OFF)
+cmake_dependent_option(NCINE_CREATE_CONTENT_SYMLINK "Create symbolic link to the game data directory in target directory" OFF "(APPLE OR LINUX OR (WIN32 AND NOT WINDOWS_PHONE AND NOT WINDOWS_STORE)) AND NOT EMSCRIPTEN AND NOT NCINE_BUILD_ANDROID AND NOT VITA" OFF)
 
 if(NCINE_WITH_RENDERDOC)
 	set(RENDERDOC_DIR "" CACHE PATH "Set path to RenderDoc directory")
@@ -182,8 +182,8 @@ option(DEATH_CPU_USE_RUNTIME_DISPATCH "Build with runtime dispatch for CPU-depen
 
 # Jazz² Resurrection options
 option(SHAREWARE_DEMO_ONLY "Show only Shareware Demo episode" OFF)
-option(DISABLE_RESCALE_SHADERS "Disable all rescaling options" OFF)
+option(DISABLE_RESCALE_SHADERS "Disable all rescaling options" ${VITA}) # Rescaling options are disabled on Vita by default
 
 # Multiplayer is not supported on Emscripten yet and requires multithreading
 cmake_dependent_option(WITH_MULTIPLAYER "Enable multiplayer support" OFF "NCINE_WITH_THREADS;NOT EMSCRIPTEN" OFF)
-cmake_dependent_option(DEDICATED_SERVER "Build dedicated server only" OFF "WITH_MULTIPLAYER;NOT NCINE_BUILD_ANDROID;NOT EMSCRIPTEN;NOT NINTENDO_SWITCH;NOT WINDOWS_PHONE;NOT WINDOWS_STORE" OFF)
+cmake_dependent_option(DEDICATED_SERVER "Build dedicated server only" OFF "WITH_MULTIPLAYER;NOT NCINE_BUILD_ANDROID;NOT EMSCRIPTEN;NOT NINTENDO_SWITCH;NOT VITA;NOT WINDOWS_PHONE;NOT WINDOWS_STORE" OFF)

@@ -49,6 +49,8 @@ if(NOT CMAKE_GENERATOR_PLATFORM OR "${CMAKE_GENERATOR_PLATFORM}" STREQUAL "${CMA
 		message(STATUS "Compiling for architecture: WASM (on ${CMAKE_SYSTEM_PROCESSOR} machine)")
 	elseif(NINTENDO_SWITCH)
 		message(STATUS "Compiling for architecture: ${CMAKE_SYSTEM_PROCESSOR} (Nintendo Switch)")
+	elseif(VITA)
+		message(STATUS "Compiling for architecture: ${CMAKE_SYSTEM_PROCESSOR} (PS Vita)")
 	elseif(APPLE AND CMAKE_OSX_ARCHITECTURES)
 		message(STATUS "Compiling for architecture: ${CMAKE_OSX_ARCHITECTURES} (on ${CMAKE_SYSTEM_PROCESSOR} machine)")
 	else()

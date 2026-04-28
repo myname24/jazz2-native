@@ -38,13 +38,10 @@ namespace nCine::Backends
 
 		void update() override;
 
-		inline void setWindowPosition(int x, int y) override { SDL_SetWindowPosition(windowHandle_, x, y); }
-
+		void setWindowPosition(int x, int y) override;
 		void setWindowSize(int width, int height) override;
 
-		inline void setWindowTitle(StringView windowTitle) override {
-			SDL_SetWindowTitle(windowHandle_, String::nullTerminatedView(windowTitle).data());
-		}
+		void setWindowTitle(StringView windowTitle) override;
 		void setWindowIcon(StringView windowIconFilename) override;
 
 		const Vector2i windowPosition() const override;
@@ -80,10 +77,12 @@ namespace nCine::Backends
 		void updateMonitors() override;
 
 	private:
+#if !defined(DEATH_TARGET_VITA)
 		/// SDL2 window handle
 		static SDL_Window* windowHandle_;
 		/// SDL2 OpenGL context handle
 		static SDL_GLContext glContextHandle_;
+#endif
 
 #if defined(WITH_RHI_SW)
 		/// SDL2 hardware-accelerated renderer used to present the SW color buffer

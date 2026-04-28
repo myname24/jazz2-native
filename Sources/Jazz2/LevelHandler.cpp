@@ -319,7 +319,7 @@ namespace Jazz2
 
 	bool LevelHandler::CanPlayersCollide() const
 	{
-		// TODO
+		// TODO: Implement player collision properly
 		return false;
 	}
 
@@ -452,7 +452,7 @@ namespace Jazz2
 			const StringView foundDot = descriptor.FullPath.findLastOr('.', descriptor.FullPath.end());
 			String scriptPath = (foundDot == descriptor.FullPath.end() ? StringView(descriptor.FullPath) : descriptor.FullPath.prefix(foundDot.begin())) + ".j2as"_s;
 			if (auto scriptPathCaseInsensitive = fs::FindPathCaseInsensitive(scriptPath)) {
-				if (fs::IsReadableFile(scriptPathCaseInsensitive)) {
+				if (fs::FileExists(scriptPathCaseInsensitive)) {
 #	if defined(WITH_ANGELSCRIPT)
 					_scripts = std::make_unique<Scripting::LevelScriptLoader>(this, scriptPathCaseInsensitive);
 #	else
