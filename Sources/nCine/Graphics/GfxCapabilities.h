@@ -2,6 +2,8 @@
 
 #include "IGfxCapabilities.h"
 
+#if defined(WITH_RHI_GL)
+
 namespace nCine
 {
 	/// Stores and retrieves runtime OpenGL device capabilities
@@ -41,3 +43,5 @@ namespace nCine
 		void CheckGLExtensions(const char* extensionNames[], bool results[], std::uint32_t numExtensionsToCheck) const;
 	};
 }
+
+#endif

@@ -1419,39 +1419,39 @@ namespace Death { namespace Cpu {
 #elif defined(DEATH_TARGET_X86)
 	#define __DEATH_CPU_DISPATCHER_BASE(function)								\
 		decltype(function(Death::Cpu::Scalar)) function(Death::Cpu::Features features) {	\
-			if(features & Death::Cpu::Avx512f)									\
+			if (features & Death::Cpu::Avx512f)									\
 				return function(Death::Cpu::Avx512f);							\
-			if(features & Death::Cpu::Avx2)										\
+			if (features & Death::Cpu::Avx2)										\
 				return function(Death::Cpu::Avx2);								\
-			if(features & Death::Cpu::Avx)										\
+			if (features & Death::Cpu::Avx)										\
 				return function(Death::Cpu::Avx);								\
-			if(features & Death::Cpu::Sse42)									\
+			if (features & Death::Cpu::Sse42)									\
 				return function(Death::Cpu::Sse42);								\
-			if(features & Death::Cpu::Sse41)									\
+			if (features & Death::Cpu::Sse41)									\
 				return function(Death::Cpu::Sse41);								\
-			if(features & Death::Cpu::Ssse3)									\
+			if (features & Death::Cpu::Ssse3)									\
 				return function(Death::Cpu::Ssse3);								\
-			if(features & Death::Cpu::Sse3)										\
+			if (features & Death::Cpu::Sse3)									\
 				return function(Death::Cpu::Sse3);								\
-			if(features & Death::Cpu::Sse2)										\
+			if (features & Death::Cpu::Sse2)									\
 				return function(Death::Cpu::Sse2);								\
 			return function(Death::Cpu::Scalar);								\
 		}
 #elif defined(DEATH_TARGET_ARM)
 	#define __DEATH_CPU_DISPATCHER_BASE(function)								\
 		decltype(function(Death::Cpu::Scalar)) function(Death::Cpu::Features features) {	\
-			if(features & Death::Cpu::NeonFp16)									\
+			if (features & Death::Cpu::NeonFp16)								\
 				return function(Death::Cpu::NeonFp16);							\
-			if(features & Death::Cpu::NeonFma)									\
+			if (features & Death::Cpu::NeonFma)									\
 				return function(Death::Cpu::NeonFma);							\
-			if(features & Death::Cpu::Neon)										\
+			if (features & Death::Cpu::Neon)									\
 				return function(Death::Cpu::Neon);								\
 			return function(Death::Cpu::Scalar);								\
 		}
 #elif defined(DEATH_TARGET_WASM)
 	#define __DEATH_CPU_DISPATCHER_BASE(function)								\
 		decltype(function(Death::Cpu::Scalar)) function(Death::Cpu::Features features) {	\
-			if(features & Death::Cpu::Simd128)									\
+			if (features & Death::Cpu::Simd128)									\
 				return function(Death::Cpu::Simd128);							\
 			return function(Death::Cpu::Scalar);								\
 		}
@@ -1465,35 +1465,35 @@ namespace Death { namespace Cpu {
 #ifndef DOXYGEN_GENERATING_OUTPUT
 #if defined(DEATH_TARGET_X86)
 	#define __DEATH_CPU_DISPATCHER_IMPLEMENTATION(function, extra)				\
-		if(features >= (Death::Cpu::Avx512f extra))								\
+		if (features >= (Death::Cpu::Avx512f extra))							\
 			return function(DEATH_CPU_SELECT(Death::Cpu::Avx512f extra));		\
-		if(features >= (Death::Cpu::Avx2 extra))								\
+		if (features >= (Death::Cpu::Avx2 extra))								\
 			return function(DEATH_CPU_SELECT(Death::Cpu::Avx2 extra));			\
-		if(features >= (Death::Cpu::Avx extra))									\
+		if (features >= (Death::Cpu::Avx extra))								\
 			return function(DEATH_CPU_SELECT(Death::Cpu::Avx extra));			\
-		if(features >= (Death::Cpu::Sse42 extra))								\
+		if (features >= (Death::Cpu::Sse42 extra))								\
 			return function(DEATH_CPU_SELECT(Death::Cpu::Sse42 extra));			\
-		if(features >= (Death::Cpu::Sse41 extra))								\
+		if (features >= (Death::Cpu::Sse41 extra))								\
 			return function(DEATH_CPU_SELECT(Death::Cpu::Sse41 extra));			\
-		if(features >= (Death::Cpu::Ssse3 extra))								\
+		if (features >= (Death::Cpu::Ssse3 extra))								\
 			return function(DEATH_CPU_SELECT(Death::Cpu::Ssse3 extra));			\
-		if(features >= (Death::Cpu::Sse3 extra))								\
+		if (features >= (Death::Cpu::Sse3 extra))								\
 			return function(DEATH_CPU_SELECT(Death::Cpu::Sse3 extra));			\
-		if(features >= (Death::Cpu::Sse2 extra))								\
+		if (features >= (Death::Cpu::Sse2 extra))								\
 			return function(DEATH_CPU_SELECT(Death::Cpu::Sse2 extra));			\
 		return function(DEATH_CPU_SELECT(Death::Cpu::Scalar extra));
 #elif defined(DEATH_TARGET_ARM)
 	#define __DEATH_CPU_DISPATCHER_IMPLEMENTATION(function, extra)				\
-		if(features >= (Death::Cpu::NeonFp16 extra))							\
+		if (features >= (Death::Cpu::NeonFp16 extra))							\
 			return function(DEATH_CPU_SELECT(Death::Cpu::NeonFp16 extra));		\
-		if(features >= (Death::Cpu::NeonFma extra))								\
+		if (features >= (Death::Cpu::NeonFma extra))							\
 			return function(DEATH_CPU_SELECT(Death::Cpu::NeonFma extra));		\
-		if(features >= (Death::Cpu::Neon extra))								\
+		if (features >= (Death::Cpu::Neon extra))								\
 			return function(DEATH_CPU_SELECT(Death::Cpu::Neon extra));			\
 		return function(DEATH_CPU_SELECT(Death::Cpu::Scalar extra));
 #elif defined(DEATH_TARGET_WASM)
 	#define __DEATH_CPU_DISPATCHER_IMPLEMENTATION(function, extra)				\
-		if(features >= (Death::Cpu::Simd128 extra))								\
+		if (features >= (Death::Cpu::Simd128 extra))							\
 			return function(DEATH_CPU_SELECT(Death::Cpu::Simd128 extra));		\
 		return function(DEATH_CPU_SELECT(Death::Cpu::Scalar extra));
 #else
@@ -1519,7 +1519,7 @@ namespace Death { namespace Cpu {
 		template<unsigned int value, class First, class ...Next> DEATH_ALWAYS_INLINE decltype(function(DEATH_CPU_SELECT(Death::Cpu::Scalar))) function ## Internal(Death::Cpu::Features features, Death::Cpu::Implementation::Tags<value> extra, First first, Next... next) { \
 			static_assert(!(static_cast<unsigned int>(Death::Cpu::Implementation::tags(First{Death::Cpu::Implementation::Init})) & Death::Cpu::Implementation::BaseTagMask),	\
 				"Only extra instruction set tags should be explicitly listed");	\
-			if(features & first)												\
+			if (features & first)												\
 				return function ## Internal(features, extra|first, next...);	\
 			else																\
 				return function ## Internal(features, extra, next...);			\

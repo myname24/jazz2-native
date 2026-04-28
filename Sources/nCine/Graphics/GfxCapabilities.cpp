@@ -1,3 +1,5 @@
+#if defined(WITH_RHI_GL)
+
 #define NCINE_INCLUDE_OPENGL
 #include "../CommonHeaders.h"
 
@@ -220,3 +222,5 @@ namespace nCine
 		}
 	}
 }
+
+#endif

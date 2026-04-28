@@ -53,20 +53,24 @@ namespace nCine::RHI
 #elif defined(DEATH_TARGET_ARM)
 		if (features & Cpu::Neon) {
 			featureName = "Neon"_s;
-		} else if (features & Cpu::Sse2) {
+		} else {
 			featureName = "Scalar"_s;
 		}
 #elif defined(DEATH_TARGET_WASM)
 		if (features & Cpu::Simd128) {
 			featureName = "SIMD128"_s;
-		} else if (features & Cpu::Sse2) {
+		} else {
 			featureName = "Scalar"_s;
 		}
 #else
 		featureName = "Scalar"_s;
 #endif
 
+#if defined(DEATH_CPU_USE_RUNTIME_DISPATCH)
+		LOGI("The application is using software renderer ({}+)", featureName);
+#else
 		LOGI("The application is using software renderer ({})", featureName);
+#endif
 	}
 
 	std::int32_t SWGfxCapabilities::GetVersion(Version version) const

@@ -62,9 +62,11 @@ namespace nCine::Backends
 			return windowHandle_;
 		}
 
+#if !defined(WITH_RHI_SW)
 		static inline SDL_GLContext glContextHandle() {
 			return glContextHandle_;
 		}
+#endif
 
 #if defined(WITH_RHI_SW)
 		/// Recreates the streaming texture and resizes the SW color buffer after a window resize
@@ -77,9 +79,9 @@ namespace nCine::Backends
 		void updateMonitors() override;
 
 	private:
-#if !defined(DEATH_TARGET_VITA)
 		/// SDL2 window handle
 		static SDL_Window* windowHandle_;
+#if !defined(WITH_RHI_SW)
 		/// SDL2 OpenGL context handle
 		static SDL_GLContext glContextHandle_;
 #endif

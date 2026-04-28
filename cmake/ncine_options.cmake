@@ -13,8 +13,13 @@ cmake_dependent_option(NCINE_BUILD_ANDROID "Build Android version of the game" O
 # N64  : Nintendo 64 / libdragon rdpq
 # PS1  : PlayStation 1 / PSn00bSDK GPU
 # SAT  : Sega Saturn / libyaul VDP1
-set(NCINE_RHI "GL" CACHE STRING "Select the rendering API backend")
-set_property(CACHE NCINE_RHI PROPERTY STRINGS "GL;SW;DX11;VK;METAL;DC;N64;PS1;SAT")
+if(VITA)
+	# On Vita we only have the option to use the software rasterizer, so set it by default and hide the option
+	set(NCINE_RHI "SW")
+else()
+	set(NCINE_RHI "GL" CACHE STRING "Select the rendering API backend")
+	set_property(CACHE NCINE_RHI PROPERTY STRINGS "GL;SW;DX11;VK;METAL;DC;N64;PS1;SAT")
+endif()
 
 option(NCINE_PROFILING "Enable runtime profiling" OFF)
 option(NCINE_DOWNLOAD_DEPENDENCIES "Download all build dependencies" ON)
@@ -26,7 +31,7 @@ option(NCINE_VERSION_FROM_GIT "Try to set current game version from GIT reposito
 #cmake_dependent_option(NCINE_DYNAMIC_LIBRARY "Compile the engine as a dynamic library" OFF "NOT EMSCRIPTEN" OFF)
 
 if(NOT NCINE_BUILD_ANDROID AND NOT WINDOWS_PHONE AND NOT WINDOWS_STORE)
-	if(NINTENDO_SWITCH)
+	if(NINTENDO_SWITCH OR VITA)
 		set(_NCINE_DEFAULT_BACKEND "SDL2")
 	else()
 		set(_NCINE_DEFAULT_BACKEND "GLFW")
@@ -113,7 +118,7 @@ endif()
 # Shared library options
 option(DEATH_DEBUG_SYMBOLS "Create debug symbols for executable" ${WIN32})
 option(DEATH_TRACE "Enable runtime event tracing" ON)
-cmake_dependent_option(DEATH_TRACE_ASYNC "Enable asynchronous processing of event tracing" ON "DEATH_TRACE;NCINE_WITH_THREADS" OFF)
+cmake_dependent_option(DEATH_TRACE_ASYNC "Enable asynchronous processing of event tracing" ON "DEATH_TRACE;NCINE_WITH_THREADS;NOT VITA" OFF)
 if(DEATH_TRACE)
 	set(DEATH_TRACE_LOG_PATH "" CACHE PATH "Override path to trace log file if specified (and force writing traces to file on some platforms)")
 endif()

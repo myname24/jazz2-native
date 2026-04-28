@@ -14,8 +14,8 @@
 
 namespace nCine::Backends
 {
-#if !defined(DEATH_TARGET_VITA)
 	SDL_Window* SdlGfxDevice::windowHandle_ = nullptr;
+#if !defined(WITH_RHI_SW)
 	SDL_GLContext SdlGfxDevice::glContextHandle_;
 #endif
 
@@ -45,10 +45,10 @@ namespace nCine::Backends
 		glContextHandle_ = nullptr;
 #endif
 
-#if !defined(DEATH_TARGET_VITA)
 		SDL_DestroyWindow(windowHandle_);
 		windowHandle_ = nullptr;
 
+#if !defined(DEATH_TARGET_VITA)
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 		SDL_Quit();
 #endif
@@ -298,20 +298,22 @@ namespace nCine::Backends
 	void SdlGfxDevice::initDevice(int windowPosX, int windowPosY, bool isResizable)
 	{
 #if defined(DEATH_TARGET_VITA)
-		LOGD("Initializing OpenGL context...");
+		/*LOGD("Initializing OpenGL context...");
 
 		// Vita OpenGL context is initialized in vglInitExtended() and doesn't use windowing system
 		std::int32_t result = vglInitExtended(0, 960, 544, 0x1800000, SCE_GXM_MULTISAMPLE_NONE);
 		DEATH_ASSERT(result >= 0, ("vglInitExtended() failed with error 0x{:.8x}", -result));
 
 		std::uint8_t interval = (displayMode_.hasVSync() ? 1 : 0);
-		vglWaitVblankStart(interval);
+		vglWaitVblankStart(interval);*/
 
 		// Force default resolution
 		drawableWidth_ = width_ = 960;
 		drawableHeight_ = height_ = 544;
 
 		LOGD("Initializing SDL2 software renderer...");
+
+		SDL_Window* windowHandle_ = SDL_CreateWindow(NCINE_APP, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width_, height_, 0);
 
 		swRenderer_ = SDL_CreateRenderer(windowHandle_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		if (swRenderer_ == nullptr) {

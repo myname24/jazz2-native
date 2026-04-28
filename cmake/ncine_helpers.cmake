@@ -322,6 +322,8 @@ function(ncine_apply_compiler_options target)
 
 	if(NINTENDO_SWITCH)
 		target_compile_definitions(${target} PUBLIC "DEATH_TARGET_SWITCH")
+	elseif(VITA)
+		target_compile_definitions(${target} PUBLIC "DEATH_TARGET_VITA")
 	elseif(WIN32)
 		# Force Unicode mode on Windows
 		target_compile_definitions(${target} PRIVATE "_UNICODE" "UNICODE")
@@ -536,7 +538,7 @@ function(ncine_apply_compiler_options target)
 				target_compile_options(${target} PRIVATE "-fno-optimize-sibling-calls")
 			endif()
 
-			if(NCINE_LINKTIME_OPTIMIZATION AND NOT (MINGW OR MSYS OR ANDROID))
+			if(NCINE_LINKTIME_OPTIMIZATION AND NOT (MINGW OR MSYS OR ANDROID OR VITA))
 				target_compile_options(${target} PRIVATE $<$<CONFIG:Release>:-flto=auto>)
 				target_link_options(${target} PRIVATE $<$<CONFIG:Release>:-flto=auto>)
 			endif()
