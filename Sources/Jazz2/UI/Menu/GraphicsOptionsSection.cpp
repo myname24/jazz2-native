@@ -150,7 +150,7 @@ namespace Jazz2::UI::Menu
 			StringView customText; String customTextBuffer;
 			bool enabled = false;
 			switch (item.Item.Type) {
-#if !defined(DEATH_TARGET_ANDROID) && !defined(DEATH_TARGET_IOS) && !defined(DEATH_TARGET_SWITCH)
+#if defined(NCINE_HAS_WINDOWS)
 				case GraphicsOptionsItemType::Fullscreen: enabled = PreferencesCache::EnableFullscreen; break;
 #endif
 #if defined(RHI_CAP_SHADERS)
@@ -209,7 +209,7 @@ namespace Jazz2::UI::Menu
 				_root->SwitchToSection<RescaleModeSection>();
 				break;
 #endif
-#if !defined(DEATH_TARGET_ANDROID) && !defined(DEATH_TARGET_IOS) && !defined(DEATH_TARGET_SWITCH)
+#if defined(NCINE_HAS_WINDOWS)
 			case GraphicsOptionsItemType::Fullscreen:
 #	if defined(DEATH_TARGET_WINDOWS_RT)
 				// Xbox is always fullscreen
