@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: jazz2-resurrection\n"
-"POT-Creation-Date: 2026-04-29 11:04+0200\n"
-"PO-Revision-Date: 2026-04-29 11:05+0200\n"
+"POT-Creation-Date: 2026-04-29 13:35+0200\n"
+"PO-Revision-Date: 2026-04-29 13:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -1655,8 +1655,8 @@ msgstr "Schwach"
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:128
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:132
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:161
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:168
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:178
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:166
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:202
 #: Sources/Jazz2/UI/Menu/UserProfileOptionsSection.cpp:382
 msgid "Disabled"
 msgstr "Deaktiviert"
@@ -1667,7 +1667,8 @@ msgstr "Deaktiviert"
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:152
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:155
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:161
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:178
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:190
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:202
 #: Sources/Jazz2/UI/Menu/UserProfileOptionsSection.cpp:382
 msgid "Enabled"
 msgstr "Aktiviert"
@@ -1970,101 +1971,113 @@ msgid "Always"
 msgstr "Immer"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:25
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:27
 msgid "Rescale Mode"
 msgstr "Skalierungsmodus"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:28
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:30
 msgid "Resolution"
 msgstr "Auflösung"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:36
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:38
 msgid "Fullscreen"
 msgstr "Vollbild"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:41
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:43
 msgid "Antialiasing"
 msgstr "Kantenglättung"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:44
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:46
 msgid "Background Dithering"
 msgstr "Hintergrund-Dithering"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:46
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:48
+msgid "Blur Effects"
+msgstr "Weichzeichner-Effekte"
+
+#. TRANSLATORS: Menu item in Options > Graphics section
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:50
+msgid "Lighting Resolution"
+msgstr "Auflösung der Beleuchtung"
+
+#. TRANSLATORS: Menu item in Options > Graphics section
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:52
 msgid "Water Quality"
 msgstr "Wasserqualität"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:48
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:54
 msgid "Show Player Trails"
 msgstr "Spielerspuren anzeigen"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:50
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:56
 msgid "Preferred Splitscreen"
 msgstr "Bevorzugter Splitscreen"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:52
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:58
 msgid "Prefer Zoom Out"
 msgstr "Herauszoomen bevorzugen"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:54
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:60
 msgid "Keep Aspect Ratio In Cinematics"
 msgstr "Seitenverhältnis in Zwischensequenzen beibehalten"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:57
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:63
 msgid "Unaligned Viewport"
 msgstr "Nicht ausgerichteter Viewport"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:60
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:66
 msgid "Performance Metrics"
 msgstr "Leistungsmetriken"
 
 #. TRANSLATORS: Menu item in Options section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:95
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:101
 #: Sources/Jazz2/UI/Menu/OptionsSection.cpp:22
 msgid "Graphics"
 msgstr "Grafik"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:158
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:166
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:179
+msgid "Forced"
+msgstr "Erzwungen"
+
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:177
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:179
 msgid "Low"
 msgstr "Niedrig"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:158
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:177
 msgid "High"
 msgstr "Hoch"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:160
-msgid "Low \f[c:#d0705d](Forced)\f[/c]"
-msgstr "Niedrig \f[c:#d0705d](Erzwungen)\f[/c]"
-
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:164
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:183
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:164
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:183
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:168
-msgid "Enabled \f[c:#d0705d](Experimental)\f[/c]"
-msgstr "Aktiviert \f[c:#d0705d](Experimentell)\f[/c]"
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:190
+msgid "Experimental"
+msgstr "Experimentell"
 
 #. TRANSLATORS: Reserved for later use
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:174
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:198
 msgid "Short"
 msgstr "Kurz"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:174
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:198
 msgid "Detailed"
 msgstr "Detailliert"
 
@@ -2669,3 +2682,9 @@ msgstr ""
 "\n"
 "Dein Client enthält das Level \"{}\" nicht.\n"
 "Bitte lade die benötigten Dateien herunter und versuche es erneut."
+
+#~ msgid "Low \f[c:#d0705d](Forced)\f[/c]"
+#~ msgstr "Niedrig \f[c:#d0705d](Erzwungen)\f[/c]"
+
+#~ msgid "Enabled \f[c:#d0705d](Experimental)\f[/c]"
+#~ msgstr "Aktiviert \f[c:#d0705d](Experimentell)\f[/c]"

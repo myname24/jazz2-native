@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: jazz2-resurrection\n"
-"POT-Creation-Date: 2026-04-29 11:03+0200\n"
-"PO-Revision-Date: 2026-04-29 11:04+0200\n"
+"POT-Creation-Date: 2026-04-29 13:34+0200\n"
+"PO-Revision-Date: 2026-04-29 13:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: Dan R.\n"
 "Language: cs\n"
@@ -1650,8 +1650,8 @@ msgstr "Slabé"
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:128
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:132
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:161
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:168
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:178
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:166
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:202
 #: Sources/Jazz2/UI/Menu/UserProfileOptionsSection.cpp:382
 msgid "Disabled"
 msgstr "Zakázáno"
@@ -1662,7 +1662,8 @@ msgstr "Zakázáno"
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:152
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:155
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:161
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:178
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:190
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:202
 #: Sources/Jazz2/UI/Menu/UserProfileOptionsSection.cpp:382
 msgid "Enabled"
 msgstr "Povoleno"
@@ -1963,101 +1964,113 @@ msgid "Always"
 msgstr "Vždy"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:25
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:27
 msgid "Rescale Mode"
 msgstr "Režim škálování"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:28
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:30
 msgid "Resolution"
 msgstr "Rozlišení"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:36
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:38
 msgid "Fullscreen"
 msgstr "Celá obrazovka"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:41
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:43
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:44
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:46
 msgid "Background Dithering"
 msgstr "Dithering na pozadí"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:46
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:48
+msgid "Blur Effects"
+msgstr "Efekty rozmazání"
+
+#. TRANSLATORS: Menu item in Options > Graphics section
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:50
+msgid "Lighting Resolution"
+msgstr "Rozlišení nasvícení"
+
+#. TRANSLATORS: Menu item in Options > Graphics section
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:52
 msgid "Water Quality"
 msgstr "Kvalita vody"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:48
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:54
 msgid "Show Player Trails"
 msgstr "Zobrazit stopy hráčů"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:50
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:56
 msgid "Preferred Splitscreen"
 msgstr "Preferované rozdělení obrazovky"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:52
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:58
 msgid "Prefer Zoom Out"
 msgstr "Preferovat oddálení"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:54
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:60
 msgid "Keep Aspect Ratio In Cinematics"
 msgstr "Zachovat poměr stran u filmů"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:57
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:63
 msgid "Unaligned Viewport"
 msgstr "Nezarovnaný pohled"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:60
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:66
 msgid "Performance Metrics"
 msgstr "Metrika výkonu"
 
 #. TRANSLATORS: Menu item in Options section
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:95
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:101
 #: Sources/Jazz2/UI/Menu/OptionsSection.cpp:22
 msgid "Graphics"
 msgstr "Grafika"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:158
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:166
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:179
+msgid "Forced"
+msgstr "Vynuceně"
+
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:177
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:179
 msgid "Low"
 msgstr "Nízká"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:158
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:177
 msgid "High"
 msgstr "Vysoká"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:160
-msgid "Low \f[c:#d0705d](Forced)\f[/c]"
-msgstr "Nízká \f[c:#d0705d](Vynucené)\f[/c]"
-
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:164
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:183
 msgid "Vertical"
 msgstr "Vertikální"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:164
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:183
 msgid "Horizontal"
 msgstr "Horizontální"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:168
-msgid "Enabled \f[c:#d0705d](Experimental)\f[/c]"
-msgstr "Povoleno \f[c:#d0705d](Experimentální)\f[/c]"
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:190
+msgid "Experimental"
+msgstr "Experimentální"
 
 #. TRANSLATORS: Reserved for later use
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:174
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:198
 msgid "Short"
 msgstr "Krátký"
 
-#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:174
+#: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:198
 msgid "Detailed"
 msgstr "Podrobný"
 
@@ -2661,6 +2674,12 @@ msgstr ""
 "\n"
 "Váš klient neobsahuje úroveň \"{}\".\n"
 "Stáhněte si požadované soubory a zkuste to znovu."
+
+#~ msgid "Low \f[c:#d0705d](Forced)\f[/c]"
+#~ msgstr "Nízká \f[c:#d0705d](Vynucené)\f[/c]"
+
+#~ msgid "Enabled \f[c:#d0705d](Experimental)\f[/c]"
+#~ msgstr "Povoleno \f[c:#d0705d](Experimentální)\f[/c]"
 
 #~ msgid "Unknown"
 #~ msgstr "Neznámý"

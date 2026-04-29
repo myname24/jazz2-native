@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: jazz2-resurrection\n"
-"POT-Creation-Date: 2026-04-29 13:39+0200\n"
+"POT-Creation-Date: 2026-04-29 13:38+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
-"Language-Team: Consul\n"
-"Language: tr\n"
+"Language-Team: FloddyFosh\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,7 +24,7 @@ msgid ""
 "Spaz ate the dopefish."
 msgstr ""
 "\n"
-"Spaz dopefish'i yedi."
+"Spaz heeft de Dopefish opgegeten."
 
 #: .fake/Translations/flash/01_diam1.j2l.h:2
 msgctxt "flash/01_diam1"
@@ -33,7 +33,7 @@ msgid ""
 "Find the gopher."
 msgstr ""
 "\n"
-"Sincabı bul."
+"Vind de goffer."
 
 #: .fake/Translations/flash/01_diam1.j2l.h:3
 msgctxt "flash/01_diam1"
@@ -42,7 +42,7 @@ msgid ""
 "Dragons live in burbank."
 msgstr ""
 "\n"
-"Ejderhalar Burbank'te yaşar."
+"Draken wonen in Burbank."
 
 #: .fake/Translations/flash/01_diam1.j2l.h:4
 msgctxt "flash/01_diam1"
@@ -52,8 +52,8 @@ msgid ""
 "Hoo Hah!"
 msgstr ""
 "\n"
-"Mark külot giyiyor.\n"
-"Hoo Hah!"
+"Mark draagt slipjes. \n"
+"Huh Hah!"
 
 #: .fake/Translations/flash/01_diam1.j2l.h:5
 msgctxt "flash/01_diam1"
@@ -63,8 +63,8 @@ msgid ""
 "Always has!"
 msgstr ""
 "\n"
-"Nick her zaman olduğu\n"
-"gibi parlak şeyleri sever!"
+"Nick is dol op glimmende dingen.\n"
+"Altijd al!"
 
 #: .fake/Translations/flash/02_diam3.j2l.h:1
 msgctxt "flash/02_diam3"
@@ -73,7 +73,7 @@ msgid ""
 "Send Tim new socks."
 msgstr ""
 "\n"
-"Tim'e yeni çorap yolla."
+"Stuur Tim nieuwe sokken."
 
 #: .fake/Translations/flash/02_diam3.j2l.h:2
 msgctxt "flash/02_diam3"
@@ -82,7 +82,7 @@ msgid ""
 "Send Nigel a green card."
 msgstr ""
 "\n"
-"Nigel'a yeşil kart yolla."
+"Stuur Nigel een Green Card."
 
 #: .fake/Translations/flash/02_diam3.j2l.h:3
 msgctxt "flash/02_diam3"
@@ -91,7 +91,7 @@ msgid ""
 "Beware of chainsaw schmalz."
 msgstr ""
 "\n"
-"Testere yağına dikkat et."
+"Pas op voor kettingzaag schmalz."
 
 #: .fake/Translations/flash/02_diam3.j2l.h:4
 msgctxt "flash/02_diam3"
@@ -100,7 +100,7 @@ msgid ""
 "Dont give mark a burrito."
 msgstr ""
 "\n"
-"Mark'a burrito verme."
+"Geef Mark geen burrito."
 
 #: .fake/Translations/flash/05_medivo1.j2l.h:1
 msgctxt "flash/05_medivo1"
@@ -109,7 +109,7 @@ msgid ""
 "Beware of falling enemies."
 msgstr ""
 "\n"
-"Düşen düşmanlara dikkat et."
+"Pas op voor vallende vijanden."
 
 #: .fake/Translations/flash/05_medivo1.j2l.h:2
 msgctxt "flash/05_medivo1"
@@ -118,7 +118,7 @@ msgid ""
 "Craig is still a doofus!"
 msgstr ""
 "\n"
-"Craig hâlâ bir şapşal!"
+"Craig is nog steeds een dwaas!"
 
 #: .fake/Translations/flash/05_medivo1.j2l.h:3
 msgctxt "flash/05_medivo1"
@@ -127,7 +127,7 @@ msgid ""
 "Secret Level Time!!!"
 msgstr ""
 "\n"
-"Gizli Bölüm Zamanı!!!"
+"Geheime level tijd!!!"
 
 #: .fake/Translations/flash/bonus_garglair.j2l.h:1
 msgctxt "flash/bonus_garglair"
@@ -137,8 +137,8 @@ msgid ""
 "To Clear Your Path"
 msgstr ""
 "\n"
-"Yolunu Açmak İçin\n"
-"Gümüş Kutuyu Ez"
+"Stomp op een zilveren kist\n"
+"om je pad vrij te maken."
 
 #: .fake/Translations/flash/bonus_garglair.j2l.h:2
 msgctxt "flash/bonus_garglair"
@@ -147,7 +147,7 @@ msgid ""
 "Crates can also make platforms appear..."
 msgstr ""
 "\n"
-"Kutular platformların görünmesini sağlayabilir..."
+"Kistjes kunnen ook platformen tevoorschijn laten komen..."
 
 #: .fake/Translations/flash/bonus_garglair.j2l.h:3
 msgctxt "flash/bonus_garglair"
@@ -156,7 +156,7 @@ msgid ""
 "Melt the Spring..."
 msgstr ""
 "\n"
-"İlkbaharı Erit..."
+"Smelt de springveer..."
 
 #: .fake/Translations/flash/bonus_garglair.j2l.h:4
 msgctxt "flash/bonus_garglair"
@@ -165,7 +165,7 @@ msgid ""
 "Leh is a Camper"
 msgstr ""
 "\n"
-"Leh bir Pusucu"
+"Leh is een camper"
 
 #: .fake/Translations/monk/01_jung1.j2l.h:1
 msgctxt "monk/01_jung1"
@@ -175,8 +175,8 @@ msgid ""
 "give you a headache."
 msgstr ""
 "\n"
-"Düşen kaya parçaları\n"
-"başını ağrıtabilir."
+"Vallende rotsen kunnen \n"
+"je hoofdpijn geven."
 
 #: .fake/Translations/monk/01_jung1.j2l.h:2
 msgctxt "monk/01_jung1"
@@ -186,8 +186,8 @@ msgid ""
 "well against bugs."
 msgstr ""
 "\n"
-"Bir Alev Makinesi \n"
-"böceklere karşı çok iyi çalışır."
+"Een vlammenwerper werkt\n"
+"goed tegen insecten."
 
 #: .fake/Translations/monk/03_hell.j2l.h:1
 msgctxt "monk/03_hell"
@@ -196,7 +196,7 @@ msgid ""
 "Long live the ice level."
 msgstr ""
 "\n"
-"Buzlu bölüm çok yaşa."
+"Lang leve het ijslevel."
 
 #: .fake/Translations/monk/03_hell.j2l.h:2
 msgctxt "monk/03_hell"
@@ -205,7 +205,7 @@ msgid ""
 "Goodnight, bubba!"
 msgstr ""
 "\n"
-"İyi geceler, canım!"
+"Welterusten, vriend!"
 
 #: .fake/Translations/monk/06_damn2.j2l.h:2
 msgctxt "monk/06_damn2"
@@ -215,8 +215,8 @@ msgid ""
 "This is NOT over!"
 msgstr ""
 "\n"
-"Nasıl ya? Aaaah! Hayır!\n"
-"Bu burada bitmedi!"
+"Wat is dit? Aaaah! Nee!  \n"
+"Dit is nog NIET voorbij!"
 
 #: .fake/Translations/prince/01_castle1.j2l.h:1
 msgctxt "prince/01_castle1"
@@ -226,8 +226,8 @@ msgid ""
 " you can go even faster."
 msgstr ""
 "\n"
-"Direkler seni döndürerek\n"
-"daha hızlı ilerlemeni sağlar."
+"Palen draaien je rond\n"
+"zodat je nog sneller kan gaan."
 
 #: .fake/Translations/prince/01_castle1.j2l.h:2
 msgctxt "prince/01_castle1"
@@ -236,7 +236,7 @@ msgid ""
 "You found a secret area."
 msgstr ""
 "\n"
-"Gizli bir bölge buldun."
+"Je hebt een geheim gebied gevonden."
 
 #: .fake/Translations/prince/01_castle1.j2l.h:3
 msgctxt "prince/01_castle1"
@@ -245,7 +245,7 @@ msgid ""
 "Secret Treasure Room."
 msgstr ""
 "\n"
-"Gizli Hazine Odası."
+"Geheime schatkamer."
 
 #: .fake/Translations/prince/01_castle1.j2l.h:4
 msgctxt "prince/01_castle1"
@@ -254,7 +254,7 @@ msgid ""
 "Nothing to see here."
 msgstr ""
 "\n"
-"Burada görülecek bir şey yok."
+"Hier is niks te zien."
 
 #: .fake/Translations/prince/01_castle1.j2l.h:5
 msgctxt "prince/01_castle1"
@@ -264,8 +264,8 @@ msgid ""
 "bonus warp devices."
 msgstr ""
 "\n"
-"Jeton toplayarak ışınlanma \n"
-"cihazlarını aktive edebilirsin."
+"Verzamel muntjes om\n"
+"bonus portalen te activeren."
 
 #: .fake/Translations/prince/02_castle1n.j2l.h:1
 msgctxt "prince/02_castle1n"
@@ -274,7 +274,7 @@ msgid ""
 "Cheese is green on tuesday."
 msgstr ""
 "\n"
-"Peynirler, Salı günleri yeşil olur."
+"Kaas is groen op dinsdag."
 
 #: .fake/Translations/prince/02_castle1n.j2l.h:2
 msgctxt "prince/02_castle1n"
@@ -283,7 +283,7 @@ msgid ""
 "Craig is king doofus."
 msgstr ""
 "\n"
-"Craig şapşal bir kral."
+"Craig is koning dwaas."
 
 #: .fake/Translations/prince/02_castle1n.j2l.h:3
 msgctxt "prince/02_castle1n"
@@ -293,8 +293,8 @@ msgid ""
 "shoot her off her ledge."
 msgstr ""
 "\n"
-"Kraliçe'yi yenebilmek için\n"
-"ona ateş ederek çıkıntıdan düşür."
+"De koningin kan je verslaan\n"
+"door haar van de rand te schieten."
 
 #: .fake/Translations/prince/02_castle1n.j2l.h:4
 msgctxt "prince/02_castle1n"
@@ -304,8 +304,8 @@ msgid ""
 "Now go get Devan Shell!"
 msgstr ""
 "\n"
-"Aferin!\n"
-"Şimdi gidip Devan Shell'i yakala!"
+"Goed gedaan! \n"
+"Ga nu achter Devan Shell aan!"
 
 #: .fake/Translations/prince/02_castle1n.j2l.h:5
 msgctxt "prince/02_castle1n"
@@ -315,8 +315,8 @@ msgid ""
 "blocks, press down and jump!"
 msgstr ""
 "\n"
-"Bu blokların içinden geçmek için\n"
-"aşağıya bas ve ardından zıpla!"
+"Om door deze blokken heen te\n"
+"trappen, druk omlaag en spring!"
 
 #: .fake/Translations/prince/02_castle1n.j2l.h:6
 msgctxt "prince/02_castle1n"
@@ -326,8 +326,8 @@ msgid ""
 "these blocks to break them!"
 msgstr ""
 "\n"
-"Kutuları kırmak için onların\n"
-"altındayken aşağıya bas ve zıpla!"
+"Druk omlaag en spring onder\n"
+"deze blokken om ze te breken!"
 
 #: .fake/Translations/prince/02_castle1n.j2l.h:7
 msgctxt "prince/02_castle1n"
@@ -337,8 +337,8 @@ msgid ""
 "to open key blocks!"
 msgstr ""
 "\n"
-"Metal kutuyu ezerek bloklarla \n"
-"kilitlenmiş bölgeleri açabilirsin!"
+"Stomp de metalen kist kapot\n"
+"om sleutelblokken te openen!"
 
 #: .fake/Translations/prince/03_carrot1.j2l.h:1
 msgctxt "prince/03_carrot1"
@@ -347,7 +347,8 @@ msgid ""
 "Stomp your booty to exit."
 msgstr ""
 "\n"
-"Buradan çıkmak için bloğu ez."
+"Stomp met je achterwerk\n"
+"om eruit te komen."
 
 #: .fake/Translations/prince/03_carrot1.j2l.h:2
 msgctxt "prince/03_carrot1"
@@ -356,7 +357,7 @@ msgid ""
 "This spring is frozen."
 msgstr ""
 "\n"
-"Bu yay donmuş."
+"Deze springveer is bevroren."
 
 #: .fake/Translations/prince/04_carrot1n.j2l.h:1
 msgctxt "prince/04_carrot1n"
@@ -365,7 +366,7 @@ msgid ""
 "Super dooper secret."
 msgstr ""
 "\n"
-"Müthiş gizli oda."
+"Super-duper geheim."
 
 #: .fake/Translations/prince/04_carrot1n.j2l.h:2
 msgctxt "prince/04_carrot1n"
@@ -375,8 +376,8 @@ msgid ""
 "special ammo for a short time."
 msgstr ""
 "\n"
-"Kalkanlar sana belli bir süre\n"
-"için sınırsız özel mermi verir."
+"Een schild geeft je voor korte tijd\n"
+"onbeperkt speciale munitie."
 
 #: .fake/Translations/prince/04_carrot1n.j2l.h:4
 msgctxt "prince/04_carrot1n"
@@ -386,8 +387,8 @@ msgid ""
 "the life of a shield."
 msgstr ""
 "\n"
-"Saatler senin kalkanına\n"
-"süre ekler."
+"Stopwatches verlengen de\n"
+"levensduur van een schild."
 
 #: .fake/Translations/prince/04_carrot1n.j2l.h:5
 msgctxt "prince/04_carrot1n"
@@ -396,7 +397,7 @@ msgid ""
 "This schwartzenguard is toast!"
 msgstr ""
 "\n"
-"Bu gardiyan yalan oldu!"
+"Deze Schwartzenguard gaat eraan!"
 
 #: .fake/Translations/prince/06_labrat2.j2l.h:1
 msgctxt "prince/06_labrat2"
@@ -408,8 +409,8 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Beni yenemezsin, Jazz!\n"
-"Süperbotum ile yüzleşmeye hazır ol!"
+"Je kunt me niet verslaan!\n"
+"Bereid je voor op mijn superbot!"
 
 #: .fake/Translations/prince/06_labrat2.j2l.h:2
 msgctxt "prince/06_labrat2"
@@ -420,7 +421,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Aman be! Buradan gidiyorum!"
+"Argh! Ik ga ervandoor!"
 
 #: .fake/Translations/prince/06_labrat2.j2l.h:3
 msgctxt "prince/06_labrat2"
@@ -430,8 +431,8 @@ msgid ""
 "Run into them at full speed!"
 msgstr ""
 "\n"
-"Bu bloklar hız bloklarıdır.\n"
-"Onlara doğru koş!"
+"Deze blokken zijn snelheidsblokken.\n"
+"Ren er met volle vaart tegenaan!"
 
 #: .fake/Translations/prince/trainer.j2l.h:1
 msgctxt "prince/trainer"
@@ -441,8 +442,8 @@ msgid ""
 " This is a training level."
 msgstr ""
 "\n"
-"Jazz Jackrabbit 2'ye hoş geldin.\n"
-" Bu bir alıştırma bölümüdür."
+"Welkom bij Jazz Jackrabbit 2.\n"
+"Dit is een oefenlevel."
 
 #: .fake/Translations/prince/trainer.j2l.h:2
 msgctxt "prince/trainer"
@@ -452,8 +453,8 @@ msgid ""
 "points and surprises."
 msgstr ""
 "\n"
-"Şekerlemeleri toplayarak\n"
-"puan ve sürprizler kazanabilirsin."
+"Verzamel goodies voor\n"
+"punten en leuke verrassingen."
 
 #: .fake/Translations/prince/trainer.j2l.h:3
 msgctxt "prince/trainer"
@@ -463,8 +464,8 @@ msgid ""
 "again to do a special move."
 msgstr ""
 "\n"
-"Zıpladıktan sonra tekrar zıplayarak\n"
-"özel hareketini yapabilirsin."
+"Druk na het springen nogmaals op springen\n"
+"om een speciale beweging te maken."
 
 #: .fake/Translations/prince/trainer.j2l.h:4
 msgctxt "prince/trainer"
@@ -473,7 +474,7 @@ msgid ""
 "Some walls can be shot."
 msgstr ""
 "\n"
-"Bazı duvarlara ateş edebilirsin."
+"Sommige muren kun je kapotschieten."
 
 #: .fake/Translations/prince/trainer.j2l.h:5
 msgctxt "prince/trainer"
@@ -483,8 +484,8 @@ msgid ""
 "to stomp with your butt."
 msgstr ""
 "\n"
-"Zıpladıktan sonra aşağı tuşuna basarak\n"
-"zemini ezebilirsin."
+"Druk in de lucht naar beneden\n"
+"om met je achterwerk te stompen."
 
 #: .fake/Translations/prince/trainer.j2l.h:6
 msgctxt "prince/trainer"
@@ -494,8 +495,8 @@ msgid ""
 " Check the walls."
 msgstr ""
 "\n"
-"Jazz 2'de gizli yerler bol.\n"
-" Duvarları kontrol et."
+"Er zijn veel geheimen in Jazz 2.\n"
+"Kijk goed naar de muren."
 
 #: .fake/Translations/prince/trainer.j2l.h:7
 msgctxt "prince/trainer"
@@ -505,8 +506,8 @@ msgid ""
 "look for secrets."
 msgstr ""
 "\n"
-"Bravo. Gizli yerleri\n"
-"aramayı unutma."
+"Goed gedaan! Vergeet niet om\n"
+"naar geheimen te blijven zoeken."
 
 #: .fake/Translations/prince/trainer.j2l.h:8
 msgctxt "prince/trainer"
@@ -516,8 +517,8 @@ msgid ""
 "an extra life."
 msgstr ""
 "\n"
-"Mücevherleri toplayarak\n"
-"ekstra can kazanabilirsin."
+"Verzamel kristallen voor\n"
+"een extra leven."
 
 #: .fake/Translations/prince/trainer.j2l.h:9
 msgctxt "prince/trainer"
@@ -527,8 +528,8 @@ msgid ""
 "as one gem."
 msgstr ""
 "\n"
-"Kırmızı mücevherler\n"
-"bir mücevher'e eşittir."
+"Rode kristallen tellen\n"
+"als één kristal."
 
 #: .fake/Translations/prince/trainer.j2l.h:10
 msgctxt "prince/trainer"
@@ -538,8 +539,8 @@ msgid ""
 "as five gems."
 msgstr ""
 "\n"
-"Yeşil mücevherler\n"
-"beş mücevher'e eşittir."
+"Groene kristallen tellen\n"
+"als vijf kristallen."
 
 #: .fake/Translations/prince/trainer.j2l.h:11
 msgctxt "prince/trainer"
@@ -549,8 +550,8 @@ msgid ""
 "as ten gems."
 msgstr ""
 "\n"
-"Mavi mücevherler de\n"
-"on mücevher'e eşittir."
+"Blauwe kristallen tellen\n"
+"als tien kristallen."
 
 #: .fake/Translations/prince/trainer.j2l.h:12
 msgctxt "prince/trainer"
@@ -559,7 +560,7 @@ msgid ""
 "Carrots give you health."
 msgstr ""
 "\n"
-"Havuçlar sana can verir."
+"Wortels zijn goed voor je gezondheid."
 
 #: .fake/Translations/prince/trainer.j2l.h:13
 msgctxt "prince/trainer"
@@ -569,8 +570,8 @@ msgid ""
 "spot if you lose a life."
 msgstr ""
 "\n"
-"Kontrol noktaları, ölmen\n"
-"halinde seni geri getirir."
+"Checkpoints bewaren je positie\n"
+"als je je leven verliest."
 
 #: .fake/Translations/prince/trainer.j2l.h:14
 msgctxt "prince/trainer"
@@ -580,8 +581,8 @@ msgid ""
 "unlock bonus rooms."
 msgstr ""
 "\n"
-"Jetonları toplayarak\n"
-"gizli odaları açabilirsin."
+"Verzamel muntjes om\n"
+"bonus kamers te ontgrendelen."
 
 #: .fake/Translations/prince/trainer.j2l.h:15
 msgctxt "prince/trainer"
@@ -591,8 +592,8 @@ msgid ""
 "It hurts."
 msgstr ""
 "\n"
-"Keskin şeylere dikkat et.\n"
-"Canını acıtır."
+"Pas op voor scherpe dingen.\n"
+"Die doen pijn."
 
 #: .fake/Translations/prince/trainer.j2l.h:16
 msgctxt "prince/trainer"
@@ -602,8 +603,8 @@ msgid ""
 " Good luck and have fun."
 msgstr ""
 "\n"
-"Şimdi oynamaya hazırsın.\n"
-"Bol şans ve iyi eğlenceler."
+"Nu ben je klaar om te spelen.\n"
+"Veel geluk en veel plezier."
 
 #: .fake/Translations/rescue/01_colon1.j2l.h:1
 msgctxt "rescue/01_colon1"
@@ -612,7 +613,7 @@ msgid ""
 "Buttstomp the manhole cover!"
 msgstr ""
 "\n"
-"Rögar kapağını ez!"
+"Stomp op het putdeksel!"
 
 #: .fake/Translations/rescue/03_psych1.j2l.h:1
 msgctxt "rescue/03_psych1"
@@ -622,8 +623,7 @@ msgid ""
 "make you dizzy."
 msgstr ""
 "\n"
-"Duman halkaları\n"
-"başını döndürür."
+"Rookringen maken je duizelig."
 
 #: .fake/Translations/secretf/01_easter1.j2l.h:1
 msgctxt "secretf/01_easter1"
@@ -633,8 +633,8 @@ msgid ""
 "so go up and around!"
 msgstr ""
 "\n"
-"Burada ezme hareketini \n"
-"yapamazsın. Yukarıdan devam et!"
+"Stompen kun je niet,\n"
+"dus ga omhoog en eromheen!"
 
 #: .fake/Translations/secretf/01_easter1.j2l.h:2
 msgctxt "secretf/01_easter1"
@@ -644,8 +644,8 @@ msgid ""
 "with itchy trigger fingers."
 msgstr ""
 "\n"
-"Aceleci davrananlara\n"
-"ödül yok."
+"Geen beloningen voor degenen\n"
+"die geen vaste hand hebben."
 
 #: .fake/Translations/secretf/01_easter1.j2l.h:3
 msgctxt "secretf/01_easter1"
@@ -654,7 +654,7 @@ msgid ""
 "Todays Forcast: Strong Winds!"
 msgstr ""
 "\n"
-"Bugünün Hava Durumu: Güçlü Rüzgarlar!"
+"De weersvoorspelling van vandaag: Harde wind!"
 
 #: .fake/Translations/secretf/01_easter1.j2l.h:4
 msgctxt "secretf/01_easter1"
@@ -664,8 +664,8 @@ msgid ""
 "to clear your path."
 msgstr ""
 "\n"
-"Yolu açmak için\n"
-"kutuyu bul."
+"Zoek het kistje\n"
+"en maak je pad vrij."
 
 #: .fake/Translations/secretf/01_easter1.j2l.h:5
 msgctxt "secretf/01_easter1"
@@ -676,8 +676,9 @@ msgid ""
 "The Secret Files!"
 msgstr ""
 "\n"
+"Welkom bij\n"
 "Jazz Jackrabbit 2:\n"
-"The Secret Files'a hoş geldin!"
+"The Secret Files!"
 
 #: .fake/Translations/secretf/01_easter1.j2l.h:6
 msgctxt "secretf/01_easter1"
@@ -689,9 +690,10 @@ msgid ""
 "to stand on."
 msgstr ""
 "\n"
-"Sol üstteki odaya sadece\n"
-"Spaz ulaşabilir. Üstünde durması \n"
-"gereken bir şeye ihtiyacı olabilir."
+"Alleen Spaz kan bij\n"
+"de kamer linksboven komen.\n"
+"Hij heeft misschien iets nodig\n"
+"om op te staan."
 
 #: .fake/Translations/secretf/01_easter1.j2l.h:7
 msgctxt "secretf/01_easter1"
@@ -701,8 +703,8 @@ msgid ""
 "You've veen warned. :)"
 msgstr ""
 "\n"
-"Nigel'ı bilardoda yenme.\n"
-"Ben uyarımı yapayım. :)"
+"Versla Nigel niet bij het poolbiljarten.\n"
+"Je bent gewaarschuwd. :)"
 
 #: .fake/Translations/secretf/01_easter1.j2l.h:16
 msgctxt "secretf/01_easter1"
@@ -710,8 +712,8 @@ msgid ""
 "Eating too many chocolate\n"
 "eggs can make you sick :p"
 msgstr ""
-"Çok fazla çikolatalı yumurta\n"
-"yemek seni rahatsız eder :p"
+"Te veel chocolade eieren\n"
+"kunnen je ziek maken :p"
 
 #: .fake/Translations/secretf/02_easter2.j2l.h:1
 msgctxt "secretf/02_easter2"
@@ -720,7 +722,7 @@ msgid ""
 "Sloping Tunnel Entrance"
 msgstr ""
 "\n"
-"Eğimli Tünel Girişi"
+"Hellende tunnelingang"
 
 #: .fake/Translations/secretf/02_easter2.j2l.h:2
 msgctxt "secretf/02_easter2"
@@ -730,8 +732,8 @@ msgid ""
 "find the access warp."
 msgstr ""
 "\n"
-"Yukarıdaki tünele ulaşabilmek için\n"
-"oraya ışınlanılacak yeri bul."
+"Om de tunnels hierboven te bereiken,\n"
+"moet je het toegangsportaal vinden."
 
 #: .fake/Translations/secretf/02_easter2.j2l.h:3
 msgctxt "secretf/02_easter2"
@@ -741,8 +743,8 @@ msgid ""
 "One route leads to battle."
 msgstr ""
 "\n"
-"Yollardan biri zenginliğe götürür.\n"
-"Diğeri ise savaşa götürür."
+"Eén weg leidt naar rijkdom.\n"
+"Eén weg leidt naar strijd."
 
 #: .fake/Translations/secretf/03_easter3.j2l.h:1
 msgctxt "secretf/03_easter3"
@@ -752,8 +754,8 @@ msgid ""
 "can get to the goodies!"
 msgstr ""
 "\n"
-"Sadece iki kere zıplayabilenler\n"
-"ödüllere erişebilir!"
+"Alleen wie kan dubbelspringen\n"
+"kan bij de goodies komen!"
 
 #: .fake/Translations/secretf/03_easter3.j2l.h:2
 msgctxt "secretf/03_easter3"
@@ -763,8 +765,8 @@ msgid ""
 "your climbing blocks appear"
 msgstr ""
 "\n"
-"Tırmanma bloklarını\n"
-"ortaya çıkartacak kutuyu bul"
+"Zoek het kistje om je\n"
+"treden te laten verschijnen"
 
 #: .fake/Translations/secretf/03_easter3.j2l.h:3
 msgctxt "secretf/03_easter3"
@@ -774,8 +776,8 @@ msgid ""
 "free's some enemies :)"
 msgstr ""
 "\n"
-"Bu kutuyu ezmek aynı zamanda\n"
-"bazı düşmanları ortaya çıkarır :)"
+"Als je dit kistje kapot stompt\n"
+"bevrijd je ook een paar vijanden :)"
 
 #: .fake/Translations/secretf/04_haunted1.j2l.h:1
 msgctxt "secretf/04_haunted1"
@@ -784,7 +786,7 @@ msgid ""
 "Enter the house with caution....."
 msgstr ""
 "\n"
-"Eve dikkatlice gir....."
+"Ga het huis voorzichtig binnen....."
 
 #: .fake/Translations/secretf/04_haunted1.j2l.h:3
 msgctxt "secretf/04_haunted1"
@@ -793,7 +795,8 @@ msgid ""
 "Silver Crates can't be broken underwater..."
 msgstr ""
 "\n"
-"Suyun altında Gümüş Kutuları kıramazsın..."
+"Zilveren kistjes kunnen onder\n"
+"water niet kapot worden gemaakt…"
 
 #: .fake/Translations/secretf/04_haunted1.j2l.h:4
 msgctxt "secretf/04_haunted1"
@@ -802,8 +805,7 @@ msgid ""
 "Water Level control crate above."
 msgstr ""
 "\n"
-"Su seviyesini kontrol eden kutu\n"
-"yakınlarda bir yerde."
+"Kistje voor het bedienen van het waterpeil hierboven."
 
 #: .fake/Translations/secretf/04_haunted1.j2l.h:5
 msgctxt "secretf/04_haunted1"
@@ -812,7 +814,8 @@ msgid ""
 "Stomping crates can be good and bad..."
 msgstr ""
 "\n"
-"Kutuları ezmek hem iyi hem de kötü olabilir..."
+"Het kapot stompen van kistjes\n"
+"kan goed en slecht zijn…"
 
 #: .fake/Translations/secretf/04_haunted1.j2l.h:7
 msgctxt "secretf/04_haunted1"
@@ -821,7 +824,8 @@ msgid ""
 "But you need a way to get up there..."
 msgstr ""
 "\n"
-"Ama yukarıya gitmek için bir yola ihtiyacın var.."
+"Maar je hebt een manier nodig\n"
+"om daar boven te kunnen komen…"
 
 #: .fake/Translations/secretf/06_haunted3.j2l.h:16
 msgctxt "secretf/06_haunted3"
@@ -832,7 +836,7 @@ msgid ""
 msgstr ""
 "\n"
 "Michelle,\n"
-"Seni her zaman ve sonsuza dek seveceğim :)"
+"ik zal eeuwig en voor altijd van je houden :)"
 
 #: .fake/Translations/secretf/07_town1.j2l.h:1
 msgctxt "secretf/07_town1"
@@ -841,7 +845,7 @@ msgid ""
 "Take to the roof tops!"
 msgstr ""
 "\n"
-"Çatıya çık!"
+"Ga de daken op!"
 
 #: .fake/Translations/secretf/07_town1.j2l.h:2
 msgctxt "secretf/07_town1"
@@ -851,7 +855,8 @@ msgid ""
 "those who stomp..."
 msgstr ""
 "\n"
-"Gökyüzü, ezenleri ödüllendirecek..."
+"De lucht hierboven zal\n"
+"degenen belonen die stompen…"
 
 #: .fake/Translations/secretf/07_town1.j2l.h:3
 msgctxt "secretf/07_town1"
@@ -861,8 +866,7 @@ msgid ""
 "right as you possibly can..."
 msgstr ""
 "\n"
-"Mümkün olduğu kadar\n"
-"sağa doğru atla..."
+"Probeer zo ver je kunt naar rechts te springen."
 
 #: .fake/Translations/secretf/07_town1.j2l.h:4
 msgctxt "secretf/07_town1"
@@ -871,7 +875,7 @@ msgid ""
 "Didn't make the jump huh? :)"
 msgstr ""
 "\n"
-"Zıplayamadın di'mi? :)"
+"De sprong is mislukt, hè? :)"
 
 #: .fake/Translations/secretf/07_town1.j2l.h:5
 msgctxt "secretf/07_town1"
@@ -880,7 +884,7 @@ msgid ""
 "Well Done!"
 msgstr ""
 "\n"
-"Aferin!"
+"Goed gedaan!"
 
 #: .fake/Translations/secretf/07_town1.j2l.h:6
 msgctxt "secretf/07_town1"
@@ -891,9 +895,9 @@ msgid ""
 "For Spaz, Press Jump Twice!"
 msgstr ""
 "\n"
-"Havalandırmaya çıkmak için Özel Hareketini kullan!\n"
-"Jazz isen, önce Eğil ve sonra Zıpla.\n"
-"Spaz isen, iki kere Zıpla!"
+"Gebruik je speciale beweging om op de airco's te komen!\n"
+"Voor Jazz: druk omlaag en spring.\n"
+"Voor Spaz: druk twee keer op springen!"
 
 #: .fake/Translations/secretf/08_town2.j2l.h:1
 msgctxt "secretf/08_town2"
@@ -902,7 +906,7 @@ msgid ""
 "Find the crate and the gems are yours!"
 msgstr ""
 "\n"
-"Kutuyu bul ve mücevherler senin olsun!"
+"Zoek het kistje en de edelstenen zijn voor jou!"
 
 #: .fake/Translations/secretf/08_town2.j2l.h:2
 msgctxt "secretf/08_town2"
@@ -911,7 +915,7 @@ msgid ""
 "Springs Don't Work When Frozen..."
 msgstr ""
 "\n"
-"Yaylar Donukken Çalışmaz..."
+"Springveren werken niet als ze bevroren zijn..."
 
 #: .fake/Translations/secretf/08_town2.j2l.h:3
 msgctxt "secretf/08_town2"
@@ -920,7 +924,7 @@ msgid ""
 "Collecting 20 coins is more rewarding..."
 msgstr ""
 "\n"
-"20 adet jeton toplamak daha ödüllendirici..."
+"Het verzamelen van 20 muntjes wordt extra beloond..."
 
 #: .fake/Translations/secretf/09_town3.j2l.h:1
 msgctxt "secretf/09_town3"
@@ -929,7 +933,7 @@ msgid ""
 "Find the crate to clear the blocks...."
 msgstr ""
 "\n"
-"Blokları temizlemek için kutuyu bul...."
+"Zoek het kistje om de blokken te verwijderen..."
 
 #: .fake/Translations/secretf/09_town3.j2l.h:2
 msgctxt "secretf/09_town3"
@@ -939,8 +943,7 @@ msgid ""
 "be very dangerous."
 msgstr ""
 "\n"
-"DİKKAT! Bir grup karga çok\n"
-"tehlikeli olabilir."
+"PAS OP! Een zwerm raven kan erg gevaarlijk zijn."
 
 #: .fake/Translations/secretf/09_town3.j2l.h:3
 msgctxt "secretf/09_town3"
@@ -950,8 +953,8 @@ msgid ""
 "look to the tallest building."
 msgstr ""
 "\n"
-"Blokları temizlemek için\n"
-"en uzun binaya doğru bak."
+"Om de blokken te verwijderen\n"
+"moet je naar het hoogste gebouw kijken."
 
 #: .fake/Translations/secretf/09_town3.j2l.h:4
 msgctxt "secretf/09_town3"
@@ -960,7 +963,7 @@ msgid ""
 "Choose a cover and stomp away!"
 msgstr ""
 "\n"
-"Saklanacak yer bul ve ezmeye başla!"
+"Kies een deksel en sla er maar op los!"
 
 #: .fake/Translations/secretf/09_town3.j2l.h:5
 msgctxt "secretf/09_town3"
@@ -969,7 +972,7 @@ msgid ""
 "Hi GeoBunny :)"
 msgstr ""
 "\n"
-"Merhaba GeoBunny :)"
+"Hoi GeoBunny :)"
 
 #: .fake/Translations/secretf/09_town3.j2l.h:6
 msgctxt "secretf/09_town3"
@@ -980,9 +983,9 @@ msgid ""
 "password: BUNNYLOVER\n"
 msgstr ""
 "\n"
-"www.project2.com adresine git\n"
-"ve\n"
-"BUNNYLOVER şifresini kullan\n"
+"Ga naar www.project2.com\n"
+"en gebruik het\n"
+"wachtwoord: BUNNYLOVER\n"
 
 #: .fake/Translations/share/01_share1.j2l.h:1
 msgctxt "share/01_share1"
@@ -991,7 +994,7 @@ msgid ""
 "Shoot these blocks!"
 msgstr ""
 "\n"
-"Bloklara ateş et!"
+"Schiet op deze blokken!"
 
 #: .fake/Translations/share/01_share1.j2l.h:2
 msgctxt "share/01_share1"
@@ -1001,8 +1004,8 @@ msgid ""
 "to stomp with your butt."
 msgstr ""
 "\n"
-"Zıpladıktan sonra aşağıya basarak\n"
-"yeri ezebilirsin."
+"Druk in de lucht naar beneden\n"
+"om met je achterwerk te stompen."
 
 #: .fake/Translations/share/01_share1.j2l.h:3
 msgctxt "share/01_share1"
@@ -1012,8 +1015,8 @@ msgid ""
 "the secret metal crate."
 msgstr ""
 "\n"
-"Burayı geçebilmek için\n"
-"metal kutuyu ez."
+"Om dit gebied te verlaten, moet\n"
+"je de geheime metalen kist stompen."
 
 #: .fake/Translations/share/01_share1.j2l.h:4
 msgctxt "share/01_share1"
@@ -1023,8 +1026,8 @@ msgid ""
 "through this secret warp!"
 msgstr ""
 "\n"
-"Bu ışınlanma cihazından geçebilmek için\n"
-"20 adet jetona ihtiyacın var!"
+"Je hebt 20 muntjes nodig om door\n"
+"dit geheime portaal te gaan!"
 
 #: .fake/Translations/share/01_share1.j2l.h:5
 msgctxt "share/01_share1"
@@ -1034,8 +1037,8 @@ msgid ""
 "warps that appear later."
 msgstr ""
 "\n"
-"Jetonlar senin ışınlanma\n"
-"cihazlarından geçmeni sağlar."
+"Muntjes geven je toegang tot\n"
+"portalen die later verschijnen."
 
 #: .fake/Translations/share/01_share1.j2l.h:6
 msgctxt "share/01_share1"
@@ -1045,8 +1048,8 @@ msgid ""
 "you might find a surprise!"
 msgstr ""
 "\n"
-"Doğru yeri ezersen\n"
-"belki bir sürpriz bulabilirsin!"
+"Stomp op de juiste plek en\n"
+"misschien vind je wel een verrassing!"
 
 #: .fake/Translations/share/01_share1.j2l.h:7
 msgctxt "share/01_share1"
@@ -1056,8 +1059,8 @@ msgid ""
 "bombs or baddies!"
 msgstr ""
 "\n"
-"Bazı kutularda bombalar\n"
-"ve daha kötü şeyler olabilir!"
+"Sommige kistjes bevatten\n"
+"bommen of vijanden!"
 
 #: .fake/Translations/share/02_share2.j2l.h:1
 msgctxt "share/02_share2"
@@ -1067,8 +1070,8 @@ msgid ""
 "through this secret warp!"
 msgstr ""
 "\n"
-"Bu gizli ışınlanma cihazından geçebilmek için \n"
-"20 adet jetona ihtiyacın var!"
+"Je hebt 20 muntjes nodig om door\n"
+"dit geheime portaal te gaan!"
 
 #: .fake/Translations/share/02_share2.j2l.h:2
 msgctxt "share/02_share2"
@@ -1078,8 +1081,8 @@ msgid ""
 "against nasty bugs."
 msgstr ""
 "\n"
-"Alev makinesi,\n"
-"böceklere karşı iyi çalışır."
+"Een vlammenwerper werkt goed\n"
+"tegen die nare insecten."
 
 #: .fake/Translations/share/02_share2.j2l.h:3
 msgctxt "share/02_share2"
@@ -1089,8 +1092,7 @@ msgid ""
 "you very dizzy!"
 msgstr ""
 "\n"
-"Duman halkaları\n"
-"başını döndürür!"
+"Rookringen maken je erg duizelig!"
 
 #: .fake/Translations/share/03_share3.j2l.h:1
 msgctxt "share/03_share3"
@@ -1100,8 +1102,8 @@ msgid ""
 "turn you into a frog."
 msgstr ""
 "\n"
-"Cadıya dikkat et! Seni bir\n"
-"kurbağaya çevirebilir."
+"Pas op voor de heks! Ze kan je\n"
+"in een kikker veranderen."
 
 #: .fake/Translations/share/03_share3.j2l.h:2
 msgctxt "share/03_share3"
@@ -1111,8 +1113,8 @@ msgid ""
 "Eva Earlong can help!"
 msgstr ""
 "\n"
-"Eğer kurbağaya dönüştüysen\n"
-"Eva Earlong sana yardımcı olabilir!"
+"Als je in een kikker bent veranderd,\n"
+"kan Eva Earlong je helpen!"
 
 #: .fake/Translations/share/03_share3.j2l.h:3
 msgctxt "share/03_share3"
@@ -1124,9 +1126,11 @@ msgid ""
 "for M O R E!"
 msgstr ""
 "\n"
-"Başardın! Bu demo sürümünün\n"
-"sonuydu. Daha fazlası için ana menüden\n"
-"tam sürümü oynayabilirsin!"
+"Je hebt het gehaald!\n"
+"Dit is het einde van\n"
+"de shareware‑versie.\n"
+"Bekijk nu de bestelinfo\n"
+"voor M É É R!"
 
 #: .fake/Translations/xmas99/01_xmas1.j2l.h:1
 msgctxt "xmas99/01_xmas1"
@@ -1135,7 +1139,7 @@ msgid ""
 "Watch out for the spikes below!"
 msgstr ""
 "\n"
-"Aşağıdaki iğnelere dikkat et!"
+"Pas op voor de stekels daar beneden!"
 
 #: .fake/Translations/xmas99/01_xmas1.j2l.h:2
 msgctxt "xmas99/01_xmas1"
@@ -1146,8 +1150,8 @@ msgid ""
 "in the pathways!"
 msgstr ""
 "\n"
-"Yolundaki bazı hassas yerleri\n"
-"ezebilirsin!"
+"Je kunt bij sommige zwakke plekken in\n"
+"de paden dwars doorheen stompen!"
 
 #: .fake/Translations/xmas99/01_xmas1.j2l.h:3
 msgctxt "xmas99/01_xmas1"
@@ -1158,8 +1162,9 @@ msgid ""
 "certain weapon."
 msgstr ""
 "\n"
-"Bazı bloklar spesifik\n"
-"silahlarla kırılabilir."
+"Sommige blokken kunnen alleen\n"
+"met een bepaald wapen\n"
+"worden kapotgemaakt."
 
 #: .fake/Translations/xmas99/01_xmas1.j2l.h:4
 msgctxt "xmas99/01_xmas1"
@@ -1168,7 +1173,7 @@ msgid ""
 "Welcome to Christmas Chronicles!"
 msgstr ""
 "\n"
-"Christmas Chronicles'a hoş geldin!"
+"Welkom bij Christmas Chronicles!"
 
 #: .fake/Translations/xmas99/01_xmas1.j2l.h:5
 msgctxt "xmas99/01_xmas1"
@@ -1180,10 +1185,10 @@ msgid ""
 "Project 2 Interactive!"
 msgstr ""
 "\n"
-"Epic MegaGames\n"
-"Orange Games ve\n"
-"Project 2 Interactive'den\n"
-"İyi Noeller!"
+"Fijne feestdagen van\n"
+"Epic MegaGames,\n"
+"Orange Games en\n"
+"Project 2 Interactive!"
 
 #: .fake/Translations/xmas99/02_xmas2.j2l.h:1
 msgctxt "xmas99/02_xmas2"
@@ -1193,8 +1198,7 @@ msgid ""
 "of some of the trees!"
 msgstr ""
 "\n"
-"Bazı ağaçların üzerinde\n"
-"durabilirsin!"
+"Je kunt bovenop sommige bomen staan!"
 
 #: .fake/Translations/xmas99/02_xmas2.j2l.h:2
 msgctxt "xmas99/02_xmas2"
@@ -1205,8 +1209,8 @@ msgid ""
 "in the pathways!"
 msgstr ""
 "\n"
-"Yolundaki bazı hassas yerleri\n"
-"ezebilirsin!"
+"Je kunt bij sommige zwakke plekken in\n"
+"de paden dwars doorheen stompen!"
 
 #: .fake/Translations/xmas99/02_xmas2.j2l.h:3
 msgctxt "xmas99/02_xmas2"
@@ -1216,8 +1220,8 @@ msgid ""
 "can be rewarding."
 msgstr ""
 "\n"
-"Yukardaki blokları ezmek\n"
-"ödüllendirici olabilir."
+"Het kan lonen om de blokken\n"
+"boven je kapot te slaan."
 
 #: .fake/Translations/xmas99/02_xmas2.j2l.h:6
 msgctxt "xmas99/02_xmas2"
@@ -1226,7 +1230,7 @@ msgid ""
 "Gem Trail Entry Crate."
 msgstr ""
 "\n"
-"Mücevher İzi Giriş Kutusu."
+"Edelstenenpad‑ingangskist."
 
 #: .fake/Translations/xmas99/02_xmas2.j2l.h:7
 msgctxt "xmas99/02_xmas2"
@@ -1237,9 +1241,9 @@ msgid ""
 "and stomp the Entry Crate."
 msgstr ""
 "\n"
-"Mücevher İzi Girişi.\n"
-"Giriş Sandığını bulup ezmek\n"
-"için ağaçların tepelerine tırman."
+"Ingang van het Edelstenenpad.\n"
+"Klim over de boomtoppen om de\n"
+"ingangskist te vinden en kapot te stompen."
 
 #: .fake/Translations/xmas99/02_xmas2.j2l.h:14
 msgctxt "xmas99/02_xmas2"
@@ -1252,9 +1256,9 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Merhaba Domuzcuk!\n"
+"Hallo daar, Biggetje!\n"
 "\n"
-"- Kakacık"
+"- Poopy"
 
 #: .fake/Translations/xmas99/02_xmas2.j2l.h:15
 msgctxt "xmas99/02_xmas2"
@@ -1269,9 +1273,9 @@ msgstr ""
 "\n"
 "\n"
 "Michelle:\n"
-"Hayatımı pek çok yönden değiştirdin.\n"
-"Bu projeyi sana ithaf ediyorum.\n"
-"Seni çok seviyorum."
+"Je hebt mijn leven op zoveel manieren veranderd.\n"
+"Ik draag dit project aan jou op.\n"
+"Ik hou zó veel van je."
 
 #: .fake/Translations/xmas99/02_xmas2.j2l.h:16
 msgctxt "xmas99/02_xmas2"
@@ -1286,9 +1290,9 @@ msgstr ""
 "\n"
 "\n"
 "Kassi Nicole:\n"
-"Sana söylemek istediğim milyonlarca şey var\n"
-"Ama sözlerim hep aynı yola çıkıyor\n"
-"Seni Seviyorum, Seni Seviyorum."
+"Er zijn een miljoen dingen die ik je zou willen zeggen,\n"
+"maar al mijn woorden komen steeds op hetzelfde neer:\n"
+"ik hou van je, ik hou van je."
 
 #: .fake/Translations/xmas99/03_xmas3.j2l.h:1
 msgctxt "xmas99/03_xmas3"
@@ -1297,7 +1301,7 @@ msgid ""
 "Please use your TNT wisely."
 msgstr ""
 "\n"
-"Lütfen TNT'lerini dikkatli kullan."
+"Gebruik je TNT verstandig."
 
 #: .fake/Translations/xmas99/03_xmas3.j2l.h:2
 msgctxt "xmas99/03_xmas3"
@@ -1306,7 +1310,7 @@ msgid ""
 "Don't lose your grip!"
 msgstr ""
 "\n"
-"Sıkı tutun!"
+"Hou je goed vast!"
 
 #: .fake/Translations/xmas99/03_xmas3.j2l.h:3
 msgctxt "xmas99/03_xmas3"
@@ -1316,8 +1320,8 @@ msgid ""
 "Please drive carefully."
 msgstr ""
 "\n"
-"Burrowsville'e hoş geldiniz.\n"
-"Lütfen dikkatli sürün."
+"Welkom in Holendorp.\n"
+"Rijd alstublieft voorzichtig."
 
 #: .fake/Translations/xmas99/03_xmas3.j2l.h:4
 msgctxt "xmas99/03_xmas3"
@@ -1327,8 +1331,7 @@ msgid ""
 "look too safe..."
 msgstr ""
 "\n"
-"O köprü pek güvenli\n"
-"gözükmüyor..."
+"Die brug ziet er niet al te veilig uit..."
 
 #: .fake/Translations/xmas99/03_xmas3.j2l.h:5
 msgctxt "xmas99/03_xmas3"
@@ -1338,8 +1341,8 @@ msgid ""
 "Springs RULE! :)"
 msgstr ""
 "\n"
-"Robert ve Craig:\n"
-"Bahar EN İYİSİ! :)"
+"Robert en Craig:\n"
+"Springveren zijn GEWELDIG! :)"
 
 #: .fake/Translations/xmas99/03_xmas3.j2l.h:6
 msgctxt "xmas99/03_xmas3"
@@ -1349,8 +1352,8 @@ msgid ""
 "Please visit again."
 msgstr ""
 "\n"
-"Burrowsville'den çıkıyorsunuz.\n"
-"Lütfen tekrar gelin."
+"U verlaat Holendorp\n"
+"Graag tot ziens."
 
 #: .fake/Translations/xmas99/03_xmas3.j2l.h:7
 msgctxt "xmas99/03_xmas3"
@@ -1361,20 +1364,20 @@ msgid ""
 "www.project2.com"
 msgstr ""
 "\n"
-"Şifre: xmasbunny\n"
-"Lütfen www.project2.com\n"
-"adresini ziyaret edin"
+"Wachtwoord: xmasbunny\n"
+"Bezoek\n"
+"www.project2.com"
 
 #: Sources/Jazz2/LevelHandler.cpp:165 Sources/Jazz2/LevelHandler.cpp:216
 #, c++-format
 msgid "Level \"{}\" initialized"
-msgstr "\"{}\" bölümü başlatıldı"
+msgstr "Level \"{}\" geïnitialiseerd"
 
 #. TRANSLATORS: Link to website under header text in About section
 #: Sources/Jazz2/LevelHandler.cpp:771
 #: Sources/Jazz2/UI/Menu/AboutSection.cpp:145
 msgid "For more information, visit the official website:"
-msgstr "Daha fazla bilgi için, resmi web sitesini ziyaret edin:"
+msgstr "Voor meer informatie, bezoek de officiële website:"
 
 #: Sources/Jazz2/LevelHandler.cpp:2357 Sources/Jazz2/LevelHandler.cpp:2370
 #: Sources/Jazz2/LevelHandler.cpp:2381 Sources/Jazz2/LevelHandler.cpp:2396
@@ -1383,7 +1386,7 @@ msgstr "Daha fazla bilgi için, resmi web sitesini ziyaret edin:"
 #: Sources/Jazz2/LevelHandler.cpp:2463 Sources/Jazz2/LevelHandler.cpp:2475
 #: Sources/Jazz2/LevelHandler.cpp:2496 Sources/Jazz2/LevelHandler.cpp:2510
 msgid "Cheats are not allowed in current context"
-msgstr "Mevcut bağlamda hile kullanılması yasaktır"
+msgstr "Cheats zijn in de huidige context niet toegelaten"
 
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:295
 msgid ""
@@ -1393,31 +1396,31 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Oyun kısa süre içerisinde başlıyor!"
+"Het spel begint zo!"
 
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:1509
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:3525
 #, c++-format
 msgid "\f[c:#d0705d]{}\f[/c] was roasted by \f[c:#d0705d]{}\f[/c]"
-msgstr "\f[c:#d0705d]{}\f[/c],  \f[c:#d0705d]{}\f[/c] tarafından yakıldı."
+msgstr "\f[c:#d0705d]{}\f[/c] werd door \f[c:#d0705d]{}\f[/c] geroosterd"
 
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:1526
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:3528
 #, c++-format
 msgid "\f[c:#d0705d]{}\f[/c] was roasted by environment"
-msgstr "\f[c:#d0705d]{}\f[/c], çevre tarafından yakıldı"
+msgstr "\f[c:#d0705d]{}\f[/c] werd door de omgeving geroosterd "
 
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:2834
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:3504
 #, c++-format
 msgid "\f[c:#d0705d]{}\f[/c] disconnected"
-msgstr "\f[c:#d0705d]{}\f[/c] ayrıldı"
+msgstr "\f[c:#d0705d]{}\f[/c] heeft de verbinding verbroken"
 
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:2987
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:3502
 #, c++-format
 msgid "\f[c:#d0705d]{}\f[/c] connected"
-msgstr "\f[c:#d0705d]{}\f[/c] bağlandı"
+msgstr "\f[c:#d0705d]{}\f[/c] is verbonden"
 
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:5790
 #, c++-format
@@ -1426,6 +1429,9 @@ msgid ""
 "\n"
 "Overtime! {} seconds remaining"
 msgstr ""
+"\n"
+"\n"
+"Verlenging! {} seconden resterend"
 
 #: Sources/Jazz2/Multiplayer/MpLevelHandler.cpp:6002
 #, c++-format
@@ -1436,15 +1442,15 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Kazanan {}"
+"De winnaar is {}"
 
 #: Sources/Jazz2/UI/HUD.cpp:481
 msgid "Spectating"
-msgstr ""
+msgstr "Aan Het Meekijken"
 
 #: Sources/Jazz2/UI/InGameConsole.cpp:359
 msgid "Unknown command"
-msgstr "Bilinmeyen komut"
+msgstr "Onbekend commando"
 
 #. TRANSLATORS: Header text in About section
 #: Sources/Jazz2/UI/Menu/AboutSection.cpp:143
@@ -1454,25 +1460,25 @@ msgid ""
 "'98, The Secret Files and Christmas Chronicles). Also, it partially supports "
 "some features of JJ2+ extension."
 msgstr ""
-"1998 yılında çıkmış \f[c:#9e7056]Jazz Jackrabbit 2\f[/c] oyununun yeniden "
-"düzenlenmiş halidir. Oyunun farklı versiyonlarını destekler (Shareware Demo, "
-"Holiday Hare '98, The Secret Files ve Christmas Chronicles). Aynı zamanda, "
-"JJ2+ eklentisinin bazı özelliklerini destekler."
+"Reïmplementatie van het in 1998 uitgekomen spel \f[c:#9e7056]Jazz Jackrabbit "
+"2\f[/c]. Ondersteunt verschillende versies van het spel (Shareware Demo, "
+"Holiday Hare '98, The Secret Files en Christmas Chronicles). Ook ondersteunt "
+"het gedeeltelijk enkele functies van de JJ2+ extensie."
 
 #. TRANSLATORS: Label in About section
 #: Sources/Jazz2/UI/Menu/AboutSection.cpp:147
 msgid "Developers"
-msgstr "Yazılımcılar"
+msgstr "Ontwikkelaars"
 
 #. TRANSLATORS: Label in About section
 #: Sources/Jazz2/UI/Menu/AboutSection.cpp:149
 msgid "Contributors"
-msgstr "Katkıda Bulunanlar"
+msgstr "Bijdragers"
 
 #. TRANSLATORS: Label in About section
 #: Sources/Jazz2/UI/Menu/AboutSection.cpp:151
 msgid "Translators"
-msgstr "Çevirmenler"
+msgstr "Vertalers"
 
 #. TRANSLATORS: Footer text in About section
 #: Sources/Jazz2/UI/Menu/AboutSection.cpp:153
@@ -1480,8 +1486,8 @@ msgid ""
 "This project uses modified \f[c:#9e7056]nCine\f[/c] game engine and "
 "following libraries:"
 msgstr ""
-"Bu proje değiştirilmiş \f[c:#9e7056]nCine\f[/c] motorunu ve şu kütüphaneleri "
-"kullanıyor:"
+"Dit project maakt gebruik van de aangepaste \f[c:#9e7056]nCine\f[/c] game-"
+"engine en de volgende libraries:"
 
 #. TRANSLATORS: Menu item in main menu
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:61
@@ -1489,34 +1495,34 @@ msgstr ""
 #: Sources/Jazz2/UI/Menu/EpisodeSelectSection.cpp:152
 #: Sources/Jazz2/UI/Menu/EpisodeSelectSection.cpp:154
 msgid "Play Story"
-msgstr "Hikaye Modu"
+msgstr "Speel Verhaal"
 
 #. TRANSLATORS: Menu item in main menu (Emscripten only)
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:64
 msgid "Play Shareware Demo"
-msgstr "Deneme Sürümünü Oyna"
+msgstr "Speel Shareware Demo"
 
 #. TRANSLATORS: Menu item in main menu (Emscripten only)
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:69
 #: Sources/Jazz2/UI/Menu/ImportSection.cpp:68
 msgid "Import Episodes"
-msgstr "Bölümleri İçe Aktar"
+msgstr "Importeer Episodes"
 
 #. TRANSLATORS: Menu item in main menu
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:74
 msgid "Continue"
-msgstr "Devam Et"
+msgstr "Doorgaan"
 
 #. TRANSLATORS: Menu item in main menu
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:83
 #: Sources/Jazz2/UI/Menu/PlayMultiplayerSection.cpp:40
 msgid "Play Online"
-msgstr "Çevrimiçi Oyna"
+msgstr "Speel Online"
 
 #. TRANSLATORS: Menu item in main menu
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:89
 msgid "Highscores"
-msgstr "Yüksek puanlar"
+msgstr "Highscores"
 
 #. TRANSLATORS: Menu item in main menu
 #. TRANSLATORS: Subheader in First Run section
@@ -1526,117 +1532,119 @@ msgstr "Yüksek puanlar"
 #: Sources/Jazz2/UI/Menu/OptionsSection.cpp:46
 #: Sources/Jazz2/UI/Menu/PauseSection.cpp:41
 msgid "Options"
-msgstr "Ayarlar"
+msgstr "Opties"
 
 #. TRANSLATORS: Menu item in main menu
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:93
 msgid "About"
-msgstr "Hakkında"
+msgstr "Over"
 
 #. TRANSLATORS: Menu item in main menu
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:100
 msgid "Quit"
-msgstr "Çıkış"
+msgstr "Afsluiten"
 
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:202
 #, c++-format
 msgid "For more information, visit {} and  Discord!"
-msgstr "Daha fazla bilgi için {} ve  Discord'u ziyaret edin!"
+msgstr "Voor meer informatie, ga naar {} en  Discord!"
 
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:215
 msgid "Access to external storage has been granted!"
-msgstr "Harici depolamaya erişim izni verildi!"
+msgstr "Toegang tot externe opslag is verleend!"
 
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:217
 msgid ""
 "\f[c:#337233]Restart the game to read \f[c:#9e7056]Jazz Jackrabbit "
 "2\f[c:#337233] files correctly."
 msgstr ""
-"\f[c:#9e7056]Jazz Jackrabbit 2\f[c:#337233] dosyalarını okumak için oyunu "
-"tekrar başlatın."
+"\f[c:#337233]Herstart het spel om \f[c:#9e7056]Jazz Jackrabbit "
+"2\f[c:#337233] bestanden correct uit te lezen."
 
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:227
 msgid ""
 "\f[c:#704a4a]This game requires original \f[c:#9e7056]Jazz Jackrabbit "
 "2\f[c:#704a4a] files!"
 msgstr ""
-"\f[c:#704a4a]Bu oyun orijinal \f[c:#9e7056]Jazz Jackrabbit 2\f[c:#704a4a] "
-"dosyalarını gerektirir!"
+"\f[c:#704a4a]Dit spel vereist originele \f[c:#9e7056]Jazz Jackrabbit "
+"2\f[c:#704a4a] bestanden!"
 
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:229
 msgid "Make sure Jazz Jackrabbit 2 files are present in following path:"
-msgstr "Jazz Jackrabbit 2 dosyalarının şurada olduğundan emin ol:"
+msgstr ""
+"Zorg ervoor dat de Jazz Jackrabbit 2 bestanden aanwezig zijn in het volgende "
+"pad:"
 
 #. TRANSLATORS: Menu item in main menu (Android 11+ only)
 #: Sources/Jazz2/UI/Menu/BeginSection.cpp:237
 msgid "Allow access to external storage"
-msgstr "Harici depolama erişimine izin ver"
+msgstr "Toegang tot externe opslag verlenen"
 
 #. TRANSLATORS: Menu item in Options > Controls section
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:23
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:165
 #, c++-format
 msgid "Remap Controls for Player {}"
-msgstr "Oyuncu {} İçin Kontrolleri Değiştir"
+msgstr "Besturing Instellen voor Speler {}"
 
 #. TRANSLATORS: Menu item in Options > Controls section
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:27
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:168
 msgid "Remap Controls"
-msgstr "Kontrolleri Değiştir"
+msgstr "Besturing Instellen"
 
 #. TRANSLATORS: Menu item in Options > Controls section
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:30
 #: Sources/Jazz2/UI/Menu/TouchControlsOptionsSection.cpp:47
 msgid "Touch Controls"
-msgstr "Dokunmatik Kontrol Ayarları"
+msgstr "Touch Besturing"
 
 #. TRANSLATORS: Menu item in Options > Controls section
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:32
 msgid "Toggle Run"
-msgstr "Sürekli Koşma"
+msgstr "Rennen Aan/Uit"
 
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:33
 msgid "Gamepad Button Labels"
-msgstr "Gamepad Tuşu İkonları"
+msgstr "Gamepad Knoppenlabels"
 
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:35
 msgid "Gamepad Rumble"
-msgstr "Gamepad Titreşim Seviyesi"
+msgstr "Gamepad Trilfunctie"
 
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:38
 msgid "Extended PlayStation™ Support"
-msgstr "Gelişmiş Playstation™ Desteği"
+msgstr "Uitgebreide PlayStation™ ondersteuning"
 
 #. TRANSLATORS: Menu item in Options > Controls section (Android only)
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:42
 msgid "Native Back Button"
-msgstr "Geri Tuşu"
+msgstr "Systeem Terugknop"
 
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:44
 #: Sources/Jazz2/UI/Menu/InputDiagnosticsSection.cpp:73
 msgid "Input Diagnostics"
-msgstr "Giriş Tanılama"
+msgstr "Invoerdiagnose"
 
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:45
 msgid "Reset To Default"
-msgstr "Varsayılana Sıfırla"
+msgstr "Herstellen Naar Standaardinstellingen"
 
 #. TRANSLATORS: Menu item in Options section
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:78
 #: Sources/Jazz2/UI/Menu/OptionsSection.cpp:28
 msgid "Controls"
-msgstr "Kontrol Ayarları"
+msgstr "Besturing"
 
 #. TRANSLATORS: Option for Gamepad Rumble in Options > Controls section
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:126
 msgid "Strong"
-msgstr "Güçlü"
+msgstr "Sterk"
 
 #. TRANSLATORS: Option for Gamepad Rumble in Options > Controls section
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:129
 msgid "Weak"
-msgstr "Zayıf"
+msgstr "Zwak"
 
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:130
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:141
@@ -1647,7 +1655,7 @@ msgstr "Zayıf"
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:202
 #: Sources/Jazz2/UI/Menu/UserProfileOptionsSection.cpp:382
 msgid "Disabled"
-msgstr "Kapalı"
+msgstr "Uitgeschakeld"
 
 #: Sources/Jazz2/UI/Menu/ControlsOptionsSection.cpp:141
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:128
@@ -1659,71 +1667,71 @@ msgstr "Kapalı"
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:202
 #: Sources/Jazz2/UI/Menu/UserProfileOptionsSection.cpp:382
 msgid "Enabled"
-msgstr "Açık"
+msgstr "Ingeschakeld"
 
 #. TRANSLATORS: Menu item to select player character (Jazz, Spaz, Lori)
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:36
 #: Sources/Jazz2/UI/Multiplayer/MpInGameLobby.cpp:98
 msgid "Character"
-msgstr "Karakter"
+msgstr "Speelfiguur"
 
 #. TRANSLATORS: Menu item to select game mode
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:38
 msgid "Game Mode"
-msgstr "Oyun Modu"
+msgstr "Game Modus"
 
 #. TRANSLATORS: Menu item to create server with selected settings
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:40
 msgid "Create Server"
-msgstr "Sunucu Yarat"
+msgstr "Server Maken"
 
 #. TRANSLATORS: Menu item in Select Game Mode section
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:216
 #: Sources/Jazz2/UI/Menu/MultiplayerGameModeSelectSection.cpp:20
 msgid "Battle"
-msgstr "Savaş"
+msgstr "Gevecht"
 
 #. TRANSLATORS: Menu item in Select Game Mode section
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:217
 #: Sources/Jazz2/UI/Menu/MultiplayerGameModeSelectSection.cpp:22
 msgid "Team Battle"
-msgstr "Takım Savaşı"
+msgstr "Team Gevecht"
 
 #. TRANSLATORS: Menu item in Select Game Mode section
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:218
 #: Sources/Jazz2/UI/Menu/MultiplayerGameModeSelectSection.cpp:24
 msgid "Race"
-msgstr "Yarış"
+msgstr "Race"
 
 #. TRANSLATORS: Menu item in Select Game Mode section
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:219
 #: Sources/Jazz2/UI/Menu/MultiplayerGameModeSelectSection.cpp:26
 msgid "Team Race"
-msgstr "Takım Yarışı"
+msgstr "Team Race"
 
 #. TRANSLATORS: Menu item in Select Game Mode section
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:220
 #: Sources/Jazz2/UI/Menu/MultiplayerGameModeSelectSection.cpp:28
 msgid "Treasure Hunt"
-msgstr "Hazine Avı"
+msgstr "Schatzoeken"
 
 #. TRANSLATORS: Menu item in Select Game Mode section
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:221
 #: Sources/Jazz2/UI/Menu/MultiplayerGameModeSelectSection.cpp:30
 msgid "Team Treasure Hunt"
-msgstr "Takım Hazine Avı"
+msgstr "Team Schatzoeken"
 
 #. TRANSLATORS: Menu item in Select Game Mode section
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:222
 #: Sources/Jazz2/UI/Menu/MultiplayerGameModeSelectSection.cpp:32
 msgid "Capture The Flag"
-msgstr "Bayrak Kapmaca"
+msgstr "Verover de Vlag"
 
 #. TRANSLATORS: Menu item in Select Game Mode section
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:223
 #: Sources/Jazz2/UI/Menu/MultiplayerGameModeSelectSection.cpp:34
 msgid "Cooperation"
-msgstr "Eşli Oyun"
+msgstr "Samenwerken"
 
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:367
 msgid ""
@@ -1733,11 +1741,11 @@ msgid ""
 "Playlist is not properly configured.\n"
 "Please review server configuration and try it again."
 msgstr ""
-"\f[c:#704a4a]Sunucu kurulamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kon de server niet maken!\f[/c]\n"
 "\n"
 "\n"
-"Çalma listesi düzgün yapılandırılmamış.\n"
-"Lütfen sunucu yapılandırmasını gözden geçirip tekrar deneyin."
+"De speellijst is niet juist geconfigureerd.\n"
+"Controleer de serverconfiguratie en probeer het opnieuw."
 
 #: Sources/Jazz2/UI/Menu/CreateServerOptionsSection.cpp:406
 msgid ""
@@ -1747,94 +1755,94 @@ msgid ""
 "Please verify that no other server\n"
 "is running on that port and try it again."
 msgstr ""
-"\f[c:#704a4a]Sunucu kurulamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kon de server niet maken!\f[/c]\n"
 "\n"
 "\n"
-"Lütfen o portta başka bir sunucunun\n"
-"çalışmadığını doğrulayın ve tekrar deneyin."
+"Controleer of er geen andere server\n"
+"op de poort actief is en probeer het opnieuw."
 
 #: Sources/Jazz2/UI/Menu/CustomLevelSelectSection.cpp:156
 #: Sources/Jazz2/UI/Menu/EpisodeSelectSection.cpp:481
 msgid "Play Custom Levels"
-msgstr "Özel Bölüm Seç"
+msgstr "Aangepaste Levels Spelen"
 
 #: Sources/Jazz2/UI/Menu/CustomLevelSelectSection.cpp:169
 msgid "No custom level found!"
-msgstr "Özel bölüm bulunamadı!"
+msgstr "Geen aangepast level gevonden!"
 
 #: Sources/Jazz2/UI/Menu/CustomLevelSelectSection.cpp:191
 msgid "Create server from playlist"
-msgstr "Çalma listesinden sunucu oluştur"
+msgstr "Maak server uit speellijst"
 
 #. TRANSLATORS: Menu item in Play Multiplayer section
 #: Sources/Jazz2/UI/Menu/EpisodeSelectSection.cpp:152
 #: Sources/Jazz2/UI/Menu/PlayMultiplayerSection.cpp:24
 msgid "Create Private Server"
-msgstr "Özel Sunucu Oluştur"
+msgstr "Maak Privé Server"
 
 #. TRANSLATORS: Menu item in Play Multiplayer section
 #: Sources/Jazz2/UI/Menu/EpisodeSelectSection.cpp:152
 #: Sources/Jazz2/UI/Menu/PlayMultiplayerSection.cpp:22
 msgid "Create Public Server"
-msgstr "Genel Sunucu Oluştur"
+msgstr "Maak Openbare Server"
 
 #: Sources/Jazz2/UI/Menu/EpisodeSelectSection.cpp:164
 msgid "No episode found!"
-msgstr "Hiçbir bölüm bulunamadı!"
+msgstr "Geen episodes gevonden!"
 
 #. TRANSLATORS: Menu subitem in Play Story section
 #: Sources/Jazz2/UI/Menu/EpisodeSelectSection.cpp:209
 #: Sources/Jazz2/UI/Menu/EpisodeSelectSection.cpp:210
 msgid "Restart episode"
-msgstr "Bölümü Tekrarla"
+msgstr "Episode opnieuw starten"
 
 #. TRANSLATORS: Information in Play Story section that episode is locked because the previous episode is not complete
 #: Sources/Jazz2/UI/Menu/EpisodeSelectSection.cpp:230
 #, c++-format
 msgid "You must complete \"{}\" first!"
-msgstr "Önce \"{}\" bölümünü bitirmelisin!"
+msgstr "Je moet eerst \"{}\" afronden!"
 
 #. TRANSLATORS: Information in Play Story section that episode is locked
 #: Sources/Jazz2/UI/Menu/EpisodeSelectSection.cpp:234
 msgid "Episode is locked!"
-msgstr "Bu bölüm kilitli!"
+msgstr "Episode niet ontgrendeld!"
 
 #. TRANSLATORS: Menu item in First Run section
 #: Sources/Jazz2/UI/Menu/FirstRunSection.cpp:17
 msgid "Legacy"
-msgstr "Orijinal"
+msgstr "Klassiek"
 
 #: Sources/Jazz2/UI/Menu/FirstRunSection.cpp:17
 msgid "I want to play the game the way it used to be."
-msgstr "Oyunu geçmişte olduğu gibi oynamak istiyorum."
+msgstr "Ik wil het spel spelen zoals het vroeger was."
 
 #. TRANSLATORS: Menu item in First Run section
 #: Sources/Jazz2/UI/Menu/FirstRunSection.cpp:19
 msgid "Reforged"
-msgstr "Yenilenmiş"
+msgstr "Aangepast"
 
 #: Sources/Jazz2/UI/Menu/FirstRunSection.cpp:19
 msgid "I want to play the game with something new."
-msgstr "Oyunu yenilenmiş haliyle oynamak istiyorum."
+msgstr "Ik wil het spel spelen met iets nieuws erbij."
 
 #. TRANSLATORS: Header in First Run section
 #: Sources/Jazz2/UI/Menu/FirstRunSection.cpp:55
 msgid "Welcome to \f[c:#9e7056]Jazz Jackrabbit 2\f[/c] reimplementation!"
-msgstr "Yenilenmiş \f[c:#9e7056]Jazz Jackrabbit 2\f[/c] deneyimine hoş geldin!"
+msgstr "Welkom bij de [c:#9e7056]Jazz Jackrabbit 2[/c] re-implementatie!"
 
 #. TRANSLATORS: Menu item in Options section
 #: Sources/Jazz2/UI/Menu/FirstRunSection.cpp:59
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:94
 #: Sources/Jazz2/UI/Menu/OptionsSection.cpp:20
 msgid "Gameplay"
-msgstr "Oyun Ayarları"
+msgstr "Spelervaring"
 
 #. TRANSLATORS: Menu item in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/FirstRunSection.cpp:59
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:72
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:40
 msgid "Enhancements"
-msgstr "Geliştirmeler"
+msgstr "Verbeteringen"
 
 #. TRANSLATORS: Subheader in First Run section
 #: Sources/Jazz2/UI/Menu/FirstRunSection.cpp:59
@@ -1845,76 +1853,77 @@ msgid ""
 "\f[c:#707070]{}\f[/c] > \f[c:#707070]{}\f[/c].\n"
 "For more information, visit {} and  Discord!"
 msgstr ""
-"Sana uygun olan oynanış biçimini seçebilirsin.\n"
-"Bu ayar \f[c:#707070]{}\f[/c] > \f[c:#707070]{}\f[/c] > \f[c:#707070]{}\f[/"
-"c]'da değiştirilebilir.\n"
-"Daha fazla bilgi için, {}'i veya  Discord sunucumuzu ziyaret edebilirsin!"
+"Je kunt je favoriete speelstijl kiezen.\n"
+"Deze optie kan op elk moment worden aangepast in \f[c:#707070]{}\f[/c] > "
+"\f[c:#707070]{}\f[/c] > \f[c:#707070]{}\f[/c].\n"
+"Voor meer informatie, bezoek {} en  Discord!"
 
 #. TRANSLATORS: Menu item in Options > Gameplay > Enhancements section
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:18
 msgid "Reforged Gameplay"
-msgstr "Yenilenmiş Oynanış"
+msgstr "Aangepaste Spelervaring"
 
 #. TRANSLATORS: Menu item in Options > Gameplay > Enhancements section
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:20
 msgid "Reforged HUD"
-msgstr "Yenilenmiş Arayüz"
+msgstr "Aangepaste HUD"
 
 #. TRANSLATORS: Menu item in Options > Gameplay > Enhancements section
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:22
 msgid "Reforged Main Menu"
-msgstr "Yenilenmiş Ana Menü"
+msgstr "Aangepaste Hoofdmenu"
 
 #. TRANSLATORS: Menu item in Options > Gameplay > Enhancements section
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:24
 msgid "Ledge Climbing"
-msgstr "Çıkıntılara Tırmanma"
+msgstr "Randen Omhoog Klimmen"
 
 #. TRANSLATORS: Menu item in Options > Gameplay > Enhancements section
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:26
 msgid "Weapon Wheel"
-msgstr "Silah Tekerleği"
+msgstr "Wapenwiel"
 
 #. TRANSLATORS: Header in Options > Gameplay > Enhancements section
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:76
 msgid "You can enable enhancements that were added to this remake."
-msgstr "Bu versiyona eklenmiş geliştirmeleri aktive edebilirsin."
+msgstr ""
+"Je kunt verbeteringen inschakelen die aan deze nieuwe versie zijn toegevoegd."
 
 #. TRANSLATORS: Option for Weapon Wheel item in Options > Gameplay > Enhancements section
 #: Sources/Jazz2/UI/Menu/GameplayEnhancementsSection.cpp:127
 msgid "Enabled With Ammo Count"
-msgstr "Mermi ile Etkin"
+msgstr "Ingeschakeld met munitieteller"
 
 #. TRANSLATORS: Menu item in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:42
 #: Sources/Jazz2/UI/Menu/LanguageSelectSection.cpp:43
 msgid "Language"
-msgstr "Dil Ayarları"
+msgstr "Taal"
 
 #. TRANSLATORS: Menu item in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:45
 msgid "Scripting"
-msgstr "Komutlama"
+msgstr "Scripting"
 
 #. TRANSLATORS: Menu item in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:48
 msgid "Continuous Jump"
-msgstr ""
+msgstr "Continu Springen"
 
 #. TRANSLATORS: Menu item in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:50
 msgid "Switch To New Weapon"
-msgstr "Yeni Silaha Geç"
+msgstr "Wissel Naar Nieuw Wapen"
 
 #. TRANSLATORS: Menu item in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:52
 msgid "Allow Cheats"
-msgstr "Hilelere İzin Ver"
+msgstr "Cheats Toestaan"
 
 #. TRANSLATORS: Menu item in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:54
 msgid "Overwrite Episode Completion"
-msgstr "Bölümün üzerine yaz"
+msgstr "Voltooide Episodes Overschrijven"
 
 #. TRANSLATORS: Menu item in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:58
@@ -1924,62 +1933,62 @@ msgstr "Razer Chroma™"
 #. TRANSLATORS: Menu item in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:62
 msgid "Browse \"Source\" Directory"
-msgstr "\"Source\" Dizinine Gözat"
+msgstr "\"Source\" Map Doorzoeken"
 
 #. TRANSLATORS: Menu item in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:67
 #: Sources/Jazz2/UI/Menu/RefreshCacheSection.cpp:78
 msgid "Refresh Cache"
-msgstr "Önbelleği Yenile"
+msgstr "Cache Verversen"
 
 #. TRANSLATORS: Option for Allow Cheats in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:134
 msgid "Yes"
-msgstr "Evet"
+msgstr "Ja"
 
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:134
 msgid "No"
-msgstr "Hayır"
+msgstr "Nee"
 
 #. TRANSLATORS: Option for Overwrite Episode Completion in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:138
 msgid "No Cheats Only"
-msgstr "Sadece hilesiz"
+msgstr "Alleen Zonder Cheats"
 
 #. TRANSLATORS: Option for Overwrite Episode Completion in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:141
 msgid "Higher Score Only"
-msgstr "Sadece en yüksek skor"
+msgstr "Alleen Bij Hogere Score"
 
 #. TRANSLATORS: Option for Overwrite Episode Completion in Options > Gameplay section
 #: Sources/Jazz2/UI/Menu/GameplayOptionsSection.cpp:143
 msgid "Always"
-msgstr "Hep"
+msgstr "Altijd"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:27
 msgid "Rescale Mode"
-msgstr "Ölçeklendirme Ayarları"
+msgstr "Schaalmodus"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:30
 msgid "Resolution"
-msgstr "Çözünürlük"
+msgstr "Resolutie"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:38
 msgid "Fullscreen"
-msgstr "Tam ekran"
+msgstr "Volledig Scherm"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:43
 msgid "Antialiasing"
-msgstr "Kenar Yumuşatma"
+msgstr "Anti-aliasing"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:46
 msgid "Background Dithering"
-msgstr "Arkaplan Titremesi"
+msgstr "Achtergrond Rastering"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:48
@@ -1995,43 +2004,43 @@ msgstr ""
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:52
 msgid "Water Quality"
-msgstr "Su Kalitesi"
+msgstr "Water Kwaliteit"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:54
 msgid "Show Player Trails"
-msgstr "Karakter İzini Göster"
+msgstr "Toon Speler-sporen"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:56
 msgid "Preferred Splitscreen"
-msgstr "Tercih Edilen Bölünmüş Ekran Modu"
+msgstr "Splitscreen Voorkeur"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:58
 msgid "Prefer Zoom Out"
-msgstr "Uzaklaştırmayı Ayarla"
+msgstr "Beeld Uitzoomen"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:60
 msgid "Keep Aspect Ratio In Cinematics"
-msgstr "Sinematiklerde En-Boy Oranını Koru"
+msgstr "Beeldverhouding Behouden in Tussenfilmpjes"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:63
 msgid "Unaligned Viewport"
-msgstr "Hizalanmamış Görünüm"
+msgstr "Niet-uitgelijnde Weergavevenster"
 
 #. TRANSLATORS: Menu item in Options > Graphics section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:66
 msgid "Performance Metrics"
-msgstr "Performans Değerleri"
+msgstr "Prestatiestatistieken"
 
 #. TRANSLATORS: Menu item in Options section
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:101
 #: Sources/Jazz2/UI/Menu/OptionsSection.cpp:22
 msgid "Graphics"
-msgstr "Grafik Ayarları"
+msgstr "Grafische Weergave"
 
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:166
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:179
@@ -2041,19 +2050,19 @@ msgstr ""
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:177
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:179
 msgid "Low"
-msgstr "Düşük"
+msgstr "Laag"
 
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:177
 msgid "High"
-msgstr "Yüksek"
+msgstr "Hoog"
 
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:183
 msgid "Vertical"
-msgstr "Dikey"
+msgstr "Verticaal"
 
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:183
 msgid "Horizontal"
-msgstr "Yatay"
+msgstr "Horizontaal"
 
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:190
 msgid "Experimental"
@@ -2062,296 +2071,297 @@ msgstr ""
 #. TRANSLATORS: Reserved for later use
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:198
 msgid "Short"
-msgstr "Kısa"
+msgstr "Kort"
 
 #: Sources/Jazz2/UI/Menu/GraphicsOptionsSection.cpp:198
 msgid "Detailed"
-msgstr "Detaylı"
+msgstr "Gedetailleerd"
 
 #: Sources/Jazz2/UI/Menu/HighscoresSection.cpp:129
 msgid "Highscores for \f[c:#d0705d]Base game\f[/c]"
-msgstr "\f[c:#d0705d]Ana oyun\f[/c] için yüksek puanlar"
+msgstr "Highscores voor \f[c:#d0705d]Basis spel\f[/c]"
 
 #: Sources/Jazz2/UI/Menu/HighscoresSection.cpp:139
 #, c++-format
 msgid "Highscores for \f[c:#d0705d]{}\f[/c]"
-msgstr "\f[c:#d0705d]{}\f[/c] için yüksek puanlar"
+msgstr "Highscores voor \f[c:#d0705d]{}\f[/c]"
 
 #. TRANSLATORS: Header in Import Episodes section
 #: Sources/Jazz2/UI/Menu/ImportSection.cpp:72
 msgid "Select files of your original game to unlock additional episodes"
-msgstr "Ekstra bölümleri orijinal oyun dosyalarının içinden seçerek aç"
+msgstr ""
+"Selecteer bestanden uit je originele spel om extra episodes te ontgrendelen"
 
 #: Sources/Jazz2/UI/Menu/ImportSection.cpp:78
 #, c++-format
 msgid "Processing of {} file..."
 msgid_plural "Processing of {} files..."
-msgstr[0] "{} dosyası işleniyor..."
-msgstr[1] "{} dosyaları işleniyor..."
+msgstr[0] "Verwerken van {} bestand..."
+msgstr[1] "Verwerken van {} bestanden..."
 
 #: Sources/Jazz2/UI/Menu/ImportSection.cpp:81
 msgid "Waiting for files..."
-msgstr "Dosyalar bekleniyor..."
+msgstr "Wachten op bestanden..."
 
 #: Sources/Jazz2/UI/Menu/ImportSection.cpp:87
 msgid "No files were selected!"
-msgstr "Hiçbir dosya seçilmedi!"
+msgstr "Geen bestanden geselecteerd!"
 
 #: Sources/Jazz2/UI/Menu/ImportSection.cpp:92
 msgid "No new episodes were imported!"
-msgstr "Hiçbir yeni bölüm içeriye alınmadı!"
+msgstr "Er zijn geen nieuwe episodes geïmporteerd!"
 
 #: Sources/Jazz2/UI/Menu/InputDiagnosticsSection.cpp:88
 msgid "No gamepads are detected!"
-msgstr "Oyun kolu algılanmadı!"
+msgstr "Geen gamepads gedetecteerd!"
 
 #: Sources/Jazz2/UI/Menu/MultiplayerGameModeSelectSection.cpp:65
 msgid "Select Game Mode"
-msgstr "Oyun Modu Seç"
+msgstr "Selecteer Spel Modus"
 
 #. TRANSLATORS: Menu item in Options section
 #: Sources/Jazz2/UI/Menu/OptionsSection.cpp:25
 #: Sources/Jazz2/UI/Menu/SoundsOptionsSection.cpp:108
 msgid "Sounds"
-msgstr "Ses Ayarları"
+msgstr "Geluid"
 
 #. TRANSLATORS: Menu item in Options section
 #: Sources/Jazz2/UI/Menu/OptionsSection.cpp:30
 #: Sources/Jazz2/UI/Menu/UserProfileOptionsSection.cpp:168
 msgid "User Profile"
-msgstr "Kullanıcı Profili"
+msgstr "Spelersprofiel"
 
 #. TRANSLATORS: Menu item in main menu
 #: Sources/Jazz2/UI/Menu/PauseSection.cpp:31
 msgid "Resume"
-msgstr "Devam Et"
+msgstr "Hervatten"
 
 #. TRANSLATORS: Menu item in main menu
 #: Sources/Jazz2/UI/Menu/PauseSection.cpp:36
 msgid "Join Game"
-msgstr ""
+msgstr "Deelnemen Aan Spel"
 
 #: Sources/Jazz2/UI/Menu/PauseSection.cpp:36
 msgid "Spectate"
-msgstr "İzle"
+msgstr "Spectator Modus"
 
 #. TRANSLATORS: Menu item in main menu
 #: Sources/Jazz2/UI/Menu/PauseSection.cpp:45
 #: Sources/Jazz2/UI/Menu/PauseSection.cpp:48
 msgid "Save & Exit"
-msgstr "Kaydet & Çık"
+msgstr "Opslaan en Afsluiten"
 
 #: Sources/Jazz2/UI/Menu/PauseSection.cpp:45
 msgid "Disconnect & Exit"
-msgstr "Bağlantıyı Kes ve Çık"
+msgstr "Verbinding Verbreken en Afsluiten"
 
 #. TRANSLATORS: Menu item in Play Multiplayer section
 #: Sources/Jazz2/UI/Menu/PlayMultiplayerSection.cpp:20
 #: Sources/Jazz2/UI/Menu/ServerSelectSection.cpp:153
 msgid "Connect To Server"
-msgstr "Sunucuya Bağlan"
+msgstr "Verbind met Server"
 
 #: Sources/Jazz2/UI/Menu/RefreshCacheSection.cpp:81
 msgid "Processing of files in \f[c:#9e7056]\"Source\"\f[/c] directory..."
-msgstr "[c:#9e7056]\"Source\"\f[/c] dizinindeki dosyalar işleniyor..."
+msgstr "Verwerken van bestanden in de \f[c:#9e7056]\"Source\"\f[/c] map..."
 
 #: Sources/Jazz2/UI/Menu/RefreshCacheSection.cpp:84
 msgid "Newly added levels and episodes will be available soon."
-msgstr "Yeni bölümler yakında erişilebilir hale gelecek."
+msgstr ""
+"Nieuw toegevoegde levels en episodes zullen binnenkort beschikbaar zijn."
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:19
 msgid "Left"
-msgstr "Sol"
+msgstr "Links"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:21
 msgid "Right"
-msgstr "Sağ"
+msgstr "Rechts"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:23
 msgid "Up"
-msgstr "Yukarı"
+msgstr "Omhoog"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:25
 msgid "Down"
-msgstr "Aşağı"
+msgstr "Omlaag"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:27
 msgid "Buttstomp"
-msgstr "Popo vuruşu"
+msgstr "Stompen"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:29
 msgid "Fire"
-msgstr "Ateş"
+msgstr "Schieten"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:31
 msgid "Jump"
-msgstr "Zıpla"
+msgstr "Springen"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:33
 msgid "Run"
-msgstr "Koş"
+msgstr "Rennen"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:35
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:182
 msgid "Change Weapon"
-msgstr "Silah Değiştir"
+msgstr "Verander Wapen"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:37
 msgid "Back"
-msgstr "Geri"
+msgstr "Terug"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:39
 msgid "Toggle Console"
-msgstr "Konsolu Aç/Kapat"
+msgstr "Console Aan/Uit"
 
 #. TRANSLATORS: Menu item in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:43
 #, c++-format
 msgid "Weapon {}"
-msgstr "Silah {}"
+msgstr "Wapen {}"
 
 #. TRANSLATORS: Bottom hint in Options > Controls > Remap Controls section
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:176
 msgid "Press any key or button to assign"
-msgstr "Tuş atayın"
+msgstr "Druk op een toets of knop om toe te wijzen"
 
 #. TRANSLATORS: Bottom hint in Options > Controls > Remap Controls section, prefixed with key/button to press
 #: Sources/Jazz2/UI/Menu/RemapControlsSection.cpp:193
 msgid "to remove assignment"
-msgstr "ile atanmış tuşu silin"
+msgstr "om de toewijzing te verwijderen"
 
 #. TRANSLATORS: Menu item in Options > Graphics > Rescale Mode section
 #: Sources/Jazz2/UI/Menu/RescaleModeSection.cpp:15
 msgid "None / Pixel-perfect"
-msgstr "Kapalı / Orijinal"
+msgstr "Geen / Pixel-perfect"
 
 #. TRANSLATORS: Menu item in Options > Graphics > Rescale Mode section
 #: Sources/Jazz2/UI/Menu/RescaleModeSection.cpp:23
 msgid "CRT Scanlines"
-msgstr "CRT Çizgileri"
+msgstr "CRT Scanlijnen"
 
 #. TRANSLATORS: Menu item in Options > Graphics > Rescale Mode section
 #: Sources/Jazz2/UI/Menu/RescaleModeSection.cpp:25
 msgid "CRT Shadow Mask"
-msgstr "CRT Gölge Maskesi"
+msgstr "CRT Schaduwmasker"
 
 #. TRANSLATORS: Menu item in Options > Graphics > Rescale Mode section
 #: Sources/Jazz2/UI/Menu/RescaleModeSection.cpp:27
 msgid "CRT Aperture Grille"
-msgstr "CRT Açıklık Izgarası"
+msgstr "CRT Aperture Grille"
 
 #. TRANSLATORS: Menu item in Options > Graphics > Rescale Mode section
 #: Sources/Jazz2/UI/Menu/RescaleModeSection.cpp:30
 msgid "Monochrome"
-msgstr "Tek Renk"
+msgstr "Monochroom"
 
 #: Sources/Jazz2/UI/Menu/RescaleModeSection.cpp:55
 msgid "Select Rescale Mode"
-msgstr "Ölçeklendirme Modunu Seçin"
+msgstr "Selecteer Schaalmodus"
 
 #: Sources/Jazz2/UI/Menu/ServerSelectSection.cpp:166
 msgid "No servers found, but still searchin'!"
-msgstr "Sunucu bulunamadı, ama hala aranıyor!"
+msgstr "Geen servers gevonden, maar we blijven zoeken!"
 
 #: Sources/Jazz2/UI/Menu/SimpleMessageSection.cpp:48
 #: Sources/Jazz2/UI/Multiplayer/MpInGameLobby.cpp:144
 msgid "Press \f[c:#d0705d]Fire\f[/c] to continue"
-msgstr "Devam etmek için \f[c:#d0705d]Ateş\f[/c] tuşuna bas"
+msgstr "Druk op \f[c:#d0705d]Vuur\f[/c] om door te gaan"
 
 #. TRANSLATORS: Menu item in Options > Sounds section
 #: Sources/Jazz2/UI/Menu/SoundsOptionsSection.cpp:17
 msgid "Master Volume"
-msgstr "Ana Ses Seviyesi"
+msgstr "Hoofdvolume"
 
 #. TRANSLATORS: Menu item in Options > Sounds section
 #: Sources/Jazz2/UI/Menu/SoundsOptionsSection.cpp:19
 msgid "SFX Volume"
-msgstr "Ses Efektleri Seviyesi"
+msgstr "Effect Volume"
 
 #. TRANSLATORS: Menu item in Options > Sounds section
 #: Sources/Jazz2/UI/Menu/SoundsOptionsSection.cpp:21
 msgid "Music Volume"
-msgstr "Müzik Seviyesi"
+msgstr "Muziek Volume"
 
 #. TRANSLATORS: Menu item to select number of players
 #: Sources/Jazz2/UI/Menu/StartGameOptionsSection.cpp:20
 msgid "Number of Local Players"
-msgstr "Yerel Oyuncu Sayısı"
+msgstr "Aantal Lokale Spelers"
 
 #. TRANSLATORS: Menu item to select difficulty
 #: Sources/Jazz2/UI/Menu/StartGameOptionsSection.cpp:22
 msgid "Difficulty"
-msgstr "Zorluk"
+msgstr "Moeilijkheidsgraad"
 
 #. TRANSLATORS: Menu item to start selected episode/level
 #: Sources/Jazz2/UI/Menu/StartGameOptionsSection.cpp:24
 msgid "Start"
-msgstr "Oyuna Başla"
+msgstr "Start"
 
 #: Sources/Jazz2/UI/Menu/StartGameOptionsSection.cpp:293
 msgid "Easy"
-msgstr "Kolay"
+msgstr "Makkelijk"
 
 #: Sources/Jazz2/UI/Menu/StartGameOptionsSection.cpp:293
 msgid "Medium"
-msgstr "Orta"
+msgstr "Gemiddeld"
 
 #: Sources/Jazz2/UI/Menu/StartGameOptionsSection.cpp:293
 msgid "Hard"
-msgstr "Zor"
+msgstr "Moeilijk"
 
 #. TRANSLATORS: Header in Options > Controls > Touch Controls section
 #: Sources/Jazz2/UI/Menu/TouchControlsOptionsSection.cpp:51
 msgid "You can adjust position of the touch zones by drag and drop."
-msgstr ""
-"Dokunma bölgelerini tutup bırakarak bulundukları pozisyonu ayarlayabilirsin."
+msgstr "Je kunt de positie van de touch-zones aanpassen door ze te slepen."
 
 #. TRANSLATORS: Menu item in Options > User Profile section
 #: Sources/Jazz2/UI/Menu/UserProfileOptionsSection.cpp:67
 msgid "Discord Integration"
-msgstr "Discord Entegrasyonu"
+msgstr "Discord Integratie"
 
 #. TRANSLATORS: Menu item in Options > User Profile section
 #: Sources/Jazz2/UI/Menu/UserProfileOptionsSection.cpp:70
 msgid "Player Name"
-msgstr "Oyuncu Adı"
+msgstr "Spelersnaam"
 
 #. TRANSLATORS: Menu item in Options > User Profile section
 #: Sources/Jazz2/UI/Menu/UserProfileOptionsSection.cpp:73
 msgid "Unique Player ID"
-msgstr "Benzersiz Oyuncu Kimliği"
+msgstr "Unieke Spelers-ID"
 
 #: Sources/Jazz2/UI/Multiplayer/MpHUD.cpp:166
 #, c++-format
 msgid "Points: {}"
-msgstr "Puanlar: {}"
+msgstr "Punten: {}"
 
 #: Sources/Jazz2/UI/Multiplayer/MpHUD.cpp:180
 #, c++-format
 msgid "Game starts in {}"
-msgstr "Oyun {} içinde başlıyor"
+msgstr "Spel start in {}"
 
 #: Sources/Jazz2/UI/Multiplayer/MpHUD.cpp:186
 #, c++-format
 msgid "Waiting for {} more player"
 msgid_plural "Waiting for {} more players"
-msgstr[0] "{} oyuncu daha bekleniyor"
-msgstr[1] "{} oyuncu daha bekleniyor"
+msgstr[0] "Wachten op {} extra speler"
+msgstr[1] "Wachten op {} extra spelers"
 
 #: Sources/Jazz2/UI/Multiplayer/MpHUD.cpp:266
 msgid "Find exit!"
-msgstr "Çıkışı bul!"
+msgstr "Vind de uitgang!"
 
 #: Sources/Main.cpp:673 Sources/Main.cpp:734
 msgid ""
@@ -2361,11 +2371,11 @@ msgid ""
 "Make sure all necessary files\n"
 "are accessible and try it again."
 msgstr ""
-"\f[c0x804a4a]İstenilen bölüm yüklenemedi!\f[/c]\n"
+"\f[c:#704a4a]Kan het opgegeven level niet laden!\f[/c]\n"
 "\n"
 "\n"
-"Gerekli dosyaların erişilebilir\n"
-"olduğundan emin olun ve tekrar deneyin."
+"Controleer of alle vereiste bestanden\n"
+"beschikbaar zijn en probeer het opnieuw."
 
 #: Sources/Main.cpp:795
 msgid ""
@@ -2375,15 +2385,15 @@ msgid ""
 "Make sure all necessary files\n"
 "are accessible and try it again."
 msgstr ""
-"\f[c0x804a4a]İstenilen kayıt yüklenemedi!\f[/c]\n"
+"\f[c:#704a4a]Kan de opgeslagen voortgang niet hervatten!\f[/c]\n"
 "\n"
 "\n"
-"Gerekli dosyaların erişilebilir\n"
-"olduğundan emin olun ve tekrar deneyin."
+"Controleer of alle vereiste bestanden\n"
+"beschikbaar zijn en probeer het opnieuw."
 
 #: Sources/Main.cpp:959
 msgid "Unnamed server"
-msgstr "İsimsiz sunucu"
+msgstr "Naamloze server"
 
 #: Sources/Main.cpp:1117
 msgid ""
@@ -2392,10 +2402,10 @@ msgid ""
 "\n"
 "Invalid parameter specified."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"Geçersiz parametre belirtildi."
+"Ongeldige parameter opgegeven."
 
 #: Sources/Main.cpp:1118
 msgid ""
@@ -2404,10 +2414,10 @@ msgid ""
 "\n"
 "Your client version is not compatible with the server."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"Oyun sürümünüz sunucuyla uyumlu değil."
+"Je clientversie is niet compatibel met de server."
 
 #: Sources/Main.cpp:1119
 msgid ""
@@ -2417,11 +2427,11 @@ msgid ""
 "Authentication failed.\n"
 "Contact server administrators for more information."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor! [/c]\\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"Kimlik doğrulama başarısız oldu.\n"
-"Daha fazla bilgi için sunucu yöneticileriyle iletişime geçin."
+"Authenticatie mislukt.\n"
+"Neem contact op met de serverbeheerders voor meer informatie."
 
 #: Sources/Main.cpp:1120
 msgid ""
@@ -2430,10 +2440,10 @@ msgid ""
 "\n"
 "Invalid password specified."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"Geçersiz parola belirtildi."
+"Ongeldig wachtwoord opgegeven."
 
 #: Sources/Main.cpp:1121
 msgid ""
@@ -2443,11 +2453,11 @@ msgid ""
 "Invalid player name specified.\n"
 "Please check your profile and try it again."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"Geçersiz oyuncu adı belirtildi.\n"
-"Lütfen profilinizi kontrol edin ve tekrar deneyin."
+"Ongeldige spelersnaam opgegeven.\n"
+"Controleer je profiel en probeer het opnieuw."
 
 #: Sources/Main.cpp:1122
 msgid ""
@@ -2457,11 +2467,11 @@ msgid ""
 "This client is not in the server whitelist.\n"
 "Contact server administrators for more information."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"Bu istemci sunucu beyaz listede değil.\n"
-"Daha fazla bilgi için sunucu yöneticileriyle iletişime geçin."
+"Deze client staat niet op de server-whitelist.\n"
+"Neem contact op met de serverbeheerders voor meer informatie."
 
 #: Sources/Main.cpp:1123
 msgid ""
@@ -2471,11 +2481,11 @@ msgid ""
 "Server requires 3rd party authentication provider.\n"
 "Contact server administrators for more information."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"Sunucu 3. taraf kimlik doğrulama sağlayıcısı gerektiriyor.\n"
-"Daha fazla bilgi için sunucu yöneticileriyle iletişime geçin."
+"De server vereist een externe authenticatieprovider.\n"
+"Neem contact op met de serverbeheerders voor meer informatie."
 
 #: Sources/Main.cpp:1124
 msgid ""
@@ -2485,11 +2495,11 @@ msgid ""
 "Server capacity is full.\n"
 "Please try it later."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"Kapasite dolu.\n"
-"Lütfen tekrar deneyin."
+"De server zit vol.\n"
+"Probeer het later opnieuw."
 
 #: Sources/Main.cpp:1125
 msgid ""
@@ -2499,11 +2509,11 @@ msgid ""
 "Server is not in a state where it can process your request.\n"
 "Please try again in a few seconds."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"Sunucu isteğinizi gerçekleştirebilecek durumda değil.\n"
-"Lütfen daha sonra tekrar deneyin."
+"De server is niet in een staat waarin je verzoek kan worden verwerkt.\n"
+"Probeer het over enkele seconden opnieuw."
 
 #: Sources/Main.cpp:1126
 msgid ""
@@ -2513,11 +2523,11 @@ msgid ""
 "Server is shutting down.\n"
 "Please try it later."
 msgstr ""
-"\f[c:#704a4a]Bağlantı kapandı!\f[/c]\n"
+"\f[c:#704a4a]Verbinding is verbroken!\f[/c]\n"
 "\n"
 "\n"
-"Sunucu kapanıyor.\n"
-"Lütfen daha sonra tekrar deneyin."
+"De server wordt afgesloten.\n"
+"Probeer het later opnieuw."
 
 #: Sources/Main.cpp:1127
 msgid ""
@@ -2527,11 +2537,11 @@ msgid ""
 "Server is shutting down for maintenance.\n"
 "Please try it again later."
 msgstr ""
-"\f[c:#704a4a]Bağlantı kapandı!\f[/c]\n"
+"\f[c:#704a4a]Verbinding is verbroken!\f[/c]\n"
 "\n"
 "\n"
-"Sunucu kapanıyor.\n"
-"Lütfen daha sonra tekrar deneyin."
+"De server wordt afgesloten voor onderhoud.\n"
+"Probeer het later opnieuw."
 
 #: Sources/Main.cpp:1128
 msgid ""
@@ -2541,11 +2551,11 @@ msgid ""
 "Server is shutting down for reconfiguration.\n"
 "Please try it again later."
 msgstr ""
-"\f[c:#704a4a]Bağlantı kapandı!\f[/c]\n"
+"\f[c:#704a4a]Verbinding is verbroken!\f[/c]\n"
 "\n"
 "\n"
-"Sunucu kapanıyor.\n"
-"Lütfen daha sonra tekrar deneyin."
+"De server wordt afgesloten voor herconfiguratie.\n"
+"Probeer het later opnieuw."
 
 #: Sources/Main.cpp:1129
 msgid ""
@@ -2555,11 +2565,11 @@ msgid ""
 "Server is shutting down for update.\n"
 "Please check your client version and try it again in a minute."
 msgstr ""
-"\f[c:#704a4a]Bağlantı kapandı!\f[/c]\n"
+"\f[c:#704a4a]Verbinding is verbroken!\f[/c]\n"
 "\n"
 "\n"
-"Sunucu kapanıyor.\n"
-"Lütfen daha sonra tekrar deneyin."
+"De server wordt afgesloten voor een update.\n"
+"Controleer je clientversie en probeer het over een minuut opnieuw."
 
 #: Sources/Main.cpp:1130
 msgid ""
@@ -2569,11 +2579,11 @@ msgid ""
 "Please try it again and if the problem persists,\n"
 "check your network connection."
 msgstr ""
-"\f[c:#704a4a]Bağlantı koptu!\f[/c]\n"
+"\f[c:#704a4a]Verbinding is verloren!\f[/c]\n"
 "\n"
 "\n"
-"Lütfen daha sonra tekrar deneyin. Problem devam ediyorsa,\n"
-"internet bağlantınızı gözden geçirin."
+"Probeer het opnieuw en controleer je\n"
+"netwerkverbinding als het probleem blijft optreden."
 
 #: Sources/Main.cpp:1131
 msgid ""
@@ -2582,10 +2592,10 @@ msgid ""
 "\n"
 "The server is not responding for connection request."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"Sunucu bağlantı isteğine cevap vermiyor."
+"De server reageert niet op het verbindingsverzoek."
 
 #: Sources/Main.cpp:1132
 msgid ""
@@ -2595,11 +2605,11 @@ msgid ""
 "You have been \f[c:#907050]kicked\f[/c] off the server.\n"
 "Contact server administrators for more information."
 msgstr ""
-"\f[c:#704a4a]Bağlantı koptu!\f[/c]\n"
+"\f[c:#704a4a]Verbinding is verbroken!\f[/c]\n"
 "\n"
 "\n"
-"Sunucudan \f[c:#907050]atıldınız\f[/c].\n"
-"Daha fazla bilgi için sunucu yöneticileri ile iletişime geçin."
+"Je bent van de server \f[c:#907050]gekickt\f[/c].\n"
+"Neem contact op met de serverbeheerders voor meer informatie."
 
 #: Sources/Main.cpp:1133
 msgid ""
@@ -2609,11 +2619,11 @@ msgid ""
 "You have been \f[c:#725040]banned\f[/c] off the server.\n"
 "Contact server administrators for more information."
 msgstr ""
-"\f[c:#704a4a]Bağlantı koptu!\f[/c]\n"
+"\f[c:#704a4a]Verbinding is verbroken!\f[/c]\n"
 "\n"
 "\n"
-"Sunucudan \f[c:#725040]yasaklandınız\f[/c].\n"
-"Daha fazla bilgi için sunucu yöneticileri ile iletişime geçin."
+"Je bent van de server \f[c:#725040]verbannen\f[/c].\n"
+"Neem contact op met de serverbeheerders voor meer informatie."
 
 #: Sources/Main.cpp:1134
 msgid ""
@@ -2622,10 +2632,10 @@ msgid ""
 "\n"
 "Cheating detected."
 msgstr ""
-"\f[c:#704a4a]Bağlantı kapatıldı!\f[/c]\n"
+"\f[c:#704a4a]Verbinding is verbroken!\f[/c]\n"
 "\n"
 "\n"
-"Hile tespit edildi."
+"Cheaten gedetecteerd."
 
 #: Sources/Main.cpp:1135
 msgid ""
@@ -2635,11 +2645,11 @@ msgid ""
 "Your client doesn't contain required assets.\n"
 "Please download the required files and try it again."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"İstemcinizde gerekli dosyalar bulunmuyor.\n"
-"Lütfen gerekli dosyaları indirin ve tekrar deneyin."
+"Je client bevat niet de vereiste bestanden.\n"
+"Download de benodigde bestanden en probeer het opnieuw."
 
 #: Sources/Main.cpp:1136
 msgid ""
@@ -2648,10 +2658,10 @@ msgid ""
 "\n"
 "The server has disconnected you due to inactivity."
 msgstr ""
-"\f[c:#704a4a]Bağlantı kapatıldı!\f[/c]\n"
+"\f[c:#704a4a]Verbinding is verbroken!\f[/c]\n"
 "\n"
 "\n"
-"Sunucu, etkin olmadığınız için bağlantınızı kesti."
+"De server heeft de verbinding verbroken wegens inactiviteit."
 
 #: Sources/Main.cpp:1391
 #, c++-format
@@ -2662,36 +2672,14 @@ msgid ""
 "Your client doesn't contain level \"{}\".\n"
 "Please download the required files and try it again."
 msgstr ""
-"\f[c:#704a4a]Sunucuya bağlanılamıyor!\f[/c]\n"
+"\f[c:#704a4a]Kan geen verbinding maken met de server!\f[/c]\n"
 "\n"
 "\n"
-"İstemciniz \"{}\" bölümünü içermiyor.\n"
-"Lütfen gerekli dosyaları indirin ve tekrar deneyin."
+"Je client ontbreekt level \"{}\".\n"
+"Download de benodigde bestanden en probeer het opnieuw."
 
 #~ msgid "Enabled \f[c:#d0705d](Experimental)\f[/c]"
-#~ msgstr "Etkin \f[c:#d0705d](Deneysel)\f[/c]"
-
-#~ msgid "Unknown"
-#~ msgstr "Bilinmiyor"
-
-#~ msgid "Play Custom Game"
-#~ msgstr "Özel Oyun Seç"
-
-#, c-format
-#~ msgid "Connecting to {}:{}..."
-#~ msgstr "{}:{}'ya bağlanıyor..."
-
-#~ msgid "Create Custom Server"
-#~ msgstr "Özel Sunucu Yarat"
-
-#~ msgid "Connect to Server"
-#~ msgstr "Sunucuya Bağlan"
-
-#~ msgid "or"
-#~ msgstr "ya da"
-
-#~ msgid "Creating server..."
-#~ msgstr "Sunucu yaratılıyor..."
+#~ msgstr "Geactiveerd \f[c:#d0705d](Experimenteel)\f[/c]"
 
 #~ msgid "Error"
-#~ msgstr "Hata"
+#~ msgstr "Fout"

@@ -1,6 +1,7 @@
 ﻿#include "GraphicsOptionsSection.h"
 #include "MenuResources.h"
 #include "RescaleModeSection.h"
+#include "../../LevelHandler.h"
 #include "../../PreferencesCache.h"
 
 #include "../../../nCine/Application.h"
@@ -8,6 +9,7 @@
 
 #include <Environment.h>
 #include <Utf8.h>
+#include <Containers/StringConcatenable.h>
 
 #if defined(DEATH_TARGET_ANDROID)
 #	include "../../../nCine/Backends/Android/AndroidApplication.h"
@@ -43,6 +45,10 @@ namespace Jazz2::UI::Menu
 		// TRANSLATORS: Menu item in Options > Graphics section
 		_items.emplace_back(GraphicsOptionsItem { GraphicsOptionsItemType::BackgroundDithering, _("Background Dithering"), true });
 		// TRANSLATORS: Menu item in Options > Graphics section
+		_items.emplace_back(GraphicsOptionsItem { GraphicsOptionsItemType::BlurEffects, _("Blur Effects"), true });
+		// TRANSLATORS: Menu item in Options > Graphics section
+		_items.emplace_back(GraphicsOptionsItem { GraphicsOptionsItemType::LightingResolution, _("Lighting Resolution"), true });
+		// TRANSLATORS: Menu item in Options > Graphics section
 		_items.emplace_back(GraphicsOptionsItem { GraphicsOptionsItemType::LowWaterQuality, _("Water Quality"), true });
 		// TRANSLATORS: Menu item in Options > Graphics section
 		_items.emplace_back(GraphicsOptionsItem { GraphicsOptionsItemType::ShowPlayerTrails, _("Show Player Trails"), true });
@@ -52,10 +58,8 @@ namespace Jazz2::UI::Menu
 		_items.emplace_back(GraphicsOptionsItem { GraphicsOptionsItemType::PreferZoomOut, _("Prefer Zoom Out"), true });
 		// TRANSLATORS: Menu item in Options > Graphics section
 		_items.emplace_back(GraphicsOptionsItem { GraphicsOptionsItemType::KeepAspectRatioInCinematics, _("Keep Aspect Ratio In Cinematics"), true });
-#if defined(RHI_CAP_SHADERS)
 		// TRANSLATORS: Menu item in Options > Graphics section
 		_items.emplace_back(GraphicsOptionsItem { GraphicsOptionsItemType::UnalignedViewport, _("Unaligned Viewport"), true });
-#endif
 		// TRANSLATORS: Menu item in Options > Graphics section
 		_items.emplace_back(GraphicsOptionsItem { GraphicsOptionsItemType::ShowPerformanceMetrics, _("Performance Metrics"), true });
 	}
@@ -143,7 +147,7 @@ namespace Jazz2::UI::Menu
 			_root->DrawStringShadow({ customText, length }, charOffset, centerX, item.Y + 22.0f, IMenuContainer::FontLayer - 10,
 				Alignment::Center, (isSelected ? Colorf(0.46f, 0.46f, 0.46f, 0.5f) : Font::DefaultColor), 0.8f);
 		} else if (item.Item.HasBooleanValue) {
-			StringView customText;
+			StringView customText; String customTextBuffer;
 			bool enabled = false;
 			switch (item.Item.Type) {
 #if !defined(DEATH_TARGET_ANDROID) && !defined(DEATH_TARGET_IOS) && !defined(DEATH_TARGET_SWITCH)
@@ -153,20 +157,36 @@ namespace Jazz2::UI::Menu
 				case GraphicsOptionsItemType::Antialiasing: enabled = (PreferencesCache::ActiveRescaleMode & RescaleMode::UseAntialiasing) == RescaleMode::UseAntialiasing; break;
 #endif
 				case GraphicsOptionsItemType::BackgroundDithering: enabled = PreferencesCache::BackgroundDithering; break;
+				case GraphicsOptionsItemType::BlurEffects:
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
+					enabled = PreferencesCache::BlurEffects;
+#else
+					enabled = false; customTextBuffer = format("{} \f[c:#d0705d]({})", _("Disabled"), _("Forced")); customText = customTextBuffer;
+#endif		
+					break;
+				case GraphicsOptionsItemType::LightingResolution:
+					customTextBuffer = format("{}% ({}x{})", PreferencesCache::LightingResolutionPercent,
+						LevelHandler::DefaultWidth * PreferencesCache::LightingResolutionPercent / 100,
+						LevelHandler::DefaultHeight * PreferencesCache::LightingResolutionPercent / 100);
+					customText = customTextBuffer;
+					break;
 				case GraphicsOptionsItemType::LowWaterQuality:
 #if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
 					enabled = PreferencesCache::LowWaterQuality; customText = (enabled ? _("Low") : _("High"));
 #else
-					enabled = true; customText = _("Low \f[c:#d0705d](Forced)\f[/c]");
+					enabled = true; customTextBuffer = format("{} \f[c:#d0705d]({})", _("Low"), _("Forced")); customText = customTextBuffer;
 #endif
 					break;
 				case GraphicsOptionsItemType::ShowPlayerTrails: enabled = PreferencesCache::ShowPlayerTrails; break;
 				case GraphicsOptionsItemType::PreferVerticalSplitscreen: enabled = PreferencesCache::PreferVerticalSplitscreen; customText = (enabled ? _("Vertical") : _("Horizontal"));  break;
 				case GraphicsOptionsItemType::PreferZoomOut: enabled = PreferencesCache::PreferZoomOut; break;
 				case GraphicsOptionsItemType::KeepAspectRatioInCinematics: enabled = PreferencesCache::KeepAspectRatioInCinematics; break;
-#if defined(RHI_CAP_SHADERS)
-				case GraphicsOptionsItemType::UnalignedViewport: enabled = PreferencesCache::UnalignedViewport; customText = (enabled ? _("Enabled \f[c:#d0705d](Experimental)\f[/c]") : _("Disabled")); break;
-#endif
+				case GraphicsOptionsItemType::UnalignedViewport:
+					enabled = PreferencesCache::UnalignedViewport; 
+					if (enabled) {
+						customTextBuffer = format("{} \f[c:#d0705d]({})", _("Enabled"), _("Experimental")); customText = customTextBuffer;
+					}
+					break;
 				case GraphicsOptionsItemType::ShowPerformanceMetrics:
 					enabled = PreferencesCache::ShowPerformanceMetrics;
 					// TODO
@@ -232,6 +252,32 @@ namespace Jazz2::UI::Menu
 				_root->PlaySfx("MenuSelect"_s, 0.6f);
 				break;
 #if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
+			case GraphicsOptionsItemType::BlurEffects:
+				PreferencesCache::BlurEffects = !PreferencesCache::BlurEffects;
+				_root->ApplyPreferencesChanges(ChangedPreferencesType::Graphics);
+				_isDirty = true;
+				_animation = 0.0f;
+				_root->PlaySfx("MenuSelect"_s, 0.6f);
+				break;
+#endif
+			case GraphicsOptionsItemType::LightingResolution:
+				if (PreferencesCache::LightingResolutionPercent >= 100) {
+					PreferencesCache::LightingResolutionPercent = 75;
+				} else if (PreferencesCache::LightingResolutionPercent >= 75) {
+					PreferencesCache::LightingResolutionPercent = 50;
+				} else if (PreferencesCache::LightingResolutionPercent >= 50) {
+					PreferencesCache::LightingResolutionPercent = 25;
+				} else if (PreferencesCache::LightingResolutionPercent >= 25) {
+					PreferencesCache::LightingResolutionPercent = 12;
+				} else {
+					PreferencesCache::LightingResolutionPercent = 100;
+				}
+				_root->ApplyPreferencesChanges(ChangedPreferencesType::Graphics);
+				_isDirty = true;
+				_animation = 0.0f;
+				_root->PlaySfx("MenuSelect"_s, 0.6f);
+				break;
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
 			case GraphicsOptionsItemType::LowWaterQuality:
 				PreferencesCache::LowWaterQuality = !PreferencesCache::LowWaterQuality;
 				_root->ApplyPreferencesChanges(ChangedPreferencesType::Graphics);
@@ -266,14 +312,12 @@ namespace Jazz2::UI::Menu
 				_animation = 0.0f;
 				_root->PlaySfx("MenuSelect"_s, 0.6f);
 				break;
-#if defined(RHI_CAP_SHADERS)
 			case GraphicsOptionsItemType::UnalignedViewport:
 				PreferencesCache::UnalignedViewport = !PreferencesCache::UnalignedViewport;
 				_isDirty = true;
 				_animation = 0.0f;
 				_root->PlaySfx("MenuSelect"_s, 0.6f);
 				break;
-#endif
 			case GraphicsOptionsItemType::ShowPerformanceMetrics:
 				PreferencesCache::ShowPerformanceMetrics = !PreferencesCache::ShowPerformanceMetrics;
 				_isDirty = true;

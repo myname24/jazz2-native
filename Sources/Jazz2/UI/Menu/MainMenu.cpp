@@ -890,9 +890,11 @@ namespace Jazz2::UI::Menu
 		command->GetMaterial().SetInstSpriteSize(static_cast<float>(viewSize.X), static_cast<float>(viewSize.Y));
 		command->GetMaterial().SetInstColor(1.0f, 1.0f, 1.0f, 1.0f);
 
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
 		command->GetMaterial().Uniform("uViewSize")->SetFloatValue(static_cast<float>(viewSize.X), static_cast<float>(viewSize.Y));
 		command->GetMaterial().Uniform("uShift")->SetFloatVector(_texturedBackgroundPos.Data());
 		command->GetMaterial().Uniform("uHorizonColor")->SetFloatVector(horizonColor.Data());
+#endif
 
 		command->SetTransformation(Matrix4x4f::Translation(0.0f, 0.0f, 0.0f));
 		command->GetMaterial().SetTexture(*target);
@@ -1052,9 +1054,6 @@ namespace Jazz2::UI::Menu
 
 	void MainMenu::TexturedBackgroundPass::Initialize()
 	{
-#if !defined(RHI_CAP_SHADERS) || !defined(RHI_CAP_FRAMEBUFFERS)
-		return; // Textured background requires shader support and framebuffers
-#endif
 		bool notInitialized = (_view == nullptr);
 
 		if (notInitialized) {
@@ -1108,9 +1107,6 @@ namespace Jazz2::UI::Menu
 
 	bool MainMenu::TexturedBackgroundPass::OnDraw(RenderQueue& renderQueue)
 	{
-#if !defined(RHI_CAP_SHADERS) || !defined(RHI_CAP_FRAMEBUFFERS)
-		return true; // Textured background requires shader support and framebuffers
-#endif
 		TileMapLayer& layer = _owner->_texturedBackgroundLayer;
 		Vector2i layoutSize = layer.LayoutSize;
 

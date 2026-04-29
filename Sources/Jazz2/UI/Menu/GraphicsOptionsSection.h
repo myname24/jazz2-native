@@ -17,14 +17,14 @@ namespace Jazz2::UI::Menu
 		Antialiasing,
 #endif
 		BackgroundDithering,
+		BlurEffects,
+		LightingResolution,
 		LowWaterQuality,
 		ShowPlayerTrails,
 		PreferVerticalSplitscreen,
 		PreferZoomOut,
 		KeepAspectRatioInCinematics,
-#if defined(RHI_CAP_SHADERS)
 		UnalignedViewport,
-#endif
 		ShowPerformanceMetrics
 	};
 

@@ -178,6 +178,7 @@ namespace nCine
 		const RHI::Texture* GetTexture(std::uint32_t unit) const;
 		bool SetTexture(std::uint32_t unit, const RHI::Texture* texture);
 		bool SetTexture(std::uint32_t unit, const Texture& texture);
+		bool SetTexture(std::uint32_t unit, std::nullptr_t);
 
 		inline const RHI::Texture* GetTexture() const {
 			return GetTexture(0);

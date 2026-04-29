@@ -209,6 +209,16 @@ namespace nCine
 		return SetTexture(unit, texture.texture_.get());
 	}
 
+	bool Material::SetTexture(std::uint32_t unit, std::nullptr_t)
+	{
+		bool result = false;
+		if (unit < MaxTextureUnits) {
+			textures_[unit] = nullptr;
+			result = true;
+		}
+		return result;
+	}
+
 	void Material::Bind()
 	{
 		for (std::uint32_t i = 0; i < MaxTextureUnits; i++) {
