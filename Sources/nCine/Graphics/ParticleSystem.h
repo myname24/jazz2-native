@@ -77,9 +77,9 @@ namespace nCine
 		void setFlippedY(bool flippedY);
 
 		/// Sets the blending factors preset for every particle
-		void setBlendingPreset(DrawableNode::BlendingPreset blendingPreset);
+		void setBlendingPreset(BlendingPreset blendingPreset);
 		/// Sets the source and destination blending factors for every particle
-		void setBlendingFactors(DrawableNode::BlendingFactor srcBlendingFactor, DrawableNode::BlendingFactor destBlendingFactor);
+		void setBlendingFactors(RHI::BlendFactor srcBlendingFactor, RHI::BlendFactor destBlendingFactor);
 
 		/// Sets the rendering layer for every particle
 		void setLayer(uint16_t layer);

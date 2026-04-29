@@ -9,7 +9,10 @@
 namespace Jazz2::Rendering
 {
 	LightingRenderer::LightingRenderer(PlayerViewport* owner)
-		: _owner(owner), _renderCommandsCount(0)
+		: _owner(owner)
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
+			, _renderCommandsCount(0)
+#endif
 	{
 		_emittedLightsCache.reserve(32);
 		setVisitOrderState(SceneNode::VisitOrderState::Disabled);
@@ -135,6 +138,7 @@ namespace Jazz2::Rendering
 #endif
 	}
 
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
 	RenderCommand* LightingRenderer::RentRenderCommand()
 	{
 		if (_renderCommandsCount < _renderCommands.size()) {
@@ -157,4 +161,5 @@ namespace Jazz2::Rendering
 			return command.get();
 		}
 	}
+#endif
 }

@@ -139,11 +139,12 @@ namespace nCine::Backends
 		RHI::ResizeColorBuffer(drawableWidth_, drawableHeight_);
 #endif
 	}
+
 #if defined(WITH_RHI_SW)
 	void GlfwGfxDevice::blitSwBuffer()
 	{
-		const std::int32_t w   = RHI::GetColorBufferWidth();
-		const std::int32_t h   = RHI::GetColorBufferHeight();
+		const std::int32_t w = RHI::GetColorBufferWidth();
+		const std::int32_t h = RHI::GetColorBufferHeight();
 		const std::uint8_t* buf = RHI::GetColorBuffer();
 
 		if (buf == nullptr || w <= 0 || h <= 0) {
@@ -197,6 +198,7 @@ namespace nCine::Backends
 		glEnd();
 	}
 #endif
+
 	void GlfwGfxDevice::setWindowIcon(StringView windowIconFilename)
 	{
 #if !defined(DEATH_TARGET_EMSCRIPTEN)

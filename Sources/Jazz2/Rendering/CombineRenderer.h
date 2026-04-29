@@ -40,7 +40,9 @@ namespace Jazz2::Rendering
 	private:
 		PlayerViewport* _owner;
 		RenderCommand _renderCommand;
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
 		RenderCommand _renderCommandWithWater;
+#endif
 		Rectf _bounds;
 
 #if !defined(RHI_CAP_SHADERS)

@@ -203,11 +203,13 @@ namespace Jazz2
 		// Hide these members from documentation before refactoring
 		IRootController* _root;
 
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
 		Shader* _lightingShader;
 		Shader* _blurShader;
 		Shader* _downsampleShader;
 		Shader* _combineShader;
 		Shader* _combineWithWaterShader;
+#endif
 
 		Rendering::UpscaleRenderPassWithClipping _upscalePass;
 

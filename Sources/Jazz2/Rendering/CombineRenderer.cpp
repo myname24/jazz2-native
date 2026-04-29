@@ -122,6 +122,7 @@ namespace Jazz2::Rendering
 
 #if !defined(RHI_CAP_SHADERS) || !defined(RHI_CAP_FRAMEBUFFERS)
 		// Blur post-processing requires shader support and framebuffers
+		_renderCommand.SetTransformation(Matrix4x4f::Translation((float)x, (float)y, 0.0f));
 #else
 		if (_renderCommand.GetMaterial().SetShader(_owner->_levelHandler->_combineShader)) {
 			_renderCommand.GetMaterial().ReserveUniformsDataMemory();
@@ -168,10 +169,10 @@ namespace Jazz2::Rendering
 				noiseTexUniform->SetIntValue(4); // GL_TEXTURE4
 			}
 		}
-#endif
 
 		_renderCommand.SetTransformation(Matrix4x4f::Translation((float)x, (float)y, 0.0f));
 		_renderCommandWithWater.SetTransformation(Matrix4x4f::Translation((float)x, (float)y, 0.0f));
+#endif
 	}
 
 	Rectf CombineRenderer::GetBounds() const

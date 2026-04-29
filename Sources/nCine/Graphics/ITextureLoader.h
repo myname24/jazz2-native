@@ -67,20 +67,21 @@ namespace nCine
 
 	protected:
 #ifndef DOXYGEN_GENERATING_OUTPUT
-		/// A flag indicating if the loading process has been successful
-		bool hasLoaded_;
 		/// Texture file handle
 		std::unique_ptr<Death::IO::Stream> fileHandle_;
+		std::unique_ptr<std::uint32_t[]> mipDataOffsets_;
+		std::unique_ptr<std::uint32_t[]> mipDataSizes_;
+		std::unique_ptr<std::uint8_t[]> pixels_;
 
 		std::int32_t width_;
 		std::int32_t height_;
 		std::int32_t headerSize_;
 		std::uint32_t dataSize_;
 		std::int32_t mipMapCount_;
-		std::unique_ptr<std::uint32_t[]> mipDataOffsets_;
-		std::unique_ptr<std::uint32_t[]> mipDataSizes_;
+
 		RHI::TextureFormat texFormat_;
-		std::unique_ptr<std::uint8_t[]> pixels_;
+		/// A flag indicating if the loading process has been successful
+		bool hasLoaded_;
 #endif
 
 		/// An empty constructor only used by `TextureLoaderRaw`

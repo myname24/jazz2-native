@@ -31,12 +31,12 @@ namespace nCine
 
 		struct BufferSpecifications
 		{
-			BufferTypes       type;
-			RHI::BufferType  bufferType;
-			RHI::MapFlags    mapFlags;
-			RHI::BufferUsage usageFlags;
-			std::uint32_t     maxSize;
-			std::uint32_t     alignment;
+			BufferTypes			type;
+			std::uint32_t		maxSize;
+			std::uint32_t		alignment;
+			RHI::MapFlags		mapFlags;
+			RHI::BufferType		bufferType;
+			RHI::BufferUsage	usageFlags;
 		};
 
 		/// Alias for backward compatibility — see BufferParams in RenderBufferParams.h

@@ -9,6 +9,16 @@ namespace nCine
 	class RenderCommand;
 	class RenderQueue;
 
+	/// Presets for blending factors
+	enum class BlendingPreset
+	{
+		Disabled,					///< Uses @ref RHI::BlendFactor::One and @ref RHI::BlendFactor::Zero
+		Alpha,						///< Uses @ref RHI::BlendFactor::SrcAlpha and @ref RHI::BlendFactor::OneMinusSrcAlpha
+		PremultipliedAlpha,			///< Uses @ref RHI::BlendFactor::One and @ref RHI::BlendFactor::OneMinusSrcAlpha
+		Additive,					///< Uses @ref RHI::BlendFactor::SrcAlpha and @ref RHI::BlendFactor::One
+		Multiply					///< Uses @ref RHI::BlendFactor::DstColor and @ref RHI::BlendFactor::Zero
+	};
+
 	/// Object that can be drawn through the render queue
 	class DrawableNode : public SceneNode
 	{
@@ -26,36 +36,6 @@ namespace nCine
 		static const Vector2f AnchorTopRight;
 
 		/** @} */
-
-		/// Presets for blending factors
-		enum class BlendingPreset
-		{
-			DISABLED,					///< uses `GL_ONE` and `GL_ZERO`
-			ALPHA,						///< uses `GL_SRC_ALPHA` and `GL_ONE_MINUS_SRC_ALPHA`
-			PREMULTIPLIED_ALPHA,		///< uses `GL_ONE` and `GL_ONE_MINUS_SRC_ALPHA`
-			ADDITIVE,					///< uses `GL_SRC_ALPHA` and `GL_ONE`
-			MULTIPLY					///< uses `GL_DST_COLOR` and `GL_ZERO`
-		};
-
-		/// OpenGL blending factors
-		enum class BlendingFactor
-		{
-			ZERO,
-			ONE,
-			SRC_COLOR,
-			ONE_MINUS_SRC_COLOR,
-			DST_COLOR,
-			ONE_MINUS_DST_COLOR,
-			SRC_ALPHA,
-			ONE_MINUS_SRC_ALPHA,
-			DST_ALPHA,
-			ONE_MINUS_DST_ALPHA,
-			CONSTANT_COLOR,
-			ONE_MINUS_CONSTANT_COLOR,
-			CONSTANT_ALPHA,
-			ONE_MINUS_CONSTANT_ALPHA,
-			SRC_ALPHA_SATURATE,
-		};
 
 		/// Constructor for a drawable node with a parent and a specified relative position
 		DrawableNode(SceneNode* parent, float xx, float yy);
@@ -117,14 +97,14 @@ namespace nCine
 		void setBlendingEnabled(bool blendingEnabled);
 
 		/// Returns the source blending factor
-		BlendingFactor srcBlendingFactor() const;
+		RHI::BlendFactor srcBlendingFactor() const;
 		/// Returns the destination blending factor
-		BlendingFactor destBlendingFactor() const;
+		RHI::BlendFactor destBlendingFactor() const;
 
 		/// Sets a blending preset for source and destination blending factors
 		void setBlendingPreset(BlendingPreset blendingPreset);
 		/// Sets a specific source and destination blending factors
-		void setBlendingFactors(BlendingFactor srcBlendingFactor, BlendingFactor destBlendingFactor);
+		void setBlendingFactors(RHI::BlendFactor srcBlendingFactor, RHI::BlendFactor destBlendingFactor);
 
 		/// Returns the last frame in which any of the viewports have rendered this node (node was not culled)
 		inline std::uint32_t lastFrameRendered() const {

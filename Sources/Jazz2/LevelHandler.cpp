@@ -106,8 +106,11 @@ namespace Jazz2
 #endif
 
 	LevelHandler::LevelHandler(IRootController* root)
-		: _root(root), _lightingShader(nullptr), _blurShader(nullptr), _downsampleShader(nullptr), _combineShader(nullptr),
-			_combineWithWaterShader(nullptr), _eventSpawner(this), _difficulty(GameDifficulty::Default), _isReforged(false),
+		: _root(root),
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
+			_lightingShader(nullptr), _blurShader(nullptr), _downsampleShader(nullptr), _combineShader(nullptr), _combineWithWaterShader(nullptr),
+#endif
+			_eventSpawner(this), _difficulty(GameDifficulty::Default), _isReforged(false),
 			_cheatsUsed(false), _checkpointCreated(false), _nextLevelType(ExitType::None),
 			_nextLevelTime(0.0f), _elapsedMillisecondsBegin(0), _elapsedFrames(0.0f), _checkpointFrames(0.0f),
 			_waterLevel(FLT_MAX), _weatherType(WeatherType::None), _pressedKeys(ValueInit, (std::size_t)Keys::Count),
@@ -696,6 +699,7 @@ namespace Jazz2
 		_viewSize = Vector2i(w, h);
 		_upscalePass.Initialize(w, h, width, height);
 
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
 		bool notInitialized = (_combineShader == nullptr);
 		if (notInitialized) {
 			LOGI("Acquiring required shaders");
@@ -708,13 +712,6 @@ namespace Jazz2
 			if (_downsampleShader == nullptr) { LOGW("PrecompiledShader::Downsample failed"); }
 			_combineShader = resolver.GetShader(PrecompiledShader::Combine);
 			if (_combineShader == nullptr) { LOGW("PrecompiledShader::Combine failed"); }
-
-			if (_hud != nullptr) {
-				_hud->setParent(_upscalePass.GetNode());
-			}
-			if (_console != nullptr) {
-				_console->setParent(_upscalePass.GetNode());
-			}
 		}
 
 		_combineWithWaterShader = resolver.GetShader(PreferencesCache::LowWaterQuality
@@ -726,6 +723,14 @@ namespace Jazz2
 			} else {
 				LOGW("PrecompiledShader::CombineWithWater failed");
 			}
+		}
+#endif
+
+		if (_hud != nullptr) {
+			_hud->setParent(_upscalePass.GetNode());
+		}
+		if (_console != nullptr) {
+			_console->setParent(_upscalePass.GetNode());
 		}
 
 		bool useHalfRes = (PreferencesCache::PreferZoomOut && _assignedViewports.size() >= 3);

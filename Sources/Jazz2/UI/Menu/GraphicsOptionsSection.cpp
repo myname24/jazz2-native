@@ -153,7 +153,13 @@ namespace Jazz2::UI::Menu
 				case GraphicsOptionsItemType::Antialiasing: enabled = (PreferencesCache::ActiveRescaleMode & RescaleMode::UseAntialiasing) == RescaleMode::UseAntialiasing; break;
 #endif
 				case GraphicsOptionsItemType::BackgroundDithering: enabled = PreferencesCache::BackgroundDithering; break;
-				case GraphicsOptionsItemType::LowWaterQuality: enabled = PreferencesCache::LowWaterQuality; customText = (enabled ? _("Low") : _("High")); break;
+				case GraphicsOptionsItemType::LowWaterQuality:
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
+					enabled = PreferencesCache::LowWaterQuality; customText = (enabled ? _("Low") : _("High"));
+#else
+					enabled = true; customText = _("Low \f[c:#d0705d](Forced)\f[/c]");
+#endif
+					break;
 				case GraphicsOptionsItemType::ShowPlayerTrails: enabled = PreferencesCache::ShowPlayerTrails; break;
 				case GraphicsOptionsItemType::PreferVerticalSplitscreen: enabled = PreferencesCache::PreferVerticalSplitscreen; customText = (enabled ? _("Vertical") : _("Horizontal"));  break;
 				case GraphicsOptionsItemType::PreferZoomOut: enabled = PreferencesCache::PreferZoomOut; break;
@@ -225,6 +231,7 @@ namespace Jazz2::UI::Menu
 				_animation = 0.0f;
 				_root->PlaySfx("MenuSelect"_s, 0.6f);
 				break;
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
 			case GraphicsOptionsItemType::LowWaterQuality:
 				PreferencesCache::LowWaterQuality = !PreferencesCache::LowWaterQuality;
 				_root->ApplyPreferencesChanges(ChangedPreferencesType::Graphics);
@@ -232,6 +239,7 @@ namespace Jazz2::UI::Menu
 				_animation = 0.0f;
 				_root->PlaySfx("MenuSelect"_s, 0.6f);
 				break;
+#endif
 			case GraphicsOptionsItemType::ShowPlayerTrails:
 				PreferencesCache::ShowPlayerTrails = !PreferencesCache::ShowPlayerTrails;
 				_isDirty = true;

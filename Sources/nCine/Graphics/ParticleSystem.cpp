@@ -167,14 +167,14 @@ namespace nCine
 		}
 	}
 
-	void ParticleSystem::setBlendingPreset(DrawableNode::BlendingPreset blendingPreset)
+	void ParticleSystem::setBlendingPreset(BlendingPreset blendingPreset)
 	{
 		for (auto& particle : particleArray_) {
 			particle->setBlendingPreset(blendingPreset);
 		}
 	}
 
-	void ParticleSystem::setBlendingFactors(DrawableNode::BlendingFactor srcBlendingFactor, DrawableNode::BlendingFactor destBlendingFactor)
+	void ParticleSystem::setBlendingFactors(RHI::BlendFactor srcBlendingFactor, RHI::BlendFactor destBlendingFactor)
 	{
 		for (auto& particle : particleArray_) {
 			particle->setBlendingFactors(srcBlendingFactor, destBlendingFactor);

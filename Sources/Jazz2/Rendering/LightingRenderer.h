@@ -25,10 +25,12 @@ namespace Jazz2::Rendering
 
 	private:
 		PlayerViewport* _owner;
+		SmallVector<LightEmitter, 0> _emittedLightsCache;
+#if defined(RHI_CAP_SHADERS) && defined(RHI_CAP_FRAMEBUFFERS)
 		SmallVector<std::unique_ptr<RenderCommand>, 0> _renderCommands;
 		std::int32_t _renderCommandsCount;
-		SmallVector<LightEmitter, 0> _emittedLightsCache;
 
 		RenderCommand* RentRenderCommand();
+#endif
 	};
 }
