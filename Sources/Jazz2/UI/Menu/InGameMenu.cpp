@@ -154,14 +154,14 @@ namespace Jazz2::UI::Menu
 			Texture* blurTarget = viewport->_blurPass4.GetTarget();
 			if (blurTarget != nullptr) {
 				DrawTexture(*blurTarget, scopedView.GetLocation(), 500, scopedView.GetSize(), Vector4f(1.0f, 0.0f, 1.0f, 0.0f), Colorf(0.5f, 0.5f, 0.5f, std::min(AnimTime * 8.0f, 1.0f)));
+			
+				Vector4f ambientColor = viewport->_ambientLight;
+				if (ambientColor.W < 1.0f) {
+					DrawSolid(scopedView.GetLocation(), 502, scopedView.GetSize(), Colorf(ambientColor.X, ambientColor.Y, ambientColor.Z, (1.0f - powf(ambientColor.W, 1.6f)) * std::min(AnimTime * 8.0f, 1.0f)));
+				}
 			} else {
 				// SW fallback: no blur available - dim the screen with a dark overlay
-				DrawSolid(scopedView.GetLocation(), 500, scopedView.GetSize(), Colorf(0.0f, 0.0f, 0.0f, std::min(AnimTime * 4.0f, 0.4f)));
-			}
-
-			Vector4f ambientColor = viewport->_ambientLight;
-			if (ambientColor.W < 1.0f) {
-				DrawSolid(scopedView.GetLocation(), 502, scopedView.GetSize(), Colorf(ambientColor.X, ambientColor.Y, ambientColor.Z, (1.0f - powf(ambientColor.W, 1.6f)) * std::min(AnimTime * 8.0f, 1.0f)));
+				DrawSolid(scopedView.GetLocation(), 500, scopedView.GetSize(), Colorf(0.0f, 0.0f, 0.0f, std::min(AnimTime * 6.0f, 0.6f)));
 			}
 		}
 
@@ -472,9 +472,11 @@ namespace Jazz2::UI::Menu
 		float angleOffset, float varianceX, float varianceY, float speed, float charSpacing, float lineSpacing)
 	{
 		Canvas* currentCanvas = GetActiveCanvas();
+#if !defined(DEATH_TARGET_VITA) // TODO: Disable text shadows on Vita for better performance
 		std::int32_t charOffsetShadow = charOffset;
 		_smallFont->DrawString(currentCanvas, text, charOffsetShadow, x, y + 2.8f * scale, FontShadowLayer,
 			align, Colorf(0.0f, 0.0f, 0.0f, 0.29f), scale, angleOffset, varianceX, varianceY, speed, charSpacing, lineSpacing);
+#endif
 		_smallFont->DrawString(currentCanvas, text, charOffset, x, y, z,
 			align, color, scale, angleOffset, varianceX, varianceY, speed, charSpacing, lineSpacing);
 	}

@@ -78,11 +78,7 @@ namespace Jazz2
 	float PreferencesCache::SfxVolume = 0.8f;
 	float PreferencesCache::MusicVolume = 0.4f;
 	bool PreferencesCache::ToggleRunAction = false;
-#if defined(DEATH_TARGET_SWITCH)
-	GamepadType PreferencesCache::GamepadButtonLabels = GamepadType::Switch;
-#else
 	GamepadType PreferencesCache::GamepadButtonLabels = GamepadType::Xbox;
-#endif
 	std::uint8_t PreferencesCache::GamepadRumble = 1;
 	bool PreferencesCache::PlayStationExtendedSupport = false;
 	bool PreferencesCache::UseNativeBackButton = false;
@@ -475,6 +471,12 @@ namespace Jazz2
 #	if defined(DEATH_TARGET_ANDROID)
 			// Use native Back button as default on smart watches
 			UseNativeBackButton = static_cast<AndroidApplication&>(theApplication()).IsScreenRound();
+#	elif defined(DEATH_TARGET_SWITCH)
+			// Use Switch button labels
+			GamepadButtonLabels = GamepadType::Switch;
+#	elif defined(DEATH_TARGET_VITA)
+			// Use PlayStation button labels on PS Vita
+			GamepadButtonLabels = GamepadType::PlayStation;
 #	elif defined(DEATH_TARGET_UNIX)
 			StringView isSteamDeck = ::getenv("SteamDeck");
 			if (isSteamDeck == "1"_s) {

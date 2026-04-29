@@ -555,9 +555,11 @@ namespace Jazz2::UI::Menu
 		}
 
 		Canvas* currentCanvas = GetActiveCanvas();
+#if !defined(DEATH_TARGET_VITA) // TODO: Disable text shadows on Vita for better performance
 		std::int32_t charOffsetShadow = charOffset;
 		_smallFont->DrawString(currentCanvas, text, charOffsetShadow, x, y + 2.8f * scale, FontShadowLayer,
 			align, Colorf(0.0f, 0.0f, 0.0f, 0.29f), scale, angleOffset, varianceX, varianceY, speed, charSpacing, lineSpacing);
+#endif
 		_smallFont->DrawString(currentCanvas, text, charOffset, x, y, z,
 			align, color, scale, angleOffset, varianceX, varianceY, speed, charSpacing, lineSpacing);
 	}
