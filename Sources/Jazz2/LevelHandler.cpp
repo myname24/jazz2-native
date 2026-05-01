@@ -1,4 +1,4 @@
-﻿#include "LevelHandler.h"
+#include "LevelHandler.h"
 #include "ContentResolver.h"
 #include "PreferencesCache.h"
 #include "Rendering/PlayerViewport.h"

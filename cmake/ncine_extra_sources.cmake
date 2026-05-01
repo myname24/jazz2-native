@@ -854,7 +854,6 @@ else()
 
 			-Wl,--no-whole-archive
 		)
-
 		string(REGEX MATCH "^([0-9]+)\\.([0-9]+)" _ ${NCINE_VERSION})
 		string(LENGTH ${CMAKE_MATCH_1} VITA_VERSION_MAJOR_LEN)
 		if(VITA_VERSION_MAJOR_LEN EQUAL 1)
@@ -869,6 +868,11 @@ else()
 			set(VITA_VERSION "${VITA_VERSION}.${CMAKE_MATCH_2}")
 		endif()
 		set(VITA_TITLEID ${NCINE_APP})
+		string(LENGTH ${VITA_TITLEID} _TITLEID_LEN)
+		while(_TITLEID_LEN LESS 9)
+			set(VITA_TITLEID "${VITA_TITLEID}0")
+			string(LENGTH ${VITA_TITLEID} _TITLEID_LEN)
+		endwhile()
 		vita_create_self(${NCINE_APP}.self ${NCINE_APP})
 		vita_create_vpk(${NCINE_APP}.vpk ${VITA_TITLEID} ${NCINE_APP}.self
 			VERSION ${VITA_VERSION} NAME ${NCINE_APP_NAME}
