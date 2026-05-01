@@ -323,7 +323,12 @@ namespace Jazz2::Rendering
 					float32x4_t vDist2 = vaddq_f32(vDx2, vDy2);
 
 					uint32x4_t mask = vcleq_f32(vDist2, vOne);
+#	if defined(DEATH_TARGET_32BIT)
+					uint32x2_t maskFolded_ = vorr_u32(vget_low_u32(mask), vget_high_u32(mask));
+					if (!(vget_lane_u32(maskFolded_, 0) | vget_lane_u32(maskFolded_, 1))) {
+#	else
 					if (vmaxvq_u32(mask) == 0) {
+#	endif
 						vDx = vaddq_f32(vDx, vStep4);
 						continue;
 					}
