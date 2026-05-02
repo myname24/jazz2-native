@@ -2,6 +2,10 @@
 
 #include "RHI_SW.h"
 
+//#if defined(DEATH_TARGET_VITA)
+#	include "TileRenderer.h"
+//#endif
+
 #include <Containers/SmallVector.h>
 #include <Containers/StringView.h>
 
@@ -1814,11 +1818,20 @@ namespace nCine::RHI
 		g_state.colorBuffer  = texPixels;
 		g_state.bufferWidth  = target->GetWidth();
 		g_state.bufferHeight = target->GetHeight();
+
+//#if defined(DEATH_TARGET_VITA)
+		// Reconfigure tile renderer for the FBO target
+		TileRenderer::SetTargetBuffer(texPixels, g_state.bufferWidth, g_state.bufferHeight, true);
+//#endif
 	}
 
 	void FramebufferUnbind()
 	{
 		if (g_state.isFboTarget) {
+//#if defined(DEATH_TARGET_VITA)
+			// Restore tile renderer to main buffer
+			TileRenderer::SetTargetBuffer(g_state.mainColorBuffer, g_state.mainBufferWidth, g_state.mainBufferHeight, false);
+//#endif
 			g_state.colorBuffer  = g_state.mainColorBuffer;
 			g_state.bufferWidth  = g_state.mainBufferWidth;
 			g_state.bufferHeight = g_state.mainBufferHeight;
@@ -1829,6 +1842,16 @@ namespace nCine::RHI
 	void Draw(PrimitiveType type, std::int32_t firstVertex, std::int32_t count)
 	{
 		if DEATH_UNLIKELY(g_state.drawCtx == nullptr) return;
+
+//#if defined(DEATH_TARGET_VITA)
+		// Defer draw commands for tile-based rendering
+		if (TileRenderer::IsActive()) {
+			if (TileRenderer::SubmitCommand(*g_state.drawCtx, type, firstVertex, count)) {
+				return; // Command accepted for deferred tile rendering
+			}
+			// Fall through to immediate rendering if command buffer is full
+		}
+//#endif
 
 		// Fast path: procedural 4-vertex quad (TriangleStrip, no VBO)
 		if DEATH_LIKELY(type == PrimitiveType::TriangleStrip && count == 4 && firstVertex == 0 &&
@@ -1919,10 +1942,22 @@ namespace nCine::RHI
 		g_state.viewportY = 0;
 		g_state.viewportW = width;
 		g_state.viewportH = height;
+
+//#if defined(DEATH_TARGET_VITA)
+		// Initialize/resize tile renderer
+		TileRenderer::Initialize();
+		TileRenderer::SetTargetBuffer(g_state.colorBuffer, width, height);
+//#endif
 	}
 
 	const std::uint8_t* GetColorBuffer()
 	{
+//#if defined(DEATH_TARGET_VITA)
+		// Flush any pending tile commands before presenting
+		if (TileRenderer::IsActive() && TileRenderer::GetPendingCommandCount() > 0) {
+			TileRenderer::Flush();
+		}
+//#endif
 		return g_state.mainColorBuffer;
 	}
 
