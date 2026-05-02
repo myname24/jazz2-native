@@ -92,6 +92,8 @@ namespace Jazz2
 		return "assets:/"_s;
 #elif defined(DEATH_TARGET_SWITCH)
 		return "romfs:/"_s;
+#elif defined(DEATH_TARGET_VITA)
+		return "ux0:/data/jazz2/Content/"_s;
 #elif defined(DEATH_TARGET_WINDOWS)
 		return "Content\\"_s;
 #else
@@ -106,6 +108,8 @@ namespace Jazz2
 #elif defined(DEATH_TARGET_SWITCH)
 		// Switch has some issues with UTF-8 characters, so use "Jazz2" instead
 		return "sdmc:/Games/Jazz2/Cache/"_s;
+#elif defined(DEATH_TARGET_VITA)
+		return "ux0:/data/jazz2/Cache/"_s;
 #elif defined(DEATH_TARGET_WINDOWS)
 		return "Cache\\"_s;
 #else
@@ -120,6 +124,8 @@ namespace Jazz2
 #elif defined(DEATH_TARGET_SWITCH)
 		// Switch has some issues with UTF-8 characters, so use "Jazz2" instead
 		return "sdmc:/Games/Jazz2/Source/"_s;
+#elif defined(DEATH_TARGET_VITA)
+		return "ux0:/data/jazz2/Source/"_s;
 #elif defined(DEATH_TARGET_WINDOWS)
 		return "Source\\"_s;
 #else
@@ -191,11 +197,6 @@ namespace Jazz2
 			_sourcePath = fs::CombinePath(dataPath, "Source/"_s);
 			_cachePath = fs::CombinePath(dataPath, "Cache/"_s);
 		}
-#elif defined(DEATH_TARGET_VITA)
-		String appRoot = fs::CombinePath("ux0:data/"_s, NCINE_APP);
-		_cachePath = fs::CombinePath(appRoot, "Cache/"_s);
-		_contentPath = fs::CombinePath(appRoot, "Content/"_s);
-		_sourcePath = fs::CombinePath(appRoot, "Source/"_s);
 #elif defined(DEATH_TARGET_APPLE)
 		// Returns local application data directory on Apple
 		const String& appData = fs::GetSavePath("Jazz² Resurrection"_s);
