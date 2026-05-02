@@ -121,7 +121,9 @@ namespace nCine::RHI
 				for (std::int32_t row = 0; row < tileH; row++) {
 					const std::uint8_t* src = tile + row * TileSize * 4;
 					const std::int32_t dstY = flipY ? (fbHeight - 1 - (tileY + row)) : (tileY + row);
-					if (DEATH_UNLIKELY(dstY < 0 || dstY >= fbHeight)) continue;
+					if DEATH_UNLIKELY(dstY < 0 || dstY >= fbHeight) {
+						continue;
+					}
 					std::uint8_t* dst = fb + (dstY * fbWidth + tileX) * 4;
 					std::memcpy(dst, src, rowBytes);
 				}
@@ -140,7 +142,7 @@ namespace nCine::RHI
 				for (std::int32_t row = 0; row < tileH; row++) {
 					std::uint8_t* dst = tile + row * TileSize * 4;
 					const std::int32_t srcY = flipY ? (fbHeight - 1 - (tileY + row)) : (tileY + row);
-					if (DEATH_UNLIKELY(srcY < 0 || srcY >= fbHeight)) {
+					if DEATH_UNLIKELY(srcY < 0 || srcY >= fbHeight) {
 						std::memset(dst, 0, rowBytes);
 						continue;
 					}
@@ -161,10 +163,14 @@ namespace nCine::RHI
 				const std::int32_t tileW = std::min(TileSize, g_tile.fbWidth - tileX);
 				const std::int32_t tileH = std::min(TileSize, g_tile.fbHeight - tileY);
 
-				if (tileW <= 0 || tileH <= 0) return;
+				if DEATH_UNLIKELY(tileW <= 0 || tileH <= 0) {
+					return;
+				}
 
 				const auto& bin = g_tile.tileBins[tileIndex];
-				if (bin.empty()) return; // No commands touch this tile - nothing to do
+				if (bin.empty()) {
+					return; // No commands touch this tile - nothing to do
+				}
 
 				// Get thread-local scratch buffer
 				std::uint8_t* tileBuf = g_tileScratch[workerIndex];
@@ -198,13 +204,13 @@ namespace nCine::RHI
 			{
 				const std::int32_t workerIndex = static_cast<std::int32_t>(reinterpret_cast<std::intptr_t>(arg));
 
-				for (;;) {
+				while (true) {
 					// Wait for new work (generation must advance)
 					g_tile.mutex.Lock();
 					while (g_tile.workerGeneration[workerIndex] == g_tile.flushGeneration && !g_tile.shutdownRequested) {
 						g_tile.workReady.Wait(g_tile.mutex);
 					}
-					if (g_tile.shutdownRequested) {
+					if DEATH_UNLIKELY(g_tile.shutdownRequested) {
 						g_tile.mutex.Unlock();
 						return;
 					}
@@ -212,9 +218,11 @@ namespace nCine::RHI
 					g_tile.mutex.Unlock();
 
 					// Process tiles using atomic counter (work-stealing pattern)
-					for (;;) {
+					while (true) {
 						std::int32_t idx = g_tile.nextTileIndex.fetch_add(1, std::memory_order_relaxed);
-						if (idx >= g_tile.totalTiles) break;
+						if (idx >= g_tile.totalTiles) {
+							break;
+						}
 						ProcessTile(idx, workerIndex + 1); // +1 because main thread uses slot 0
 					}
 
@@ -263,7 +271,9 @@ namespace nCine::RHI
 
 		void Shutdown()
 		{
-			if (!g_tile.initialized) return;
+			if DEATH_UNLIKELY(!g_tile.initialized) {
+				return;
+			}
 
 #if defined(WITH_THREADS)
 			// Signal workers to exit
@@ -289,7 +299,9 @@ namespace nCine::RHI
 
 		void SetTargetBuffer(std::uint8_t* buffer, std::int32_t width, std::int32_t height, bool isFboTarget)
 		{
-			if (!g_tile.initialized) return;
+			if DEATH_UNLIKELY(!g_tile.initialized) {
+				return;
+			}
 
 			// If the target is changing and we have pending commands, flush them first
 			if (g_tile.commandCount > 0 && (buffer != g_tile.targetBuffer || width != g_tile.fbWidth || height != g_tile.fbHeight)) {
@@ -297,7 +309,7 @@ namespace nCine::RHI
 			}
 
 			// Validate dimensions fit within our static tile bin array
-			if (width > MaxWidth || height > MaxHeight || width <= 0 || height <= 0) {
+			if DEATH_UNLIKELY(width > MaxWidth || height > MaxHeight || width <= 0 || height <= 0) {
 				// Too large for tile renderer - disable until next valid target
 				g_tile.targetBuffer = nullptr;
 				g_tile.fbWidth = 0;
@@ -319,8 +331,10 @@ namespace nCine::RHI
 		bool SubmitCommand(const DrawContext& ctx, PrimitiveType type,
 		                   std::int32_t firstVertex, std::int32_t count)
 		{
-			if (!g_tile.initialized || g_tile.targetBuffer == nullptr) return false;
-			if (g_tile.commandCount >= MaxCommands) {
+			if DEATH_UNLIKELY(!g_tile.initialized || g_tile.targetBuffer == nullptr) {
+				return false;
+			}
+			if DEATH_UNLIKELY(g_tile.commandCount >= MaxCommands) {
 				// Buffer full - flush and retry, or fall back to immediate
 				Flush();
 				if (g_tile.commandCount >= MaxCommands) return false;
@@ -333,8 +347,7 @@ namespace nCine::RHI
 			// Compute screen-space AABB from the draw command
 			std::int32_t screenMinX, screenMinY, screenMaxX, screenMaxY;
 
-			if (type == PrimitiveType::TriangleStrip && count == 4 && firstVertex == 0 &&
-			    ctx.vertexFormat == nullptr) {
+			if DEATH_LIKELY(type == PrimitiveType::TriangleStrip && count == 4 && firstVertex == 0 && ctx.vertexFormat == nullptr) {
 				// Procedural sprite quad - compute bounds from MVP + sprite size
 				const float* m = ctx.ff.mvpMatrix;
 				const float sw = ctx.ff.spriteSize[0];
@@ -385,7 +398,7 @@ namespace nCine::RHI
 			}
 
 			// Scissor clip (Y must be flipped for FBO targets, matching immediate path)
-			if (ctx.scissorEnabled) {
+			if DEATH_UNLIKELY(ctx.scissorEnabled) {
 				std::int32_t scY0, scY1;
 				if (g_tile.isFboTarget) {
 					scY0 = g_tile.fbHeight - ctx.scissorRect.Y - ctx.scissorRect.H;
@@ -400,7 +413,7 @@ namespace nCine::RHI
 				screenMaxY = std::min(screenMaxY, scY1);
 			}
 
-			if (screenMinX > screenMaxX || screenMinY > screenMaxY) {
+			if DEATH_UNLIKELY(screenMinX > screenMaxX || screenMinY > screenMaxY) {
 				return true; // Command is fully clipped - accepted but discarded
 			}
 
@@ -409,7 +422,7 @@ namespace nCine::RHI
 			DeferredCommand& cmd = g_tile.commands[cmdIdx];
 			cmd.ctx = ctx;
 			// Store scissor in screen-space (Y already flipped for FBO)
-			if (ctx.scissorEnabled && g_tile.isFboTarget) {
+			if DEATH_UNLIKELY(ctx.scissorEnabled && g_tile.isFboTarget) {
 				cmd.ctx.scissorRect.Y = g_tile.fbHeight - ctx.scissorRect.Y - ctx.scissorRect.H;
 			}
 			cmd.primType = type;
@@ -441,7 +454,9 @@ namespace nCine::RHI
 
 		void Flush()
 		{
-			if (!g_tile.initialized || g_tile.commandCount == 0) return;
+			if DEATH_UNLIKELY(!g_tile.initialized || g_tile.commandCount == 0) {
+				return;
+			}
 
 			// Target buffer must have been set via SetTargetBuffer()
 			if (g_tile.targetBuffer == nullptr || g_tile.totalTiles == 0) {
@@ -465,7 +480,7 @@ namespace nCine::RHI
 			g_tile.mutex.Unlock();
 
 			// Main thread also processes tiles (worker slot 0)
-			for (;;) {
+			while (true) {
 				std::int32_t idx = g_tile.nextTileIndex.fetch_add(1, std::memory_order_relaxed);
 				if (idx >= g_tile.totalTiles) break;
 				ProcessTile(idx, 0);

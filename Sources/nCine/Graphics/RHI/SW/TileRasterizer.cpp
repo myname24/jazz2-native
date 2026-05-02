@@ -267,7 +267,7 @@ namespace nCine::RHI
 		{
 			Vertex2D out = { 0, 0, 0, 0, 1, 1, 1, 1 };
 
-			if (ctx.vertexFormat == nullptr) {
+			if DEATH_LIKELY(ctx.vertexFormat == nullptr) {
 				const float ax = ((index & ~1) == 0) ? 1.0f : 0.0f;
 				const float ay = (index & 1) ? 1.0f : 0.0f;
 
@@ -292,10 +292,10 @@ namespace nCine::RHI
 					if (!attr.enabled || attr.vbo == nullptr) continue;
 
 					const std::uint8_t* base = static_cast<const std::uint8_t*>(attr.vbo->GetData());
-					if (base == nullptr) continue;
+					if DEATH_UNLIKELY(base == nullptr) continue;
 
 					std::int32_t stride = attr.stride;
-					if (stride == 0) stride = attr.size * 4;
+					if DEATH_UNLIKELY(stride == 0) stride = attr.size * 4;
 
 					const std::uint8_t* ptr = base + ctx.vboByteOffset + static_cast<std::size_t>(index) * stride + attr.offset;
 
@@ -360,13 +360,13 @@ namespace nCine::RHI
 			std::int32_t yMax = std::min(tileY + tileH - 1, static_cast<std::int32_t>(fyMax - 0.5f));
 
 			// Also apply scissor
-			if (ctx.scissorEnabled) {
+			if DEATH_UNLIKELY(ctx.scissorEnabled) {
 				xMin = std::max(xMin, ctx.scissorRect.X);
 				xMax = std::min(xMax, ctx.scissorRect.X + ctx.scissorRect.W - 1);
 				yMin = std::max(yMin, ctx.scissorRect.Y);
 				yMax = std::min(yMax, ctx.scissorRect.Y + ctx.scissorRect.H - 1);
 			}
-			if (xMin > xMax || yMin > yMax) return;
+			if DEATH_UNLIKELY(xMin > xMax || yMin > yMax) return;
 
 			// Texture info
 			static constexpr std::int32_t MaxTextureUnits = Texture::MaxTextureUnitsConst;
@@ -491,7 +491,7 @@ namespace nCine::RHI
 							ctx.fragmentShader(fsInput);
 							txFixShader += dtxFix;
 						}
-					} else if (!whiteTint) {
+					} else if DEATH_UNLIKELY(!whiteTint) {
 						TintScanlineNeon(scanBuf, scanWidth, tR, tG, tB, tA);
 					}
 
@@ -761,7 +761,7 @@ namespace nCine::RHI
 							fsInput.userData = ctx.fragmentShaderUserData;
 							ctx.fragmentShader(fsInput);
 							sR = px4[0]; sG = px4[1]; sB = px4[2]; sA = px4[3];
-						} else if (!whiteTint) {
+						} else if DEATH_UNLIKELY(!whiteTint) {
 							sR = (sR * tR) >> 8;
 							sG = (sG * tG) >> 8;
 							sB = (sB * tB) >> 8;
@@ -770,7 +770,7 @@ namespace nCine::RHI
 
 						// Blend
 						if (useBlend) {
-							if (sA == 0) goto next_pixel;
+							if (sA == 0) goto NextPixel;
 							if (useFastBlend) {
 								if (sA >= 255) {
 									dstPx[0] = static_cast<std::uint8_t>(sR);
@@ -811,7 +811,8 @@ namespace nCine::RHI
 							dstPx[3] = static_cast<std::uint8_t>(sA);
 						}
 					}
-				next_pixel:
+
+				NextPixel:
 					t1_w0 += t1_w0_dx; t1_w1 += t1_w1_dx; t1_w2 += t1_w2_dx;
 					t2_w0 += t2_w0_dx; t2_w1 += t2_w1_dx; t2_w2 += t2_w2_dx;
 					uFix += dudxFix; vFix += dvdxFix;
@@ -829,8 +830,8 @@ namespace nCine::RHI
 		                         std::int32_t fbWidth, std::int32_t fbHeight)
 		{
 			// Fast path: procedural 4-vertex quad (most common case)
-			if (type == PrimitiveType::TriangleStrip && count == 4 && firstVertex == 0 &&
-			    ctx.vertexFormat == nullptr) {
+			if DEATH_LIKELY(type == PrimitiveType::TriangleStrip && count == 4 && firstVertex == 0 &&
+							ctx.vertexFormat == nullptr) {
 				Vertex2D v0 = FetchVertex(ctx, 0, fbWidth, fbHeight);
 				Vertex2D v1 = FetchVertex(ctx, 1, fbWidth, fbHeight);
 				Vertex2D v2 = FetchVertex(ctx, 2, fbWidth, fbHeight);
@@ -862,7 +863,9 @@ namespace nCine::RHI
 				const float w1_dx = vc.y - va.y, w1_dy = va.x - vc.x;
 				const float w2_dx = va.y - vb.y, w2_dy = vb.x - va.x;
 				const float area = (vc.x - vb.x) * (va.y - vb.y) - (vc.y - vb.y) * (va.x - vb.x);
-				if (std::fabs(area) < 1e-6f) return;
+				if DEATH_UNLIKELY(std::fabs(area) < 1e-6f) {
+					return;
+				}
 				const float invArea = 1.0f / area;
 				const bool signPos = (area > 0.0f);
 
@@ -871,13 +874,15 @@ namespace nCine::RHI
 				std::int32_t minY = std::max(tileY, static_cast<std::int32_t>(std::min({va.y, vb.y, vc.y})));
 				std::int32_t maxY = std::min(tileY + tileH - 1, static_cast<std::int32_t>(std::max({va.y, vb.y, vc.y})));
 
-				if (ctx.scissorEnabled) {
+				if DEATH_UNLIKELY(ctx.scissorEnabled) {
 					minX = std::max(minX, ctx.scissorRect.X);
 					maxX = std::min(maxX, ctx.scissorRect.X + ctx.scissorRect.W - 1);
 					minY = std::max(minY, ctx.scissorRect.Y);
 					maxY = std::min(maxY, ctx.scissorRect.Y + ctx.scissorRect.H - 1);
 				}
-				if (minX > maxX || minY > maxY) return;
+				if DEATH_UNLIKELY(minX > maxX || minY > maxY) {
+					return;
+				}
 
 				static constexpr std::int32_t MaxTextureUnits = Texture::MaxTextureUnitsConst;
 				Texture* tex = (ctx.ff.hasTexture && ctx.ff.textureUnit < MaxTextureUnits
@@ -903,8 +908,9 @@ namespace nCine::RHI
 				for (std::int32_t py = minY; py <= maxY; py++) {
 					float w0 = w0_row, w1 = w1_row, w2 = w2_row;
 					for (std::int32_t px = minX; px <= maxX; ++px, w0 += w0_dx, w1 += w1_dx, w2 += w2_dx) {
-						if ((w0 >= 0.0f) != signPos || (w1 >= 0.0f) != signPos || (w2 >= 0.0f) != signPos)
+						if ((w0 >= 0.0f) != signPos || (w1 >= 0.0f) != signPos || (w2 >= 0.0f) != signPos) {
 							continue;
+						}
 
 						const float b0 = w0 * invArea, b1 = w1 * invArea, b2 = w2 * invArea;
 						float u = b0 * va.u + b1 * vb.u + b2 * vc.u;

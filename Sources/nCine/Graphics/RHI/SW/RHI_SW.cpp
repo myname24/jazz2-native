@@ -858,7 +858,7 @@ namespace nCine::RHI
 		{
 			Vertex2D out = { 0, 0, 0, 0, 1, 1, 1, 1 };
 
-			if (ctx.vertexFormat == nullptr) {
+			if DEATH_LIKELY(ctx.vertexFormat == nullptr) {
 				// Procedural sprite quad — replicate the sprite_vs.glsl vertex synthesis
 				const float ax = ((index & ~1) == 0) ? 1.0f : 0.0f;
 				const float ay = (index & 1) ? 1.0f : 0.0f;
@@ -884,10 +884,10 @@ namespace nCine::RHI
 					if (!attr.enabled || attr.vbo == nullptr) continue;
 
 					const std::uint8_t* base = static_cast<const std::uint8_t*>(attr.vbo->GetData());
-					if (base == nullptr) continue;
+					if DEATH_UNLIKELY(base == nullptr) continue;
 
 					std::int32_t stride = attr.stride;
-					if (stride == 0) stride = attr.size * 4;
+					if DEATH_UNLIKELY(stride == 0) stride = attr.size * 4;
 
 					const std::uint8_t* ptr = base + ctx.vboByteOffset + static_cast<std::size_t>(index) * stride + attr.offset;
 
@@ -939,7 +939,9 @@ namespace nCine::RHI
 
 			const float fullW = fxMax - fxMin;
 			const float fullH = fyMax - fyMin;
-			if (fullW < 0.5f || fullH < 0.5f) return;
+			if DEATH_UNLIKELY(fullW < 0.5f || fullH < 0.5f) {
+				return;
+			}
 
 			// UV corners
 			const float uLeft  = (v2.x <= v0.x) ? v2.u : v0.u;
@@ -954,7 +956,7 @@ namespace nCine::RHI
 			std::int32_t yMax = std::min(g_state.bufferHeight - 1, static_cast<std::int32_t>(fyMax - 0.5f));
 
 			// Scissor pre-clip
-			if (g_state.scissorEnabled) {
+			if DEATH_UNLIKELY(g_state.scissorEnabled) {
 				xMin = std::max(xMin, g_state.scissorX);
 				xMax = std::min(xMax, g_state.scissorX + g_state.scissorW - 1);
 				if (g_state.isFboTarget) {
@@ -968,7 +970,9 @@ namespace nCine::RHI
 					yMax = std::min(yMax, g_state.scissorY + g_state.scissorH - 1);
 				}
 			}
-			if (xMin > xMax || yMin > yMax) return;
+			if DEATH_UNLIKELY(xMin > xMax || yMin > yMax) {
+				return;
+			}
 
 			// Texture info
 			Texture* tex = (ctx.ff.hasTexture && ctx.ff.textureUnit < MaxTextureUnits
@@ -1210,7 +1214,7 @@ namespace nCine::RHI
 			std::int32_t maxY = std::min(g_state.bufferHeight - 1, static_cast<std::int32_t>(std::max({v0.y, v1.y, v2.y})));
 
 			// Pre-clip to scissor
-			if (g_state.scissorEnabled) {
+			if DEATH_UNLIKELY(g_state.scissorEnabled) {
 				if (g_state.isFboTarget) {
 					// TODO: Y-coords need to be flipped when accessing pixels
 					const std::int32_t pyMin = g_state.bufferHeight - g_state.scissorY - g_state.scissorH;
@@ -1226,7 +1230,9 @@ namespace nCine::RHI
 					maxY = std::min(maxY, g_state.scissorY + g_state.scissorH - 1);
 				}
 			}
-			if (minX > maxX || minY > maxY) return;
+			if DEATH_UNLIKELY(minX > maxX || minY > maxY) {
+				return;
+			}
 
 			// Edge function: E(A→B, P) = (B.x-A.x)*(P.y-A.y) - (B.y-A.y)*(P.x-A.x)
 			// Incremental: dE/dx = -(B.y-A.y),  dE/dy = (B.x-A.x)
@@ -1415,7 +1421,7 @@ namespace nCine::RHI
 			std::int32_t xMaxClamp = std::min(g_state.bufferWidth - 1, static_cast<std::int32_t>(fxMax));
 
 			// Scissor clamp
-			if (g_state.scissorEnabled) {
+			if DEATH_UNLIKELY(g_state.scissorEnabled) {
 				if (g_state.isFboTarget) {
 					const std::int32_t pyMin = g_state.bufferHeight - g_state.scissorY - g_state.scissorH;
 					const std::int32_t pyMax = g_state.bufferHeight - 1 - g_state.scissorY;
@@ -1430,7 +1436,9 @@ namespace nCine::RHI
 					yMax = std::min(yMax, g_state.scissorY + g_state.scissorH - 1);
 				}
 			}
-			if (yMin > yMax || xMinClamp > xMaxClamp) return;
+			if DEATH_UNLIKELY(yMin > yMax || xMinClamp > xMaxClamp) {
+				return;
+			}
 
 			// Texture info
 			Texture* tex = (ctx.ff.hasTexture && ctx.ff.textureUnit < MaxTextureUnits
@@ -1478,7 +1486,7 @@ namespace nCine::RHI
 			float e1x = v2.x - v0.x, e1y = v2.y - v0.y;
 			float e2x = v1.x - v0.x, e2y = v1.y - v0.y;
 			float det = e1x * e2y - e1y * e2x;
-			if (std::fabs(det) < 1e-6f) return; // Degenerate quad
+			if DEATH_UNLIKELY(std::fabs(det) < 1e-6f) return; // Degenerate quad
 
 			float invDet = 1.0f / det;
 			// For point P, barycentric-like coords: s = ((P-v0) x e2) / det, t = (e1 x (P-v0)) / det
@@ -1518,7 +1526,7 @@ namespace nCine::RHI
 			const float t2_w2_dx = v2.y - v1.y, t2_w2_dy = v1.x - v2.x;
 			const float area2 = (v3.x - v1.x) * (v2.y - v1.y) - (v3.y - v1.y) * (v2.x - v1.x);
 
-			if (std::fabs(area1) < 1e-6f && std::fabs(area2) < 1e-6f) return;
+			if DEATH_UNLIKELY(std::fabs(area1) < 1e-6f && std::fabs(area2) < 1e-6f) return;
 			const bool sign1 = (area1 > 0.0f);
 			const bool sign2 = (area2 > 0.0f);
 
