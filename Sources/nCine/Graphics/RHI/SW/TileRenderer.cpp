@@ -175,11 +175,24 @@ namespace nCine::RHI
 				// Get thread-local scratch buffer
 				std::uint8_t* tileBuf = g_tileScratch[workerIndex];
 
-				// Initialize tile with current framebuffer contents
-				// (needed for correct blending with existing content)
-				CopyFramebufferToTile(tileBuf, g_tile.targetBuffer,
-				                      tileX, tileY, tileW, tileH,
-				                      g_tile.fbWidth, g_tile.fbHeight, g_tile.isFboTarget);
+				// Optimization: skip reading framebuffer if the first command fully covers
+				// this tile with an opaque draw (no blending needed for background)
+				const DeferredCommand& firstCmd = g_tile.commands[bin[0]];
+				bool needsReadBack = true;
+				if (!firstCmd.ctx.blendingEnabled &&
+				    firstCmd.screenMinX <= tileX && firstCmd.screenMinY <= tileY &&
+				    firstCmd.screenMaxX >= tileX + tileW - 1 && firstCmd.screenMaxY >= tileY + tileH - 1) {
+					// First command covers entire tile and is opaque - no need to read framebuffer
+					needsReadBack = false;
+				}
+
+				if (needsReadBack) {
+					// Initialize tile with current framebuffer contents
+					// (needed for correct blending with existing content)
+					CopyFramebufferToTile(tileBuf, g_tile.targetBuffer,
+					                      tileX, tileY, tileW, tileH,
+					                      g_tile.fbWidth, g_tile.fbHeight, g_tile.isFboTarget);
+				}
 
 				// Render all commands binned to this tile
 				for (std::uint16_t cmdIdx : bin) {
@@ -397,16 +410,10 @@ namespace nCine::RHI
 				screenMaxY = vpH - 1;
 			}
 
-			// Scissor clip (Y must be flipped for FBO targets, matching immediate path)
+			// Scissor clip (Y always flipped — buffer is bottom-up for presentation)
 			if DEATH_UNLIKELY(ctx.scissorEnabled) {
-				std::int32_t scY0, scY1;
-				if (g_tile.isFboTarget) {
-					scY0 = g_tile.fbHeight - ctx.scissorRect.Y - ctx.scissorRect.H;
-					scY1 = g_tile.fbHeight - 1 - ctx.scissorRect.Y;
-				} else {
-					scY0 = ctx.scissorRect.Y;
-					scY1 = ctx.scissorRect.Y + ctx.scissorRect.H - 1;
-				}
+				std::int32_t scY0 = g_tile.fbHeight - ctx.scissorRect.Y - ctx.scissorRect.H;
+				std::int32_t scY1 = g_tile.fbHeight - 1 - ctx.scissorRect.Y;
 				screenMinX = std::max(screenMinX, ctx.scissorRect.X);
 				screenMinY = std::max(screenMinY, scY0);
 				screenMaxX = std::min(screenMaxX, ctx.scissorRect.X + ctx.scissorRect.W - 1);
@@ -421,8 +428,8 @@ namespace nCine::RHI
 			const std::int32_t cmdIdx = g_tile.commandCount;
 			DeferredCommand& cmd = g_tile.commands[cmdIdx];
 			cmd.ctx = ctx;
-			// Store scissor in screen-space (Y already flipped for FBO)
-			if DEATH_UNLIKELY(ctx.scissorEnabled && g_tile.isFboTarget) {
+			// Store scissor in screen-space (Y flipped)
+			if DEATH_UNLIKELY(ctx.scissorEnabled) {
 				cmd.ctx.scissorRect.Y = g_tile.fbHeight - ctx.scissorRect.Y - ctx.scissorRect.H;
 			}
 			cmd.primType = type;

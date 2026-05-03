@@ -124,7 +124,7 @@ namespace nCine::Backends
 					SDL_UnlockTexture(swTexture_);
 				}
 			}
-			SDL_RenderCopy(swRenderer_, swTexture_, nullptr, nullptr);
+			SDL_RenderCopyEx(swRenderer_, swTexture_, nullptr, nullptr, 0.0, nullptr, SDL_FLIP_VERTICAL);
 			SDL_RenderPresent(swRenderer_);
 		}
 #elif defined(DEATH_TARGET_VITA)
@@ -156,6 +156,25 @@ namespace nCine::Backends
 		swTexture_ = SDL_CreateTexture(swRenderer_, SDL_PIXELFORMAT_RGBA32,
 		                               SDL_TEXTUREACCESS_STREAMING, width, height);
 		RHI::ResizeColorBuffer(width, height);
+	}
+
+	void SdlGfxDevice::resizeSwBufferToLogical(int logicalWidth, int logicalHeight)
+	{
+		if (swRenderer_ == nullptr) return;
+		if (logicalWidth <= 0 || logicalHeight <= 0) return;
+
+		// Only resize if different from current buffer
+		if (RHI::GetColorBufferWidth() == logicalWidth && RHI::GetColorBufferHeight() == logicalHeight) {
+			return;
+		}
+
+		if (swTexture_ != nullptr) {
+			SDL_DestroyTexture(swTexture_);
+		}
+		// Create SDL texture at logical resolution - SDL_RenderCopy stretches to window
+		swTexture_ = SDL_CreateTexture(swRenderer_, SDL_PIXELFORMAT_RGBA32,
+		                               SDL_TEXTUREACCESS_STREAMING, logicalWidth, logicalHeight);
+		RHI::ResizeColorBuffer(logicalWidth, logicalHeight);
 	}
 #endif
 
