@@ -87,35 +87,16 @@ namespace Jazz2::UI
 	HUD::HUD(LevelHandler* levelHandler)
 		: _levelHandler(levelHandler), _metadata(nullptr), _levelTextTime(-1.0f), _coins(0), _gems(0), _coinsTime(-1.0f), _gemsTime(-1.0f),
 			_activeBossTime(0.0f), _touchButtonsTimer(0.0f), _rgbAmbientLight(0.0f), _rgbHealthLast(0.0f), _rgbLightsAnim(0.0f),
-			_rgbLightsTime(0.0f), _transitionState(TransitionState::WaitingForFadeIn), _transitionTime(1.0f)
+			_rgbLightsTime(0.0f), _transitionState(TransitionState::WaitingForFadeIn), _transitionTime(1.0f),
+			_joystickActive(false), _joystickOrigin(0.0f, 0.0f), _joystickCurrent(0.0f, 0.0f),
+			_joystickPointerId(-1), _joystickMaxRadius(60.0f)
 	{
 		auto& resolver = ContentResolver::Get();
 
 		_metadata = resolver.RequestMetadata("UI/HUD"_s);
 		_smallFont = resolver.GetFont(FontType::Small);
 
-		_touchButtons[0] = CreateTouchButton(PlayerAction::None, TouchDpad, Alignment::BottomLeft, DpadLeft, DpadBottom, DpadSize, DpadSize);
-		// D-pad subsections
-		_touchButtons[1] = CreateTouchButton(PlayerAction::Up, AnimState::Default, Alignment::BottomLeft, DpadLeft, DpadBottom + (DpadSize * 2 / 3), DpadSize, (DpadSize / 3) + DpadThreshold);
-		_touchButtons[2] = CreateTouchButton(PlayerAction::Down, AnimState::Default, Alignment::BottomLeft, DpadLeft, DpadBottom - DpadThreshold, DpadSize, (DpadSize / 3) + DpadThreshold);
-		_touchButtons[3] = CreateTouchButton(PlayerAction::Left, AnimState::Default, Alignment::BottomLeft | AllowRollover, DpadLeft - DpadThreshold, DpadBottom, (DpadSize / 3) + DpadThreshold, DpadSize);
-		_touchButtons[4] = CreateTouchButton(PlayerAction::Right, AnimState::Default, Alignment::BottomLeft | AllowRollover, DpadLeft + (DpadSize * 2 / 3), DpadBottom, (DpadSize / 3) + DpadThreshold, DpadSize);
-		// Action buttons
-		_touchButtons[5] = CreateTouchButton(PlayerAction::Fire, TouchFire, Alignment::BottomRight, (ButtonSize + 0.02f) * 2, 0.04f, ButtonSize, ButtonSize);
-		_touchButtons[6] = CreateTouchButton(PlayerAction::Jump, TouchJump, Alignment::BottomRight, (ButtonSize + 0.02f), 0.04f + 0.08f, ButtonSize, ButtonSize);
-		_touchButtons[7] = CreateTouchButton(PlayerAction::Run, TouchRun, Alignment::BottomRight, 0.001f, 0.01f + 0.15f, ButtonSize, ButtonSize);
-		_touchButtons[8] = CreateTouchButton(PlayerAction::ChangeWeapon, TouchChange, Alignment::BottomRight, ButtonSize + 0.01f, 0.04f + 0.28f, SmallButtonSize, SmallButtonSize);
-
-#if defined(DEATH_TARGET_ANDROID)
-		if (static_cast<AndroidApplication&>(theApplication()).IsScreenRound()) {
-			_touchButtons[9] = CreateTouchButton(PlayerAction::Menu, TouchPause, Alignment::Top | Fixed, 0.0f, 0.02f, SmallButtonSize, SmallButtonSize);
-			_touchButtons[10] = {};
-		} else
-#endif
-		{
-			_touchButtons[9] = CreateTouchButton(PlayerAction::Menu, TouchPause, Alignment::TopRight | Fixed, 0.02f, 0.02f, SmallButtonSize, SmallButtonSize);
-			_touchButtons[10] = CreateTouchButton(PlayerAction::Console, AnimState::Default, Alignment::TopLeft | Fixed, 0.02f, 0.02f, SmallButtonSize, SmallButtonSize);
-		}
+		RefreshTouchButtons();
 	}
 
 	HUD::~HUD()
@@ -206,8 +187,17 @@ namespace Jazz2::UI
 		} else
 #endif
 		if (_touchButtonsTimer > 0.0f) {
-			adjustedView.X = 140.0f + PreferencesCache::TouchLeftPadding.X;
-			adjustedView.W = adjustedView.W - adjustedView.X - (195.0f + PreferencesCache::TouchRightPadding.X);
+			const auto& dpadLayout = PreferencesCache::TouchButtons[(std::size_t)TouchButtonSlot::Dpad];
+			float leftMargin = dpadLayout.EdgeOffset.X + DpadSize * DefaultRef * dpadLayout.Scale + 8.0f;
+			float rightMargin = 0.0f;
+			for (TouchButtonSlot slot : { TouchButtonSlot::Fire, TouchButtonSlot::Jump, TouchButtonSlot::Run }) {
+				const auto& sl = PreferencesCache::TouchButtons[(std::size_t)slot];
+				if (sl.Anchor == TouchButtonAnchor::BottomRight || sl.Anchor == TouchButtonAnchor::TopRight) {
+					rightMargin = std::max(rightMargin, sl.EdgeOffset.X + ButtonSize * DefaultRef * sl.Scale + 8.0f);
+				}
+			}
+			adjustedView.X = leftMargin;
+			adjustedView.W = adjustedView.W - adjustedView.X - rightMargin;
 		}
 
 		std::int32_t charOffset = 0;
@@ -307,19 +297,37 @@ namespace Jazz2::UI
 	{
 		_touchButtonsTimer = 1200.0f;
 
+		constexpr std::uint32_t DpadMask = (1 << (std::int32_t)PlayerAction::Left)
+			| (1 << (std::int32_t)PlayerAction::Right)
+			| (1 << (std::int32_t)PlayerAction::Up)
+			| (1 << (std::int32_t)PlayerAction::Down);
+
 		if (event.type == TouchEventType::Down || event.type == TouchEventType::PointerDown) {
 			int32_t pointerIndex = event.findPointerIndex(event.actionIndex);
 			if (pointerIndex != -1) {
 				float x = event.pointers[pointerIndex].x * (float)ViewSize.X;
 				float y = event.pointers[pointerIndex].y * (float)ViewSize.Y;
+
+				if (PreferencesCache::EnableTouchJoystick && _joystickPointerId == -1) {
+					// Floating joystick: activate anywhere in the left portion / D-pad zone
+					if (x < ViewSize.X * 0.5f && y > ViewSize.Y * 0.2f) {
+						_joystickActive = true;
+						_joystickOrigin = Vector2f(x, y);
+						_joystickCurrent = Vector2f(x, y);
+						_joystickPointerId = event.actionIndex;
+					}
+				}
+
 				for (std::uint32_t i = 0; i < TouchButtonsCount; i++) {
 					auto& button = _touchButtons[i];
+					if (PreferencesCache::EnableTouchJoystick && i <= 4) {
+						continue;  // D-pad managed by joystick
+					}
 					if (button.Action != PlayerAction::None) {
 						if (button.CurrentPointerId == -1 && IsOnButton(button, x, y)) {
 							button.CurrentPointerId = event.actionIndex;
 							overrideActions |= (1 << (std::int32_t)button.Action);
 							if (button.Action == PlayerAction::Down) {
-								// Buttstomp action is not separate for Touch controls yet
 								overrideActions |= (1 << (std::int32_t)PlayerAction::Buttstomp);
 							}
 						}
@@ -327,8 +335,37 @@ namespace Jazz2::UI
 				}
 			}
 		} else if (event.type == TouchEventType::Move) {
+			if (PreferencesCache::EnableTouchJoystick && _joystickActive) {
+				std::int32_t pointerIndex = event.findPointerIndex(_joystickPointerId);
+				if (pointerIndex != -1) {
+					_joystickCurrent = Vector2f(
+						event.pointers[pointerIndex].x * (float)ViewSize.X,
+						event.pointers[pointerIndex].y * (float)ViewSize.Y);
+
+					Vector2f diff = _joystickCurrent - _joystickOrigin;
+					float dist = diff.Length();
+					Vector2f dir = (dist > 1.0f) ? diff / dist : Vector2f(0.0f, 0.0f);
+					float magnitude = std::min(dist / _joystickMaxRadius, 1.0f);
+					Vector2f movement = dir * magnitude;
+
+					auto players = _levelHandler->GetPlayers();
+					if (!players.empty()) {
+						_levelHandler->_playerInputs[players[0]->_playerIndex].RequiredMovement = movement;
+					}
+
+					overrideActions &= ~DpadMask;
+					if (movement.X < -0.3f) overrideActions |= (1 << (std::int32_t)PlayerAction::Left);
+					else if (movement.X > 0.3f) overrideActions |= (1 << (std::int32_t)PlayerAction::Right);
+					if (movement.Y < -0.3f) overrideActions |= (1 << (std::int32_t)PlayerAction::Up);
+					else if (movement.Y > 0.3f) overrideActions |= (1 << (std::int32_t)PlayerAction::Down);
+				}
+			}
+
 			for (std::uint32_t i = 0; i < TouchButtonsCount; i++) {
 				auto& button = _touchButtons[i];
+				if (PreferencesCache::EnableTouchJoystick && i <= 4) {
+					continue;
+				}
 				if (button.Action != PlayerAction::None) {
 					if (button.CurrentPointerId != -1) {
 						bool isPressed = false;
@@ -343,12 +380,10 @@ namespace Jazz2::UI
 							button.CurrentPointerId = -1;
 							overrideActions &= ~(1 << (std::int32_t)button.Action);
 							if (button.Action == PlayerAction::Down) {
-								// Buttstomp action is not separate for Touch controls yet
 								overrideActions &= ~(1 << (std::int32_t)PlayerAction::Buttstomp);
 							}
 						}
 					} else {
-						// Only some buttons should allow roll-over (only when the player's on foot)
 						auto players = _levelHandler->GetPlayers();
 						bool canPlayerMoveVertically = (!players.empty() && players[0]->CanMoveVertically());
 						if ((button.Align & AllowRollover) != AllowRollover && !canPlayerMoveVertically) continue;
@@ -360,7 +395,6 @@ namespace Jazz2::UI
 								button.CurrentPointerId = event.pointers[j].id;
 								overrideActions |= (1 << (std::int32_t)button.Action);
 								if (button.Action == PlayerAction::Down) {
-									// Buttstomp action is not separate for Touch controls yet
 									overrideActions |= (1 << (std::int32_t)PlayerAction::Buttstomp);
 								}
 								break;
@@ -370,26 +404,50 @@ namespace Jazz2::UI
 				}
 			}
 		} else if (event.type == TouchEventType::Up) {
+			if (PreferencesCache::EnableTouchJoystick && _joystickActive) {
+				_joystickActive = false;
+				_joystickPointerId = -1;
+				auto players = _levelHandler->GetPlayers();
+				if (!players.empty()) {
+					_levelHandler->_playerInputs[players[0]->_playerIndex].RequiredMovement = Vector2f(0.0f, 0.0f);
+				}
+				overrideActions &= ~DpadMask;
+			}
+
 			for (std::uint32_t i = 0; i < TouchButtonsCount; i++) {
 				auto& button = _touchButtons[i];
+				if (PreferencesCache::EnableTouchJoystick && i <= 4) {
+					continue;
+				}
 				if (button.CurrentPointerId != -1) {
 					button.CurrentPointerId = -1;
 					overrideActions &= ~(1 << (std::int32_t)button.Action);
 					if (button.Action == PlayerAction::Down) {
-						// Buttstomp action is not separate for Touch controls yet
 						overrideActions &= ~(1 << (std::int32_t)PlayerAction::Buttstomp);
 					}
 				}
 			}
 
 		} else if (event.type == TouchEventType::PointerUp) {
+			if (PreferencesCache::EnableTouchJoystick && _joystickActive && event.actionIndex == _joystickPointerId) {
+				_joystickActive = false;
+				_joystickPointerId = -1;
+				auto players = _levelHandler->GetPlayers();
+				if (!players.empty()) {
+					_levelHandler->_playerInputs[players[0]->_playerIndex].RequiredMovement = Vector2f(0.0f, 0.0f);
+				}
+				overrideActions &= ~DpadMask;
+			}
+
 			for (std::uint32_t i = 0; i < TouchButtonsCount; i++) {
 				auto& button = _touchButtons[i];
+				if (PreferencesCache::EnableTouchJoystick && i <= 4) {
+					continue;
+				}
 				if (button.CurrentPointerId == event.actionIndex) {
 					button.CurrentPointerId = -1;
 					overrideActions &= ~(1 << (std::int32_t)button.Action);
 					if (button.Action == PlayerAction::Down) {
-						// Buttstomp action is not separate for Touch controls yet
 						overrideActions &= ~(1 << (std::int32_t)PlayerAction::Buttstomp);
 					}
 				}
@@ -834,7 +892,14 @@ namespace Jazz2::UI
 	void HUD::OnDrawTouchButtons(Actors::Player* player)
 	{
 		bool isConsoleVisible = _levelHandler->_console->IsVisible();
-		for (auto& button : _touchButtons) {
+		for (std::uint32_t bi = 0; bi < TouchButtonsCount; bi++) {
+			auto& button = _touchButtons[bi];
+
+			// In joystick mode, skip the D-pad visual (indices 0-4); joystick is drawn separately
+			if (PreferencesCache::EnableTouchJoystick && bi <= 4) {
+				continue;
+			}
+
 			if (player == nullptr && button.Action != PlayerAction::Menu && button.Action != PlayerAction::Console) {
 				continue;
 			}
@@ -877,20 +942,20 @@ namespace Jazz2::UI
 			} else {
 				y = y + button.Height * 0.5f;
 			}
-			if ((button.Align & Fixed) != Fixed) {
-				if ((button.Align & Alignment::Right) == Alignment::Right) {
-					x -= PreferencesCache::TouchRightPadding.X;
-					y += PreferencesCache::TouchRightPadding.Y;
-				} else if ((button.Align & Alignment::Left) == Alignment::Left) {
-					x += PreferencesCache::TouchLeftPadding.X;
-					y += PreferencesCache::TouchLeftPadding.Y;
-				}
-			}
 
-			Colorf color = (button.Action == PlayerAction::Run && player->_isRunPressed ? Colorf(0.6f, 0.6f, 0.6f) : Colorf::White);
+			Colorf color = (button.Action == PlayerAction::Run && player != nullptr && player->_isRunPressed ? Colorf(0.6f, 0.6f, 0.6f) : Colorf::White);
 
 			DrawTexture(*texture, Vector2f(std::round(x - button.Width * 0.5f), std::round(y - button.Height * 0.5f)),
 				TouchButtonsLayer, Vector2f(button.Width, button.Height), Vector4f(1.0f, 0.0f, 1.0f, 0.0f), color);
+		}
+
+		// Floating analog joystick overlay (replaces D-pad in joystick mode)
+		if (PreferencesCache::EnableTouchJoystick && _joystickActive) {
+			Vector2f diff = _joystickCurrent - _joystickOrigin;
+			float dist = diff.Length();
+			Vector2f thumbPos = _joystickOrigin + (dist > _joystickMaxRadius ? diff / dist * _joystickMaxRadius : diff);
+			DrawJoystick(_joystickOrigin.X, _joystickOrigin.Y, _joystickMaxRadius, _joystickMaxRadius * 0.75f,
+				thumbPos.X, thumbPos.Y);
 		}
 	}
 
@@ -1425,6 +1490,94 @@ namespace Jazz2::UI
 		DrawRenderCommand(command);
 	}
 
+	void HUD::RefreshTouchButtons()
+	{
+		using PC = PreferencesCache;
+		using Slot = Jazz2::TouchButtonSlot;
+
+		auto toAlign = [](Jazz2::TouchButtonAnchor anchor) -> Alignment {
+			switch (anchor) {
+				case Jazz2::TouchButtonAnchor::BottomLeft:  return Alignment::BottomLeft;
+				case Jazz2::TouchButtonAnchor::BottomRight: return Alignment::BottomRight;
+				case Jazz2::TouchButtonAnchor::TopLeft:     return Alignment::TopLeft;
+				case Jazz2::TouchButtonAnchor::TopRight:    return Alignment::TopRight;
+				case Jazz2::TouchButtonAnchor::TopCenter:   return Alignment::Top;
+				default:                                    return Alignment::BottomLeft;
+			}
+		};
+
+		// D-pad / Joystick (buttons 0-4)
+		{
+			const auto& layout = PC::TouchButtons[(std::size_t)Slot::Dpad];
+			float scale = layout.Scale;
+			float ex = layout.EdgeOffset.X;
+			float ey = layout.EdgeOffset.Y;
+			Alignment align = toAlign(layout.Anchor);
+			float s = std::round(DpadSize * DefaultRef * scale);
+			float t = std::round(DpadThreshold * DefaultRef * scale);
+
+			_touchButtons[0] = MakeTouchButton(PlayerAction::None, TouchDpad, align, ex, ey, s, s);
+			_touchButtons[1] = MakeTouchButton(PlayerAction::Up, AnimState::Default, align, ex, ey + s * 2.0f / 3.0f, s, s / 3.0f + t);
+			_touchButtons[2] = MakeTouchButton(PlayerAction::Down, AnimState::Default, align, ex, ey - t, s, s / 3.0f + t);
+			_touchButtons[3] = MakeTouchButton(PlayerAction::Left, AnimState::Default, align | AllowRollover, ex - t, ey, s / 3.0f + t, s);
+			_touchButtons[4] = MakeTouchButton(PlayerAction::Right, AnimState::Default, align | AllowRollover, ex + s * 2.0f / 3.0f, ey, s / 3.0f + t, s);
+
+			_joystickMaxRadius = s * 0.5f;
+		}
+
+		// Fire, Jump, Run, ChangeWeapon (buttons 5-8)
+		const AnimState actionStates[] = { TouchFire, TouchJump, TouchRun, TouchChange };
+		const float actionDefaultSizes[] = { ButtonSize, ButtonSize, ButtonSize, SmallButtonSize };
+		const Slot actionSlots[] = { Slot::Fire, Slot::Jump, Slot::Run, Slot::ChangeWeapon };
+		for (std::int32_t i = 0; i < 4; i++) {
+			const auto& layout = PC::TouchButtons[(std::size_t)actionSlots[i]];
+			float sz = std::round(actionDefaultSizes[i] * DefaultRef * layout.Scale);
+			_touchButtons[5 + i] = MakeTouchButton(
+				static_cast<PlayerAction>((std::int32_t)PlayerAction::Fire + i),
+				actionStates[i], toAlign(layout.Anchor),
+				layout.EdgeOffset.X, layout.EdgeOffset.Y, sz, sz);
+		}
+
+		// Menu and Console (buttons 9-10)
+#if defined(DEATH_TARGET_ANDROID)
+		if (static_cast<AndroidApplication&>(theApplication()).IsScreenRound()) {
+			const auto& layout = PC::TouchButtons[(std::size_t)Slot::Menu];
+			float sz = std::round(SmallButtonSize * DefaultRef * layout.Scale);
+			_touchButtons[9] = MakeTouchButton(PlayerAction::Menu, TouchPause, Alignment::Top | Fixed,
+				layout.EdgeOffset.X, layout.EdgeOffset.Y, sz, sz);
+			_touchButtons[10] = {};
+		} else
+#endif
+		{
+			{
+				const auto& layout = PC::TouchButtons[(std::size_t)Slot::Menu];
+				float sz = std::round(SmallButtonSize * DefaultRef * layout.Scale);
+				_touchButtons[9] = MakeTouchButton(PlayerAction::Menu, TouchPause, toAlign(layout.Anchor),
+					layout.EdgeOffset.X, layout.EdgeOffset.Y, sz, sz);
+			}
+			{
+				const auto& layout = PC::TouchButtons[(std::size_t)Slot::Console];
+				float sz = std::round(SmallButtonSize * DefaultRef * layout.Scale);
+				_touchButtons[10] = MakeTouchButton(PlayerAction::Console, AnimState::Default, toAlign(layout.Anchor),
+					layout.EdgeOffset.X, layout.EdgeOffset.Y, sz, sz);
+			}
+		}
+	}
+
+	HUD::TouchButtonInfo HUD::MakeTouchButton(PlayerAction action, AnimState state, Alignment align, float edgeX, float edgeY, float w, float h)
+	{
+		TouchButtonInfo info;
+		info.Action = action;
+		info.Left = std::round(edgeX);
+		info.Top = std::round(edgeY);
+		info.Width = std::round(w);
+		info.Height = std::round(h);
+		info.Graphics = (state != AnimState::Default ? _metadata->FindAnimation(state) : nullptr);
+		info.CurrentPointerId = -1;
+		info.Align = align;
+		return info;
+	}
+
 	HUD::TouchButtonInfo HUD::CreateTouchButton(PlayerAction action, AnimState state, Alignment align, float x, float y, float w, float h)
 	{
 		TouchButtonInfo info;
@@ -1441,16 +1594,6 @@ namespace Jazz2::UI
 
 	bool HUD::IsOnButton(const HUD::TouchButtonInfo& button, float x, float y)
 	{
-		if ((button.Align & Fixed) != Fixed) {
-			if ((button.Align & Alignment::Right) == Alignment::Right) {
-				x += PreferencesCache::TouchRightPadding.X;
-				y -= PreferencesCache::TouchRightPadding.Y;
-			} else if ((button.Align & Alignment::Left) == Alignment::Left) {
-				x -= PreferencesCache::TouchLeftPadding.X;
-				y -= PreferencesCache::TouchLeftPadding.Y;
-			}
-		}
-
 		float left = button.Left;
 		if ((button.Align & Alignment::Right) == Alignment::Right) { left = ViewSize.X - button.Width - left; }
 		else if ((button.Align & Alignment::Left) != Alignment::Left) { left = ViewSize.X / 2 - button.Width * 0.5f; }
@@ -1467,6 +1610,42 @@ namespace Jazz2::UI
 		if (y > bottom) return false;
 
 		return true;
+	}
+
+	void HUD::DrawJoystick(float centerX, float centerY, float outerRadius, float innerRadius, float thumbX, float thumbY)
+	{
+		auto* shader = ContentResolver::Get().GetShader(PrecompiledShader::TouchCircle);
+		if (shader == nullptr) {
+			return;
+		}
+
+		auto drawCircle = [&](float cx, float cy, float radius, float ringInnerFraction, Colorf color) {
+			auto command = RentRenderCommand();
+			if (command->GetMaterial().SetShader(shader)) {
+				command->GetMaterial().ReserveUniformsDataMemory();
+				command->GetGeometry().SetDrawParameters(GL_TRIANGLE_STRIP, 0, 4);
+			}
+			command->GetMaterial().SetBlendingFactors(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+			auto instanceBlock = command->GetMaterial().UniformBlock(Material::InstanceBlockName);
+			// texRect: x=inner radius fraction (0=filled, e.g. 0.75=ring), y=softness, zw=unused
+			instanceBlock->GetUniform(Material::TexRectUniformName)->SetFloatVector(Vector4f(ringInnerFraction, 0.018f, 0.0f, 0.0f).Data());
+			instanceBlock->GetUniform(Material::SpriteSizeUniformName)->SetFloatVector(Vector2f(radius * 2.0f, radius * 2.0f).Data());
+			instanceBlock->GetUniform(Material::ColorUniformName)->SetFloatVector(color.Data());
+
+			command->SetTransformation(Matrix4x4f::Translation(std::round(cx - radius), std::round(cy - radius), 0.0f));
+			command->SetLayer(TouchButtonsLayer + 1);
+
+			DrawRenderCommand(command);
+		};
+
+		// Outer ring (translucent white ring)
+		drawCircle(centerX, centerY, outerRadius, 0.78f, Colorf(1.0f, 1.0f, 1.0f, 0.35f));
+		// Outer ring border highlight
+		drawCircle(centerX, centerY, outerRadius, 0.90f, Colorf(1.0f, 1.0f, 1.0f, 0.55f));
+		// Thumb (filled circle)
+		float thumbRadius = outerRadius * 0.28f;
+		drawCircle(thumbX, thumbY, thumbRadius, 0.0f, Colorf(1.0f, 1.0f, 1.0f, 0.80f));
 	}
 
 	void HUD::UpdateRgbLights(float timeMult, Rendering::PlayerViewport* viewport)

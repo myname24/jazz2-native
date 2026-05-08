@@ -217,6 +217,7 @@ namespace Jazz2::Resources
 #endif
 		Antialiasing,
 		Transition,
+		TouchCircle,
 
 		Count
 	};

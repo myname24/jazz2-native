@@ -79,6 +79,37 @@ namespace Jazz2
 		CheatsUsed = 0x02			/**< Cheats have been used */
 	};
 
+	/** @brief Anchor edge for a configurable touch button */
+	enum class TouchButtonAnchor : std::uint8_t {
+		BottomLeft = 0,				/**< Bottom-left corner */
+		BottomRight = 1,			/**< Bottom-right corner */
+		TopLeft = 2,				/**< Top-left corner */
+		TopRight = 3,				/**< Top-right corner */
+		TopCenter = 4				/**< Top-center (used for round screens) */
+	};
+
+	/** @brief Slot index for each independently configurable touch button */
+	enum class TouchButtonSlot : std::uint8_t {
+		Dpad = 0,					/**< D-pad / Joystick (moves and resizes as a unit with its sub-zones) */
+		Fire = 1,					/**< Fire button */
+		Jump = 2,					/**< Jump button */
+		Run = 3,					/**< Run button */
+		ChangeWeapon = 4,			/**< Change weapon button */
+		Menu = 5,					/**< Pause / Menu button */
+		Console = 6,				/**< Console button */
+		Count = 7					/**< Number of configurable slots */
+	};
+
+	/** @brief Per-button layout stored in user preferences */
+	struct TouchButtonLayout {
+		/** @brief Offset from the anchor edge in reference pixels (DefaultWidth * 0.5 = 360) */
+		Vector2f EdgeOffset;
+		/** @brief Size scale factor (0.5 = half size, 1.0 = default, 3.0 = triple size) */
+		float Scale;
+		/** @brief Which screen corner this button is anchored to */
+		TouchButtonAnchor Anchor;
+	};
+
 	DEATH_ENUM_FLAGS(EpisodeContinuationFlags);
 
 #	pragma pack(push, 1)
@@ -233,10 +264,10 @@ namespace Jazz2
 		 * @partialsupport Available only on @ref DEATH_TARGET_ANDROID "Android" platform.
 		 */
 		static bool UseNativeBackButton;
-		/** @brief Touch controls left padding */
-		static Vector2f TouchLeftPadding;
-		/** @brief Touch controls right padding */
-		static Vector2f TouchRightPadding;
+		/** @brief Whether D-pad is replaced by a floating analog joystick */
+		static bool EnableTouchJoystick;
+		/** @brief Per-button layout configuration for all configurable touch buttons */
+		static TouchButtonLayout TouchButtons[(std::size_t)TouchButtonSlot::Count];
 
 		// User Profile
 		/** @brief Unique player ID */
@@ -267,6 +298,8 @@ namespace Jazz2
 		static EpisodeContinuationStateWithLevel* GetEpisodeContinue(StringView episodeName, bool createIfNotFound = false);
 		/** @brief Removes information about episode continuation (resets progress) */
 		static void RemoveEpisodeContinue(StringView episodeName);
+		/** @brief Resets all touch button layouts to their default positions and sizes */
+		static void ResetTouchButtons();
 
 	private:
 		enum class BoolOptions : std::uint64_t {
@@ -304,14 +337,13 @@ namespace Jazz2
 			SwitchToNewWeapon = 0x8000000,
 			EnableContinuousJump = 0x10000000,
 
-			BlurEffects = 0x20000000
+			BlurEffects = 0x20000000,
+			EnableTouchJoystick = 0x40000000
 		};
 
 		DEATH_PRIVATE_ENUM_FLAGS(BoolOptions);
 
-		static constexpr std::uint8_t FileVersion = 13;
-
-		static constexpr float TouchPaddingMultiplier = 0.003f;
+		static constexpr std::uint8_t FileVersion = 14;
 
 		PreferencesCache(const PreferencesCache&) = delete;
 		PreferencesCache& operator=(const PreferencesCache&) = delete;

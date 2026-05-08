@@ -86,8 +86,8 @@ namespace Jazz2
 	std::uint8_t PreferencesCache::GamepadRumble = 1;
 	bool PreferencesCache::PlayStationExtendedSupport = false;
 	bool PreferencesCache::UseNativeBackButton = false;
-	Vector2f PreferencesCache::TouchLeftPadding;
-	Vector2f PreferencesCache::TouchRightPadding;
+	bool PreferencesCache::EnableTouchJoystick = false;
+	TouchButtonLayout PreferencesCache::TouchButtons[(std::size_t)TouchButtonSlot::Count] = {};
 	Uuid PreferencesCache::UniquePlayerID;
 	Uuid PreferencesCache::UniqueServerID;
 	String PreferencesCache::PlayerName;
@@ -96,6 +96,20 @@ namespace Jazz2
 	String PreferencesCache::_configPath;
 	HashMap<String, EpisodeContinuationState> PreferencesCache::_episodeEnd;
 	HashMap<String, EpisodeContinuationStateWithLevel> PreferencesCache::_episodeContinue;
+
+	void PreferencesCache::ResetTouchButtons()
+	{
+		// Default positions derived from HUD constants × (DefaultWidth * 0.5f = 360):
+		//	DpadSize=0.37 → 133px, DpadLeft=0.02 → 7px, DpadBottom=0.1 → 36px
+		//	ButtonSize=0.172 → 62px, SmallButtonSize=0.098 → 35px
+		TouchButtons[(std::size_t)TouchButtonSlot::Dpad]			= { Vector2f(  7.0f,  36.0f), 1.0f, TouchButtonAnchor::BottomLeft  };
+		TouchButtons[(std::size_t)TouchButtonSlot::Fire]			= { Vector2f(138.0f,  14.0f), 1.0f, TouchButtonAnchor::BottomRight };
+		TouchButtons[(std::size_t)TouchButtonSlot::Jump]			= { Vector2f( 69.0f,  43.0f), 1.0f, TouchButtonAnchor::BottomRight };
+		TouchButtons[(std::size_t)TouchButtonSlot::Run]				= { Vector2f(  0.0f,  58.0f), 1.0f, TouchButtonAnchor::BottomRight };
+		TouchButtons[(std::size_t)TouchButtonSlot::ChangeWeapon]	= { Vector2f( 66.0f, 115.0f), 1.0f, TouchButtonAnchor::BottomRight };
+		TouchButtons[(std::size_t)TouchButtonSlot::Menu]			= { Vector2f(  7.0f,   7.0f), 1.0f, TouchButtonAnchor::TopRight    };
+		TouchButtons[(std::size_t)TouchButtonSlot::Console]			= { Vector2f(  7.0f,   7.0f), 1.0f, TouchButtonAnchor::TopLeft     };
+	}
 
 	static void ReadEpisodeContinuationState(Stream& s, EpisodeContinuationState& state)
 	{
@@ -321,10 +335,16 @@ namespace Jazz2
 					SfxVolume = uc.ReadValue<std::uint8_t>() / 255.0f;
 					MusicVolume = uc.ReadValue<std::uint8_t>() / 255.0f;
 
-					TouchLeftPadding.X = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
-					TouchLeftPadding.Y = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
-					TouchRightPadding.X = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
-					TouchRightPadding.Y = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
+					// v14+: Removed the 4 legacy TouchPadding bytes - convert old format on load
+					Vector2f legacyLeftPadding;
+					Vector2f legacyRightPadding;
+					if (version < 14) {
+						constexpr float TouchPaddingMultiplier = 0.003f;
+						legacyLeftPadding.X  = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
+						legacyLeftPadding.Y  = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
+						legacyRightPadding.X = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
+						legacyRightPadding.Y = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
+					}
 
 					if (version >= 5) {
 						GamepadButtonLabels = (GamepadType)uc.ReadValue<std::uint8_t>();
@@ -366,6 +386,27 @@ namespace Jazz2
 						// These 2 new options needs to be enabled by default
 						BlurEffects = ((boolOptions & BoolOptions::BlurEffects) == BoolOptions::BlurEffects);
 						LightingResolutionPercent = std::clamp(uc.ReadValue<std::uint8_t>(), std::uint8_t(10), std::uint8_t(100));
+					}
+
+					// Touch button per-slot configuration (v14+)
+					EnableTouchJoystick = ((boolOptions & BoolOptions::EnableTouchJoystick) == BoolOptions::EnableTouchJoystick);
+					if (version >= 14) {
+						for (std::size_t i = 0; i < (std::size_t)TouchButtonSlot::Count; i++) {
+							TouchButtons[i].EdgeOffset.X = (float)uc.ReadValueAsLE<std::int16_t>();
+							TouchButtons[i].EdgeOffset.Y = (float)uc.ReadValueAsLE<std::int16_t>();
+							std::uint8_t scaleByte = uc.ReadValue<std::uint8_t>();
+							TouchButtons[i].Scale = 0.5f + (scaleByte / 255.0f) * 2.5f;
+							TouchButtons[i].Anchor = (TouchButtonAnchor)uc.ReadValue<std::uint8_t>();
+						}
+					} else {
+						// Convert from legacy left/right padding to per-button layout
+						ResetTouchButtons();
+						TouchButtons[(std::size_t)TouchButtonSlot::Dpad].EdgeOffset.X += legacyLeftPadding.X;
+						TouchButtons[(std::size_t)TouchButtonSlot::Dpad].EdgeOffset.Y -= legacyLeftPadding.Y;
+						for (std::size_t i = (std::size_t)TouchButtonSlot::Fire; i <= (std::size_t)TouchButtonSlot::ChangeWeapon; i++) {
+							TouchButtons[i].EdgeOffset.X -= legacyRightPadding.X;
+							TouchButtons[i].EdgeOffset.Y -= legacyRightPadding.Y;
+						}
 					}
 
 					// Controls
@@ -460,6 +501,7 @@ namespace Jazz2
 		if (resetConfig) {
 			// Config file doesn't exist or reset is requested
 			FirstRun = true;
+			ResetTouchButtons();
 			Random().Uuid(UniquePlayerID);
 			Random().Uuid(UniqueServerID);
 			PlayerName = GetEffectivePlayerName();
@@ -591,6 +633,7 @@ namespace Jazz2
 		if (SwitchToNewWeapon) boolOptions |= BoolOptions::SwitchToNewWeapon;
 		if (EnableContinuousJump) boolOptions |= BoolOptions::EnableContinuousJump;
 		if (BlurEffects) boolOptions |= BoolOptions::BlurEffects;
+		if (EnableTouchJoystick) boolOptions |= BoolOptions::EnableTouchJoystick;
 		co.WriteValueAsLE<std::uint64_t>(std::uint64_t(boolOptions));
 
 		if (Language[0] != '\0') {
@@ -606,10 +649,7 @@ namespace Jazz2
 		co.WriteValue<std::uint8_t>(std::uint8_t(SfxVolume * 255.0f));
 		co.WriteValue<std::uint8_t>(std::uint8_t(MusicVolume * 255.0f));
 
-		co.WriteValue<std::int8_t>(std::int8_t(TouchLeftPadding.X * INT8_MAX * TouchPaddingMultiplier));
-		co.WriteValue<std::int8_t>(std::int8_t(TouchLeftPadding.Y * INT8_MAX * TouchPaddingMultiplier));
-		co.WriteValue<std::int8_t>(std::int8_t(TouchRightPadding.X * INT8_MAX * TouchPaddingMultiplier));
-		co.WriteValue<std::int8_t>(std::int8_t(TouchRightPadding.Y * INT8_MAX * TouchPaddingMultiplier));
+		// v14+: No legacy TouchPadding bytes here
 
 		co.WriteValue<std::uint8_t>(std::uint8_t(GamepadButtonLabels));
 		co.WriteValue<std::uint8_t>(GamepadRumble);
@@ -622,6 +662,14 @@ namespace Jazz2
 		co.Write(UniqueServerID, sizeof(UniqueServerID));
 
 		co.WriteValue<std::uint8_t>(LightingResolutionPercent);
+
+		// Per-button touch layout (v14+)
+		for (std::size_t i = 0; i < (std::size_t)TouchButtonSlot::Count; i++) {
+			co.WriteValueAsLE<std::int16_t>(std::int16_t(TouchButtons[i].EdgeOffset.X));
+			co.WriteValueAsLE<std::int16_t>(std::int16_t(TouchButtons[i].EdgeOffset.Y));
+			co.WriteValue<std::uint8_t>(std::uint8_t(std::clamp((TouchButtons[i].Scale - 0.5f) / 2.5f, 0.0f, 1.0f) * 255.0f));
+			co.WriteValue<std::uint8_t>(std::uint8_t(TouchButtons[i].Anchor));
+		}
 
 		// Controls
 		co.WriteValue<std::uint8_t>(std::uint8_t(ControlScheme::MaxSupportedPlayers));

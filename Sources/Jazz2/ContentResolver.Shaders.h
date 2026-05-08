@@ -4,7 +4,7 @@
 
 namespace Jazz2::Shaders
 {
-	constexpr std::uint64_t Version = 8;
+	constexpr std::uint64_t Version = 9;
 
 	constexpr char LightingVs[] = "#line " DEATH_LINE_STRING "\n" R"(
 uniform mat4 uProjectionMatrix;
@@ -2620,6 +2620,58 @@ void main() {
 	vTexCoords = vec2(aPosition.x * texRect.x + texRect.y, aPosition.y * texRect.z + texRect.w);
 	vCorrection = spriteSize / vec2(max(spriteSize.x, spriteSize.y));
 	vProgressTime = color.a;
+}
+)";
+
+	constexpr char TouchCircleVs[] = "#line " DEATH_LINE_STRING "\n" R"(
+uniform mat4 uProjectionMatrix;
+uniform mat4 uViewMatrix;
+
+layout (std140) uniform InstanceBlock
+{
+	mat4 modelMatrix;
+	vec4 color;
+	vec4 texRect;
+	vec2 spriteSize;
+};
+
+out vec2 vPos;
+
+void main() {
+	vec2 aPosition = vec2(float(gl_VertexID >> 1), float(gl_VertexID % 2));
+	vec4 position = vec4(aPosition.x * spriteSize.x, aPosition.y * spriteSize.y, 0.0, 1.0);
+	gl_Position = uProjectionMatrix * uViewMatrix * modelMatrix * position;
+	vPos = aPosition - vec2(0.5, 0.5);
+}
+)";
+
+	// Fragment shader for drawing SDF circles and rings without textures.
+	//	texRect.x = inner radius as fraction of outer (0=filled circle, 0.8=thin ring)
+	//	texRect.y = edge softness (anti-alias width, e.g. 0.02)
+	//	texRect.z, texRect.w = unused
+	constexpr char TouchCircleFs[] = "#line " DEATH_LINE_STRING "\n" R"(
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+in vec2 vPos;
+out vec4 fragColor;
+
+layout (std140) uniform InstanceBlock
+{
+	mat4 modelMatrix;
+	vec4 color;
+	vec4 texRect;
+	vec2 spriteSize;
+};
+
+void main() {
+	float dist = length(vPos);
+	float softness = texRect.y;
+	float outerAlpha = 1.0 - smoothstep(0.5 - softness, 0.5, dist);
+	float innerRadius = texRect.x * 0.5;
+	float innerAlpha = (innerRadius > 0.0) ? smoothstep(innerRadius - softness, innerRadius, dist) : 1.0;
+	fragColor = vec4(color.rgb, color.a * outerAlpha * innerAlpha);
 }
 )";
 

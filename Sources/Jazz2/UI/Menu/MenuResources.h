@@ -102,6 +102,14 @@ namespace Jazz2::UI::Menu::Resources
 
 	static constexpr AnimState LoriExistsCheck = (AnimState)120;
 
+	static constexpr AnimState TouchDpad = (AnimState)130;
+	static constexpr AnimState TouchFire = (AnimState)131;
+	static constexpr AnimState TouchJump = (AnimState)132;
+	static constexpr AnimState TouchRun = (AnimState)133;
+	static constexpr AnimState TouchChange = (AnimState)134;
+	static constexpr AnimState TouchPause = (AnimState)135;
+	static constexpr AnimState TouchClose = (AnimState)136;
+
 	/** @} */
 
 	/** @brief Returns animation resource for the specified gamepad axis */

@@ -359,6 +359,35 @@
 		"LoriExistsCheck": {
 			"Path": "Lori/corpse.aura",
 			"States": [ 120 ]
+		},
+		
+		"TouchDpad": {
+			"Path": "UI/touch_dpad.aura",
+			"States": [ 130 ]
+		},
+		"TouchFire": {
+			"Path": "UI/touch_fire.aura",
+			"States": [ 131 ]
+		},
+		"TouchJump": {
+			"Path": "UI/touch_jump.aura",
+			"States": [ 132 ]
+		},
+		"TouchRun": {
+			"Path": "UI/touch_run.aura",
+			"States": [ 133 ]
+		},
+		"TouchChange": {
+			"Path": "UI/touch_change.aura",
+			"States": [ 134 ]
+		},
+		"TouchPause": {
+			"Path": "UI/touch_pause.aura",
+			"States": [ 135 ]
+		},
+		"TouchClose": {
+			"Path": "UI/touch_close.aura",
+			"States": [ 136 ]
 		}
 	},
 

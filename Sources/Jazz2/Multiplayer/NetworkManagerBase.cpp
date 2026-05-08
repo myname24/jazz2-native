@@ -906,6 +906,7 @@ namespace Jazz2::Multiplayer
 			case Reason::Disconnected: return "Client disconnected by user"; break;
 			case Reason::InvalidParameter: return "Invalid parameter specified"; break;
 			case Reason::IncompatibleVersion: return "Incompatible client version"; break;
+			case Reason::SecurityPolicyViolation: return "Security policy violation"; break;
 			case Reason::AuthFailed: return "Authentication failed"; break;
 			case Reason::InvalidPassword: return "Invalid password specified"; break;
 			case Reason::InvalidPlayerName: return "Invalid player name specified"; break;

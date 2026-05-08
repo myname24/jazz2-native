@@ -64,6 +64,9 @@ namespace Jazz2::UI
 		/** @brief Returns `true` if weapon wheel is visible */
 		bool IsWeaponWheelVisible(std::int32_t playerIndex) const;
 
+		/** @brief Rebuilds internal touch button data from current @ref PreferencesCache::TouchButtons configuration */
+		void RefreshTouchButtons();
+
 	protected:
 #ifndef DOXYGEN_GENERATING_OUTPUT
 		// Doxygen 1.12.0 outputs also private structs/unions even if it shouldn't
@@ -182,6 +185,7 @@ namespace Jazz2::UI
 		static constexpr std::int32_t TouchButtonsCount = 11;
 		static constexpr float WeaponWheelAnimDuration = 20.0f;
 		static constexpr std::int32_t WeaponWheelMaxVertices = 768;
+		static constexpr float DefaultRef = LevelHandler::DefaultWidth * 0.5f; // = 360.0f
 
 		float _rgbAmbientLight;
 		float _rgbHealthLast;
@@ -195,6 +199,13 @@ namespace Jazz2::UI
 		TouchButtonInfo _touchButtons[TouchButtonsCount];
 		float _touchButtonsTimer;
 
+		// Floating analog joystick state
+		bool _joystickActive;
+		Vector2f _joystickOrigin;
+		Vector2f _joystickCurrent;
+		std::int32_t _joystickPointerId;
+		float _joystickMaxRadius;
+
 		AnimState GetCurrentWeapon(Actors::Player* player, WeaponType weapon, Vector2f& offset);
 		void DrawWeaponWheel(const Rectf& view, Actors::Player* player);
 		void UpdateWeaponWheel(float timeMult);
@@ -202,8 +213,10 @@ namespace Jazz2::UI
 		static std::int32_t GetWeaponCount(Actors::Player* player);
 		void DrawWeaponWheelSegment(WeaponWheelState& state, float x, float y, float width, float height, std::uint16_t z, float minAngle, float maxAngle, const Texture& texture, const Colorf& color);
 
+		TouchButtonInfo MakeTouchButton(PlayerAction action, AnimState state, Alignment align, float edgeX, float edgeY, float w, float h);
 		TouchButtonInfo CreateTouchButton(PlayerAction action, AnimState state, Alignment align, float x, float y, float w, float h);
 		bool IsOnButton(const TouchButtonInfo& button, float x, float y);
+		void DrawJoystick(float centerX, float centerY, float outerRadius, float innerRadius, float thumbX, float thumbY);
 
 		void UpdateRgbLights(float timeMult, Rendering::PlayerViewport* viewport);
 		static Color ApplyRgbGradientAlpha(Color color, std::int32_t x, std::int32_t y, float animProgress, float ambientLight);
