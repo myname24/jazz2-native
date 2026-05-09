@@ -62,14 +62,14 @@ namespace nCine::RHI
 				Mutex mutex;
 				CondVariable workReady;
 				CondVariable workDone;
-				std::int32_t workersActive = 0;
+				std::atomic<std::int32_t> workersActive{0};
+				std::int32_t numSpawnedWorkers = 0; // Actual threads created — may be < MaxWorkers if spawn fails
 				bool shutdownRequested = false;
 
 				// Work distribution
 				std::atomic<std::int32_t> nextTileIndex{0};
 				std::int32_t flushGeneration = 0; // Incremented each Flush to prevent worker re-entry
 				std::int32_t workerGeneration[MaxWorkers] = {}; // Last generation each worker processed
-				float clearR = 0, clearG = 0, clearB = 0, clearA = 1;
 #endif
 			};
 
@@ -107,7 +107,6 @@ namespace nCine::RHI
 				}
 #endif
 			}
-
 			// =====================================================================
 			// Copy tile buffer back to framebuffer
 			// =====================================================================
@@ -176,15 +175,13 @@ namespace nCine::RHI
 				std::uint8_t* tileBuf = g_tileScratch[workerIndex];
 
 				// Optimization: skip reading framebuffer if the first command fully covers
-				// this tile with an opaque draw (no blending needed for background)
+				// this tile with an opaque draw (no blending needed for background).
+				// Only safe when boundsAreAccurate — conservative full-frame bounds would
+				// match any tile even if the geometry doesn't actually cover it.
 				const DeferredCommand& firstCmd = g_tile.commands[bin[0]];
-				bool needsReadBack = true;
-				if (!firstCmd.ctx.blendingEnabled &&
-				    firstCmd.screenMinX <= tileX && firstCmd.screenMinY <= tileY &&
-				    firstCmd.screenMaxX >= tileX + tileW - 1 && firstCmd.screenMaxY >= tileY + tileH - 1) {
-					// First command covers entire tile and is opaque - no need to read framebuffer
-					needsReadBack = false;
-				}
+				const bool needsReadBack = (firstCmd.ctx.blendingEnabled || !firstCmd.boundsAreAccurate ||
+				    firstCmd.screenMinX > tileX || firstCmd.screenMinY > tileY ||
+				    firstCmd.screenMaxX < tileX + tileW - 1 || firstCmd.screenMaxY < tileY + tileH - 1);
 
 				if (needsReadBack) {
 					// Initialize tile with current framebuffer contents
@@ -202,7 +199,7 @@ namespace nCine::RHI
 						tileBuf, tileX, tileY, tileW, tileH,
 						cmd.viewportW, cmd.viewportH);
 				}
-
+				
 				// Copy tile back to framebuffer
 				CopyTileToFramebuffer(tileBuf, g_tile.targetBuffer,
 				                      tileX, tileY, tileW, tileH,
@@ -240,6 +237,7 @@ namespace nCine::RHI
 					}
 
 					// Signal completion
+					std::atomic_thread_fence(std::memory_order_release); // Ensure all tile writes are pushed out
 					g_tile.mutex.Lock();
 					g_tile.workersActive--;
 					if (g_tile.workersActive == 0) {
@@ -261,16 +259,27 @@ namespace nCine::RHI
 			if (!g_tile.initialized) {
 				g_tile.shutdownRequested = false;
 				g_tile.workersActive = 0;
+				g_tile.numSpawnedWorkers = 0;
 				g_tile.flushGeneration = 0;
+				std::memset(g_tile.workerGeneration, 0, sizeof(g_tile.workerGeneration));
 
 				// Spawn worker threads
+#if defined(DEATH_TARGET_VITA)
+				// Vita has 4 cores: core 0 (OS) + cores 1-3 (app). Force 3 workers.
+				const std::int32_t numWorkers = 3;
+#else
 				const std::int32_t numWorkers = std::min(
 					static_cast<std::int32_t>(Thread::GetProcessorCount()) - 1,
 					static_cast<std::int32_t>(TileState::MaxWorkers));
+#endif
 
 				for (std::int32_t i = 0; i < numWorkers; i++) {
 					g_tile.workers[i] = Thread(WorkerThreadFunc,
 						reinterpret_cast<void*>(static_cast<std::intptr_t>(i)));
+					// Only count workers that actually started
+					if (static_cast<bool>(g_tile.workers[i])) {
+						g_tile.numSpawnedWorkers++;
+					}
 				}
 			}
 #endif
@@ -301,6 +310,7 @@ namespace nCine::RHI
 					g_tile.workers[i].Join();
 				}
 			}
+			// mutex/workReady/workDone are destroyed automatically by their destructors
 #endif
 			g_tile.initialized = false;
 		}
@@ -359,6 +369,7 @@ namespace nCine::RHI
 
 			// Compute screen-space AABB from the draw command
 			std::int32_t screenMinX, screenMinY, screenMaxX, screenMaxY;
+			bool accurateBounds;
 
 			if DEATH_LIKELY(type == PrimitiveType::TriangleStrip && count == 4 && firstVertex == 0 && ctx.vertexFormat == nullptr) {
 				// Procedural sprite quad - compute bounds from MVP + sprite size
@@ -402,15 +413,18 @@ namespace nCine::RHI
 				screenMinY = std::max(0, static_cast<std::int32_t>(fMinY));
 				screenMaxX = std::min(vpW - 1, static_cast<std::int32_t>(fMaxX));
 				screenMaxY = std::min(vpH - 1, static_cast<std::int32_t>(fMaxY));
+				accurateBounds = true;
 			} else {
 				// For non-procedural quads, use full framebuffer bounds (conservative)
 				screenMinX = 0;
 				screenMinY = 0;
 				screenMaxX = vpW - 1;
 				screenMaxY = vpH - 1;
+				accurateBounds = false;
 			}
 
-			// Scissor clip (Y always flipped — buffer is bottom-up for presentation)
+			// Scissor clip — Y always flipped for tile culling because tile rows are
+			// indexed top-down in screen space but the framebuffer stores rows bottom-up.
 			if DEATH_UNLIKELY(ctx.scissorEnabled) {
 				std::int32_t scY0 = g_tile.fbHeight - ctx.scissorRect.Y - ctx.scissorRect.H;
 				std::int32_t scY1 = g_tile.fbHeight - 1 - ctx.scissorRect.Y;
@@ -428,7 +442,9 @@ namespace nCine::RHI
 			const std::int32_t cmdIdx = g_tile.commandCount;
 			DeferredCommand& cmd = g_tile.commands[cmdIdx];
 			cmd.ctx = ctx;
-			// Store scissor in screen-space (Y flipped)
+			// scissorRect.Y is stored in top-down screen space so TileRasterizer
+			// can use it directly as a pixel-row clip. ctx.scissorRect.Y is bottom-up
+			// (same convention as the RHI scissor API), so always flip it here.
 			if DEATH_UNLIKELY(ctx.scissorEnabled) {
 				cmd.ctx.scissorRect.Y = g_tile.fbHeight - ctx.scissorRect.Y - ctx.scissorRect.H;
 			}
@@ -441,6 +457,7 @@ namespace nCine::RHI
 			cmd.screenMinY = screenMinY;
 			cmd.screenMaxX = screenMaxX;
 			cmd.screenMaxY = screenMaxY;
+			cmd.boundsAreAccurate = accurateBounds;
 			g_tile.commandCount++;
 
 			// Bin into overlapping tiles (clamp to valid tile range)
@@ -475,14 +492,10 @@ namespace nCine::RHI
 			// Multi-threaded tile processing using atomic work counter
 			g_tile.nextTileIndex.store(0, std::memory_order_relaxed);
 
-			// Wake workers with new generation
-			const std::int32_t numWorkers = std::min(
-				static_cast<std::int32_t>(Thread::GetProcessorCount()) - 1,
-				static_cast<std::int32_t>(TileState::MaxWorkers));
-
 			g_tile.mutex.Lock();
 			g_tile.flushGeneration++;
-			g_tile.workersActive = numWorkers;
+			// Set active count based on successfully spawned threads
+			g_tile.workersActive.store(g_tile.numSpawnedWorkers, std::memory_order_release);
 			g_tile.workReady.Broadcast();
 			g_tile.mutex.Unlock();
 
@@ -493,12 +506,16 @@ namespace nCine::RHI
 				ProcessTile(idx, 0);
 			}
 
-			// Wait for workers to finish
+			// Wait for all workers to finish
 			g_tile.mutex.Lock();
-			while (g_tile.workersActive > 0) {
+			while (g_tile.workersActive.load(std::memory_order_acquire) > 0) {
 				g_tile.workDone.Wait(g_tile.mutex);
 			}
 			g_tile.mutex.Unlock();
+
+			// Ensure all worker pixel writes are globally visible before the engine
+			// moves on to DiscardPending or flipping buffers.
+			std::atomic_thread_fence(std::memory_order_acquire);
 #else
 			// Single-threaded fallback: process tiles sequentially
 			for (std::int32_t i = 0; i < g_tile.totalTiles; i++) {
