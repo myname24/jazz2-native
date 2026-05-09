@@ -22,7 +22,8 @@ namespace Jazz2::UI::Menu
 		Gameplay = 0x04,				/**< Gameplay */
 		Language = 0x08,				/**< Language */
 		ControlScheme = 0x10,			/**< Control Scheme */
-		MainMenu = 0x20					/**< Main Menu */
+		TouchButtons = 0x20,			/**< Touch Buttons layout */
+		MainMenu = 0x40					/**< Main Menu */
 	};
 
 	DEATH_ENUM_FLAGS(ChangedPreferencesType);

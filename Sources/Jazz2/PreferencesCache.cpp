@@ -336,14 +336,14 @@ namespace Jazz2
 					MusicVolume = uc.ReadValue<std::uint8_t>() / 255.0f;
 
 					// v14+: Removed the 4 legacy TouchPadding bytes - convert old format on load
-					Vector2f legacyLeftPadding;
-					Vector2f legacyRightPadding;
+					/*Vector2f legacyLeftPadding, legacyRightPadding;*/
 					if (version < 14) {
-						constexpr float TouchPaddingMultiplier = 0.003f;
+						/*constexpr float TouchPaddingMultiplier = 0.003f;
 						legacyLeftPadding.X  = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
 						legacyLeftPadding.Y  = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
 						legacyRightPadding.X = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
-						legacyRightPadding.Y = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));
+						legacyRightPadding.Y = std::round(uc.ReadValue<std::int8_t>() / (TouchPaddingMultiplier * INT8_MAX));*/
+						uc.ReadValue<std::int32_t>();
 					}
 
 					if (version >= 5) {
@@ -401,12 +401,12 @@ namespace Jazz2
 					} else {
 						// Convert from legacy left/right padding to per-button layout
 						ResetTouchButtons();
-						TouchButtons[(std::size_t)TouchButtonSlot::Dpad].EdgeOffset.X += legacyLeftPadding.X;
+						/*TouchButtons[(std::size_t)TouchButtonSlot::Dpad].EdgeOffset.X += legacyLeftPadding.X;
 						TouchButtons[(std::size_t)TouchButtonSlot::Dpad].EdgeOffset.Y -= legacyLeftPadding.Y;
 						for (std::size_t i = (std::size_t)TouchButtonSlot::Fire; i <= (std::size_t)TouchButtonSlot::ChangeWeapon; i++) {
 							TouchButtons[i].EdgeOffset.X -= legacyRightPadding.X;
 							TouchButtons[i].EdgeOffset.Y -= legacyRightPadding.Y;
-						}
+						}*/
 					}
 
 					// Controls

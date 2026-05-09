@@ -27,7 +27,7 @@ namespace Jazz2::UI::Menu
 			float CenterX, CenterY, HalfW, HalfH;
 		};
 
-		static constexpr float MinScale = 0.5f;
+		static constexpr float MinScale = 0.3f;
 		static constexpr float MaxScale = 3.0f;
 
 		// Focused slot state
@@ -40,6 +40,7 @@ namespace Jazz2::UI::Menu
 		float _primaryStartX, _primaryStartY;      // normalized touch pos at gesture start
 		Vector2f _slotEdgeOffsetAtStart;
 		Jazz2::TouchButtonAnchor _slotAnchorAtStart;
+		float _resizeCenterX, _resizeCenterY;       // button center saved at corner-resize start
 
 		// Secondary touch for pinch-to-resize
 		std::int32_t _secondaryPointerId;

@@ -5,6 +5,7 @@
 #include "../../LevelHandler.h"
 #include "../../PreferencesCache.h"
 #include "../../Rendering/PlayerViewport.h"
+#include "../HUD.h"
 
 #include "../../../nCine/Application.h"
 #include "../../../nCine/Graphics/RenderQueue.h"
@@ -386,6 +387,12 @@ namespace Jazz2::UI::Menu
 		if ((type & ChangedPreferencesType::ControlScheme) == ChangedPreferencesType::ControlScheme) {
 			// Mark all buttons as already pressed to avoid some issues
 			_pressedActions = 0xffff | (0xffff << 16);
+		}
+
+		if ((type & ChangedPreferencesType::TouchButtons) == ChangedPreferencesType::TouchButtons) {
+			if (_root->_hud != nullptr) {
+				_root->_hud->RefreshTouchButtons();
+			}
 		}
 	}
 
